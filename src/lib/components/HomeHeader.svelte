@@ -23,12 +23,7 @@
 	const MENU_LABELS: Record<string, string> = {
 		en: 'Open navigation menu',
 		id: 'Buka menu navigasi',
-		zh: '打开导航菜单',
-		ja: 'ナビゲーションメニューを開く',
-		ko: '내비게이션 메뉴 열기',
-		es: 'Abrir menú de navegación',
-		fr: 'Ouvrir le menu de navigation',
-		de: 'Navigationsmenü öffnen'
+		ja: 'ナビゲーションメニューを開く'
 	};
 
 	const menuAriaLabel = $derived(MENU_LABELS[language.toLowerCase()] ?? MENU_LABELS.en);

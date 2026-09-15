@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { mobileMenu } from '$lib/stores/mobile-menu.svelte';
 
 	import type { NavTranslation } from '$lib/i18n/nav';
@@ -16,12 +15,7 @@
 	const DRAWER_LABELS: Record<string, string> = {
 		en: 'Mobile navigation menu',
 		id: 'Menu navigasi mobile',
-		zh: '移动导航菜单',
-		ja: 'モバイルナビゲーションメニュー',
-		ko: '모바일 내비게이션 메뉴',
-		es: 'Menú de navegación móvil',
-		fr: 'Menu de navigation mobile',
-		de: 'Mobiles Navigationsmenü'
+		ja: 'モバイルナビゲーションメニュー'
 	};
 
 	const drawerAriaLabel = $derived(DRAWER_LABELS[lang.toLowerCase()] ?? DRAWER_LABELS.en);
@@ -38,7 +32,6 @@
 	]);
 
 	$effect(() => {
-		if (!browser) return;
 		document.body.style.overflow = mobileMenu.open ? 'hidden' : '';
 		return () => {
 			document.body.style.overflow = '';
