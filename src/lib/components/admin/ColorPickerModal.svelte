@@ -1,5 +1,6 @@
 <script lang="ts">
 	import X from 'lucide-svelte/icons/x';
+	import ColorPicker from 'svelte-awesome-color-picker';
 
 	import { DEFAULT_THEME_SHADES } from '$lib/constants';
 	import { generateColorShades } from '$lib/utils/generate-color-shades';
@@ -33,11 +34,10 @@
 		generateColorShades(initialColor) ?? DEFAULT_THEME_SHADES
 	);
 
-	const handleColorChange = (newColor: string): void => {
-		color = newColor;
-		const shades = generateColorShades(newColor);
+	$effect(() => {
+		const shades = generateColorShades(color);
 		if (shades) previewShades = shades;
-	};
+	});
 
 	const handleApply = (): void => {
 		onSelectColor(color);
@@ -60,25 +60,13 @@
 	</div>
 
 	<div class="flex justify-center py-1">
-		<input
-			type="color"
-			value={color}
-			oninput={(event) => handleColorChange((event.target as HTMLInputElement).value)}
-			class="h-32 w-full cursor-pointer rounded-lg border border-gray-200"
-		/>
-	</div>
-
-	<div class="flex items-center gap-2">
-		<span
-			class="h-10 w-10 shrink-0 rounded-lg border border-gray-300 shadow-xs"
-			style={`background-color:${color}`}
-		></span>
-		<input
-			type="text"
-			value={color}
-			oninput={(event) => handleColorChange((event.target as HTMLInputElement).value)}
-			placeholder="#000000"
-			class="h-10 w-full rounded-lg border border-gray-300 px-3 text-sm font-medium text-gray-800 uppercase outline-none focus:border-theme-500 focus:ring-1 focus:ring-theme-500"
+		<ColorPicker
+			bind:hex={color}
+			isDialog={false}
+			isAlpha={false}
+			isTextInput
+			textInputModes={['hex']}
+			label=""
 		/>
 	</div>
 
