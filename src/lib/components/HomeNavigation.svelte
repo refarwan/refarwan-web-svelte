@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { mobileMenu } from '$lib/stores/mobile-menu.svelte';
 
 	import type { NavTranslation } from '$lib/i18n/nav';
@@ -37,6 +38,7 @@
 	]);
 
 	$effect(() => {
+		if (!browser) return;
 		document.body.style.overflow = mobileMenu.open ? 'hidden' : '';
 		return () => {
 			document.body.style.overflow = '';
