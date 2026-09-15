@@ -32,10 +32,26 @@ const decodeAccessToken = (token: string): AccessTokenClaims | null => {
 const isExpired = (claims: AccessTokenClaims): boolean =>
 	claims.exp * 1000 <= Date.now() + EXPIRY_LEEWAY_MS;
 
-const extractRefreshTokenValue = (setCookieHeader: string | null): string | null => {
+interface ParsedRefreshTokenCookie {
+	value: string;
+	expires: Date | null;
+}
+
+const parseRefreshTokenCookie = (
+	setCookieHeader: string | null
+): ParsedRefreshTokenCookie | null => {
 	if (!setCookieHeader) return null;
-	const match = /refreshToken=([^;]+)/.exec(setCookieHeader);
-	return match ? decodeURIComponent(match[1]) : null;
+
+	const valueMatch = /refreshToken=([^;]+)/.exec(setCookieHeader);
+	if (!valueMatch) return null;
+
+	const expiresMatch = /expires=([^;]+)/i.exec(setCookieHeader);
+	const expires = expiresMatch ? new Date(expiresMatch[1]) : null;
+
+	return {
+		value: decodeURIComponent(valueMatch[1]),
+		expires: expires && !Number.isNaN(expires.getTime()) ? expires : null
+	};
 };
 
 const setAccessTokenCookie = (cookies: Cookies, accessToken: string): void => {
@@ -55,13 +71,15 @@ export const startSession = (
 ): void => {
 	setAccessTokenCookie(cookies, accessToken);
 
-	const refreshToken = extractRefreshTokenValue(loginSetCookieHeader);
-	if (refreshToken) {
-		cookies.set(REFRESH_TOKEN_COOKIE, refreshToken, {
+	const refreshCookie = parseRefreshTokenCookie(loginSetCookieHeader);
+	if (refreshCookie) {
+		cookies.set(REFRESH_TOKEN_COOKIE, refreshCookie.value, {
 			path: '/',
 			httpOnly: true,
 			sameSite: 'lax',
-			maxAge: SESSION_MAX_AGE
+			...(refreshCookie.expires
+				? { expires: refreshCookie.expires }
+				: { maxAge: SESSION_MAX_AGE })
 		});
 	}
 };
