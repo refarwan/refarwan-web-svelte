@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
+
 	import Eye from 'lucide-svelte/icons/eye';
 	import EyeOff from 'lucide-svelte/icons/eye-off';
 
@@ -17,10 +19,13 @@
 	const fieldError = (field: string): string | undefined => form?.fieldErrors?.[field];
 
 	$effect(() => {
+		// popup.success/error read and write the popup store's own state, so calling
+		// them untracked keeps this effect's only dependency on `form` — otherwise it
+		// re-triggers itself via the store write and floods duplicate popups.
 		if (form?.success && form.message) {
-			popup.success({ message: form.message });
+			untrack(() => popup.success({ message: form.message ?? '' }));
 		} else if (form?.error) {
-			popup.error({ message: form.error });
+			untrack(() => popup.error({ message: form.error ?? '' }));
 		}
 	});
 </script>
