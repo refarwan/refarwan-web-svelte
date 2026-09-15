@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@theme inline {
+	--font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+	--color-theme-50: var(--color-theme-50, #f0f9ff);
+	--color-theme-100: var(--color-theme-100, #e0f2fe);
+	--color-theme-200: var(--color-theme-200, #bae6fd);
+	--color-theme-300: var(--color-theme-300, #7dd3fc);
+	--color-theme-400: var(--color-theme-400, #38bdf8);
+	--color-theme-500: var(--color-theme-500, #0ea5e9);
+	--color-theme-600: var(--color-theme-600, #0284c7);
+	--color-theme-700: var(--color-theme-700, #0369a1);
+	--color-theme-800: var(--color-theme-800, #075985);
+	--color-theme-900: var(--color-theme-900, #0c4a6e);
+	--color-theme-950: var(--color-theme-950, #082f49);
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background: #ffffff;
+	color: #111827;
+}
