@@ -40,5 +40,13 @@ export default defineConfig(
 		rules: {
 			'svelte/no-navigation-without-resolve': 'off'
 		}
+	},
+	{
+		// homeHref/contactHref are pre-resolved (via resolve()) by the caller and passed
+		// in as plain string props, so resolve() can't be called directly on these hrefs.
+		files: ['src/lib/components/NotFoundContent.svelte'],
+		rules: {
+			'svelte/no-navigation-without-resolve': 'off'
+		}
 	}
 );

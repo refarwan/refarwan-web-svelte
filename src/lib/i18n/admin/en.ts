@@ -122,5 +122,29 @@ export const enUS: AdminTranslation = {
 		unsavedMessage: 'You have unsaved changes. Are you sure you want to leave this page?',
 		leave: 'Leave Page',
 		stay: 'Stay on Page'
+	},
+	dashboard: {
+		statArticles: 'Total Articles',
+		statVideos: 'Total Videos',
+		statProjects: 'Total Projects',
+		vsLastMonth: 'last month',
+		chartArticleReadsTitle: 'Article Reads',
+		chartArticleReadsDesc: 'Article read counts over the past 7 days',
+		chartVideoViewersTitle: 'Video Viewers',
+		chartVideoViewersDesc: 'Video viewer counts over the past 7 days',
+		chartProjectViewersTitle: 'Project Viewers',
+		chartProjectViewersDesc: 'Project page view statistics',
+		popularArticlesTitle: 'Popular Articles',
+		popularArticlesButton: '+ Add Article',
+		popularVideosTitle: 'Popular Videos',
+		popularVideosButton: '+ Add Video',
+		popularProjectsTitle: 'Popular Projects',
+		popularProjectsButton: '+ Add Project'
+	},
+	notFound: {
+		heading: 'Page Not Found',
+		subtext:
+			'Sorry, the page you are looking for in the admin panel is unavailable or has been moved.',
+		backToDashboard: 'Back to Dashboard'
 	}
 };

@@ -123,5 +123,28 @@ export const idID: AdminTranslation = {
 			'Anda memiliki perubahan yang belum disimpan. Yakin ingin meninggalkan halaman ini?',
 		leave: 'Tinggalkan Halaman',
 		stay: 'Tetap di Halaman'
+	},
+	dashboard: {
+		statArticles: 'Total Artikel',
+		statVideos: 'Total Video',
+		statProjects: 'Total Project',
+		vsLastMonth: 'bulan lalu',
+		chartArticleReadsTitle: 'Pembaca Artikel',
+		chartArticleReadsDesc: 'Jumlah pembaca artikel dalam 7 hari terakhir',
+		chartVideoViewersTitle: 'Penonton Video',
+		chartVideoViewersDesc: 'Jumlah penonton video dalam 7 hari terakhir',
+		chartProjectViewersTitle: 'Pengunjung Proyek',
+		chartProjectViewersDesc: 'Statistik pengunjung halaman proyek',
+		popularArticlesTitle: 'Artikel Terpopuler',
+		popularArticlesButton: '+ Tambah Artikel',
+		popularVideosTitle: 'Video Terpopuler',
+		popularVideosButton: '+ Tambah Video',
+		popularProjectsTitle: 'Project Terpopuler',
+		popularProjectsButton: '+ Tambah Project'
+	},
+	notFound: {
+		heading: 'Halaman Tidak Ditemukan',
+		subtext: 'Maaf, halaman yang Anda cari di panel admin tidak tersedia atau telah dipindahkan.',
+		backToDashboard: 'Kembali ke Dasbor'
 	}
 };
