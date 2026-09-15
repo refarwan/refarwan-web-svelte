@@ -2,7 +2,7 @@ import { fail } from '@sveltejs/kit';
 
 import { getAdminTranslation } from '$lib/i18n/admin';
 import { getAdminLang } from '$lib/server/admin-lang';
-import { getApiData } from '$lib/server/api';
+import { getApiData } from '$lib/server/get-api-data';
 import { authFetch, parseApiError } from '$lib/server/api-auth';
 
 import type { Actions, PageServerLoad } from './$types';
@@ -13,19 +13,23 @@ export const load: PageServerLoad = async ({ parent, fetch }) => {
 	const { account, adminLang } = await parent();
 
 	const [provinces, allRegencies] = await Promise.all([
-		getApiData<DataResponse<AreaItem[]>>('area/provinces', fetch),
-		getApiData<DataResponse<AreaItem[]>>('area/all-regencies', fetch)
+		getApiData<DataResponse<AreaItem[]>>('area/provinces', 'area', fetch),
+		getApiData<DataResponse<AreaItem[]>>('area/all-regencies', 'area', fetch)
 	]);
 
 	const [regencies, districts, villages] = await Promise.all([
 		account?.province
-			? getApiData<DataResponse<AreaItem[]>>(`area/regencies/${account.province.code}`, fetch)
+			? getApiData<DataResponse<AreaItem[]>>(
+					`area/regencies/${account.province.code}`,
+					'area',
+					fetch
+				)
 			: undefined,
 		account?.regency
-			? getApiData<DataResponse<AreaItem[]>>(`area/districts/${account.regency.code}`, fetch)
+			? getApiData<DataResponse<AreaItem[]>>(`area/districts/${account.regency.code}`, 'area', fetch)
 			: undefined,
 		account?.district
-			? getApiData<DataResponse<AreaItem[]>>(`area/villages/${account.district.code}`, fetch)
+			? getApiData<DataResponse<AreaItem[]>>(`area/villages/${account.district.code}`, 'area', fetch)
 			: undefined
 	]);
 

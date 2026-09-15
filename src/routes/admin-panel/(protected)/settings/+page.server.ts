@@ -1,70 +1,74 @@
-import { fail } from '@sveltejs/kit';
+import { fail } from "@sveltejs/kit";
 
-import { getAdminTranslation } from '$lib/i18n/admin';
-import { getAdminLang, setAdminLang } from '$lib/server/admin-lang';
-import { authFetch, parseApiError } from '$lib/server/api-auth';
+import { getAdminTranslation } from "$lib/i18n/admin";
+import { getAdminLang, setAdminLang } from "$lib/server/admin-lang";
+import { authFetch, parseApiError } from "$lib/server/api-auth";
 
-import type { Actions, PageServerLoad } from './$types';
+import type { Actions, PageServerLoad } from "./$types";
 
-import type { AdminSettingsData, DataResponse } from '$lib/types';
+import type { AdminSettingsData, DataResponse } from "$lib/types";
+import { clearApiCache } from "$lib/server/get-api-data";
 
 export const load: PageServerLoad = async ({ parent, cookies, fetch }) => {
-	const { adminLang } = await parent();
+    const { adminLang } = await parent();
 
-	const res = await authFetch(cookies, fetch, '/setting');
-	const setting = res.ok ? ((await res.json()) as DataResponse<AdminSettingsData>).data : null;
+    const res = await authFetch(cookies, fetch, "/setting");
+    const setting = res.ok ? ((await res.json()) as DataResponse<AdminSettingsData>).data : null;
 
-	const translation = getAdminTranslation(adminLang);
-	return { t: translation.settings, common: translation.common, setting };
+    const translation = getAdminTranslation(adminLang);
+    return { t: translation.settings, common: translation.common, setting };
 };
 
 export const actions: Actions = {
-	save: async ({ request, cookies, fetch }) => {
-		const raw = await request.formData();
-		const output = new FormData();
-		output.set('title', String(raw.get('title') ?? ''));
-		output.set('description', String(raw.get('description') ?? ''));
+    save: async ({ request, cookies, fetch }) => {
+        const raw = await request.formData();
+        const output = new FormData();
+        output.set("title", String(raw.get("title") ?? ""));
+        output.set("description", String(raw.get("description") ?? ""));
 
-		const colorCode = raw.get('colorCode');
-		if (typeof colorCode === 'string' && colorCode) output.set('colorCode', colorCode);
+        const colorCode = raw.get("colorCode");
+        if (typeof colorCode === "string" && colorCode) output.set("colorCode", colorCode);
 
-		const languages = raw.get('otherContentLanguages');
-		if (typeof languages === 'string') output.set('otherContentLanguages', languages);
+        const languages = raw.get("otherContentLanguages");
+        if (typeof languages === "string") output.set("otherContentLanguages", languages);
 
-		const favicon = raw.get('favicon');
-		if (favicon instanceof File && favicon.size > 0) output.set('favicon', favicon);
+        const favicon = raw.get("favicon");
+        if (favicon instanceof File && favicon.size > 0) output.set("favicon", favicon);
 
-		const res = await authFetch(cookies, fetch, '/setting', { method: 'PUT', body: output });
+        const res = await authFetch(cookies, fetch, "/setting", { method: "PUT", body: output });
 
-		const lang = getAdminLang(cookies);
-		const t = getAdminTranslation(lang).settings;
+        const lang = getAdminLang(cookies);
+        const t = getAdminTranslation(lang).settings;
 
-		if (!res.ok) {
-			const { message } = await parseApiError(res, 'Update failed');
-			return fail(res.status, { error: message });
-		}
+        if (!res.ok) {
+            const { message } = await parseApiError(res, "Update failed");
+            return fail(res.status, { error: message });
+        }
 
-		return { success: true, message: t.updated };
-	},
+        void clearApiCache("settings");
 
-	resetTheme: async ({ cookies, fetch }) => {
-		const res = await authFetch(cookies, fetch, '/setting/theme-shades', { method: 'DELETE' });
+        return { success: true, message: t.updated };
+    },
 
-		const lang = getAdminLang(cookies);
-		const t = getAdminTranslation(lang).settings;
+    resetTheme: async ({ cookies, fetch }) => {
+        const res = await authFetch(cookies, fetch, "/setting/theme-shades", { method: "DELETE" });
 
-		if (!res.ok) {
-			const { message } = await parseApiError(res, 'Reset failed');
-			return fail(res.status, { error: message });
-		}
+        const lang = getAdminLang(cookies);
+        const t = getAdminTranslation(lang).settings;
 
-		return { success: true, message: t.resetDone };
-	},
+        if (!res.ok) {
+            const { message } = await parseApiError(res, "Reset failed");
+            return fail(res.status, { error: message });
+        }
 
-	setAdminLang: async ({ request, cookies }) => {
-		const raw = await request.formData();
-		const lang = raw.get('lang');
-		if (lang === 'en-US' || lang === 'id-ID') setAdminLang(cookies, lang);
-		return { success: true };
-	}
+        await clearApiCache("settings");
+        return { success: true, message: t.resetDone };
+    },
+
+    setAdminLang: async ({ request, cookies }) => {
+        const raw = await request.formData();
+        const lang = raw.get("lang");
+        if (lang === "en-US" || lang === "id-ID") setAdminLang(cookies, lang);
+        return { success: true };
+    }
 };

@@ -1,7 +1,11 @@
 import { env } from "$env/dynamic/private";
 import { redis } from "./redis";
 
-export const getApiData = async <T>(endpoint: string, tag?: string): Promise<T | undefined> => {
+export const getApiData = async <T>(
+    endpoint: string,
+    tag?: string,
+    fetchFn: typeof fetch = fetch
+): Promise<T | undefined> => {
     const cacheKey = tag ? `${tag}:${endpoint}` : null;
 
     try {
@@ -12,7 +16,7 @@ export const getApiData = async <T>(endpoint: string, tag?: string): Promise<T |
             if (cached) return JSON.parse(cached) as T | undefined;
         }
 
-        const res = await fetch(`${apiUrl}/${endpoint}`, { method: "GET" });
+        const res = await fetchFn(`${apiUrl}/${endpoint}`, { method: "GET" });
 
         if (!res.ok) {
             if (res.status === 404 && cacheKey)
