@@ -1,4 +1,7 @@
 services:
+  refarwan-web-redis:
+    restart: 'no'
+
   refarwan-web-svelte:
     restart: 'no'
     image: refarwan-web-svelte:local
