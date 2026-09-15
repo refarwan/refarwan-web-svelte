@@ -15,10 +15,19 @@ export const enUS: AdminTranslation = {
 	},
 	shell: {
 		dashboard: 'Dashboard',
+		landingPage: 'Landing Page',
+		blog: 'Blog',
+		blogArticles: 'Articles',
+		blogCategories: 'Categories',
+		watch: 'Watch',
+		watchVideo: 'Video',
+		watchCategories: 'Categories',
+		project: 'Project',
 		myAccount: 'My Account',
 		changePassword: 'Change Password',
 		settings: 'Settings',
-		logout: 'Logout'
+		logout: 'Logout',
+		comingSoon: 'This section is coming soon.'
 	},
 	account: {
 		title: 'My Account',

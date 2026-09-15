@@ -13,10 +13,19 @@ export interface AdminTranslation {
 	};
 	shell: {
 		dashboard: string;
+		landingPage: string;
+		blog: string;
+		blogArticles: string;
+		blogCategories: string;
+		watch: string;
+		watchVideo: string;
+		watchCategories: string;
+		project: string;
 		myAccount: string;
 		changePassword: string;
 		settings: string;
 		logout: string;
+		comingSoon: string;
 	};
 	account: {
 		title: string;

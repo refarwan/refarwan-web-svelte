@@ -1,7 +1,11 @@
 <script lang="ts">
-	import KeyRound from 'lucide-svelte/icons/key-round';
+	import ChevronDown from 'lucide-svelte/icons/chevron-down';
+	import FolderGit2 from 'lucide-svelte/icons/folder-git-2';
+	import LayoutDashboard from 'lucide-svelte/icons/layout-dashboard';
+	import Monitor from 'lucide-svelte/icons/monitor';
+	import Newspaper from 'lucide-svelte/icons/newspaper';
 	import Settings from 'lucide-svelte/icons/settings';
-	import UserRound from 'lucide-svelte/icons/user-round';
+	import Video from 'lucide-svelte/icons/video';
 	import X from 'lucide-svelte/icons/x';
 
 	import { page } from '$app/state';
@@ -20,12 +24,46 @@
 	const homeHref = resolve('/admin-panel');
 
 	const navItems = $derived([
-		{ label: t.myAccount, href: resolve('/admin-panel/my-account'), icon: UserRound },
-		{ label: t.changePassword, href: resolve('/admin-panel/change-password'), icon: KeyRound },
-		{ label: t.settings, href: resolve('/admin-panel/settings'), icon: Settings }
+		{ label: t.dashboard, href: resolve('/admin-panel'), icon: LayoutDashboard, exact: true },
+		{
+			label: t.landingPage,
+			href: resolve('/admin-panel/landing-page'),
+			icon: Monitor,
+			exact: true
+		},
+		{
+			label: t.blog,
+			href: resolve('/admin-panel/blog'),
+			icon: Newspaper,
+			subItems: [
+				{ label: t.blogArticles, href: resolve('/admin-panel/blog'), exact: true },
+				{ label: t.blogCategories, href: resolve('/admin-panel/blog/categories'), exact: true }
+			]
+		},
+		{
+			label: t.watch,
+			href: resolve('/admin-panel/watch'),
+			icon: Video,
+			subItems: [
+				{ label: t.watchVideo, href: resolve('/admin-panel/watch/video'), exact: true },
+				{ label: t.watchCategories, href: resolve('/admin-panel/watch/category'), exact: true }
+			]
+		},
+		{ label: t.project, href: resolve('/admin-panel/project'), icon: FolderGit2, exact: true },
+		{ label: t.settings, href: resolve('/admin-panel/settings'), icon: Settings, exact: true }
 	]);
 
-	const isActive = (href: string): boolean => page.url.pathname === href;
+	let openMenus = $state<Record<string, boolean>>({});
+
+	const isMenuOpen = (href: string): boolean =>
+		openMenus[href] ?? page.url.pathname.startsWith(href);
+
+	const toggleMenu = (href: string): void => {
+		openMenus = { ...openMenus, [href]: !isMenuOpen(href) };
+	};
+
+	const isActive = (href: string, exact?: boolean): boolean =>
+		exact ? page.url.pathname === href : page.url.pathname.startsWith(href);
 </script>
 
 {#snippet logo()}
@@ -41,18 +79,60 @@
 {#snippet nav()}
 	<nav class="flex-1 space-y-1">
 		{#each navItems as item (item.href)}
-			<a
-				href={item.href}
-				onclick={() => (adminSidebar.open = false)}
-				class={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition-colors ${
-					isActive(item.href)
-						? 'bg-theme-600 font-semibold text-white shadow-xs'
-						: 'font-medium text-theme-100 hover:bg-white/10 hover:text-white'
-				}`}
-			>
-				<item.icon class="h-5 w-5 shrink-0" />
-				<span>{item.label}</span>
-			</a>
+			{#if item.subItems}
+				<button
+					type="button"
+					onclick={() => toggleMenu(item.href)}
+					aria-expanded={isMenuOpen(item.href)}
+					class={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-sm transition-colors ${
+						isActive(item.href)
+							? 'bg-theme-600 font-semibold text-white shadow-xs'
+							: 'font-medium text-theme-100 hover:bg-white/10 hover:text-white'
+					}`}
+				>
+					<span class="flex items-center gap-3">
+						<item.icon class="h-5 w-5 shrink-0" />
+						<span>{item.label}</span>
+					</span>
+					<ChevronDown
+						class={`h-4 w-4 text-theme-100/80 transition-transform duration-200 ${
+							isMenuOpen(item.href) ? 'rotate-180 text-white' : ''
+						}`}
+					/>
+				</button>
+
+				{#if isMenuOpen(item.href)}
+					<div class="flex flex-col space-y-0.5 pl-11">
+						{#each item.subItems as sub (sub.href)}
+							<a
+								href={sub.href}
+								onclick={() => (adminSidebar.open = false)}
+								class={`flex items-center gap-1.5 rounded-md px-2 py-1 text-[13px] transition-colors ${
+									isActive(sub.href, sub.exact)
+										? 'bg-white/15 font-semibold text-white'
+										: 'font-medium text-theme-100 hover:bg-white/10 hover:text-white'
+								}`}
+							>
+								<span class="text-xs leading-none select-none">&bull;</span>
+								<span>{sub.label}</span>
+							</a>
+						{/each}
+					</div>
+				{/if}
+			{:else}
+				<a
+					href={item.href}
+					onclick={() => (adminSidebar.open = false)}
+					class={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition-colors ${
+						isActive(item.href, item.exact)
+							? 'bg-theme-600 font-semibold text-white shadow-xs'
+							: 'font-medium text-theme-100 hover:bg-white/10 hover:text-white'
+					}`}
+				>
+					<item.icon class="h-5 w-5 shrink-0" />
+					<span>{item.label}</span>
+				</a>
+			{/if}
 		{/each}
 	</nav>
 {/snippet}

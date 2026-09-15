@@ -15,10 +15,19 @@ export const idID: AdminTranslation = {
 	},
 	shell: {
 		dashboard: 'Dasbor',
+		landingPage: 'Halaman Beranda',
+		blog: 'Blog',
+		blogArticles: 'Artikel',
+		blogCategories: 'Kategori',
+		watch: 'Watch',
+		watchVideo: 'Video',
+		watchCategories: 'Kategori',
+		project: 'Proyek',
 		myAccount: 'Akun Saya',
 		changePassword: 'Ubah Password',
 		settings: 'Pengaturan',
-		logout: 'Keluar'
+		logout: 'Keluar',
+		comingSoon: 'Bagian ini akan segera hadir.'
 	},
 	account: {
 		title: 'Akun Saya',

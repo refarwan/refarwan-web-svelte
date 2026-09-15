@@ -24,6 +24,13 @@
 
 	const title = $derived.by(() => {
 		const path = page.url.pathname;
+		if (path.startsWith('/admin-panel/blog/categories')) return t.blogCategories;
+		if (path.startsWith('/admin-panel/blog')) return t.blog;
+		if (path.startsWith('/admin-panel/watch/category')) return t.watchCategories;
+		if (path.startsWith('/admin-panel/watch/video')) return t.watchVideo;
+		if (path.startsWith('/admin-panel/watch')) return t.watch;
+		if (path.startsWith('/admin-panel/project')) return t.project;
+		if (path.startsWith('/admin-panel/landing-page')) return t.landingPage;
 		if (path.startsWith('/admin-panel/settings')) return t.settings;
 		if (path.startsWith('/admin-panel/change-password')) return t.changePassword;
 		if (path.startsWith('/admin-panel/my-account')) return t.myAccount;
