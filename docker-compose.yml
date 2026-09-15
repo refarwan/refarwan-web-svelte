@@ -10,6 +10,9 @@ services:
     environment:
       PORT: ${PORT:-3110}
       NODE_ENV: ${NODE_ENV:-production}
+      # adapter-node defaults to 512K, far below nginx's client_max_body_size —
+      # raise it so profile photo / favicon uploads aren't rejected with 413.
+      BODY_SIZE_LIMIT: ${BODY_SIZE_LIMIT:-1G}
     ports:
       - 127.0.0.1:${PORT:-3110}:${PORT:-3110}
     extra_hosts:
