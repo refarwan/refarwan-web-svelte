@@ -4,6 +4,8 @@
 
 	import { enhance } from '$app/forms';
 
+	import { popup } from '$lib/stores/popup.svelte';
+
 	let { data, form } = $props();
 	const t = $derived(data.t);
 
@@ -13,6 +15,14 @@
 	let showConfirm = $state(false);
 
 	const fieldError = (field: string): string | undefined => form?.fieldErrors?.[field];
+
+	$effect(() => {
+		if (form?.success && form.message) {
+			popup.success({ message: form.message });
+		} else if (form?.error) {
+			popup.error({ message: form.error });
+		}
+	});
 </script>
 
 <svelte:head>
@@ -21,15 +31,6 @@
 
 <div class="flex w-full justify-center pb-8">
 	<div class="w-full max-w-120 rounded-lg border border-gray-200 bg-white p-5 md:px-6 md:py-5">
-		{#if form?.error}
-			<p class="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{form.error}</p>
-		{/if}
-		{#if form?.success}
-			<p class="mb-4 rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-				{form.message}
-			</p>
-		{/if}
-
 		<form
 			method="POST"
 			use:enhance={() => {

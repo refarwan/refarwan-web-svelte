@@ -5,6 +5,9 @@
 
 	import { enhance } from '$app/forms';
 
+	import DropdownSelect from '$lib/components/admin/DropdownSelect.svelte';
+	import { popup } from '$lib/stores/popup.svelte';
+
 	import type { AreaItem } from '$lib/types';
 
 	let { data, form } = $props();
@@ -80,6 +83,46 @@
 		avatarPreview = null;
 		if (fileInput) fileInput.value = '';
 	};
+
+	const genderOptions = $derived([
+		{ value: 'male', label: t.male },
+		{ value: 'female', label: t.female }
+	]);
+
+	const birthplaceOptions = $derived(
+		data.allRegencies.map((item) => ({ value: item.code, label: item.name }))
+	);
+	const provinceOptions = $derived(
+		data.provinces.map((item) => ({ value: item.code, label: item.name }))
+	);
+	const regencyOptions = $derived(
+		regencies.map((item) => ({ value: item.code, label: item.name }))
+	);
+	const districtOptions = $derived(
+		districts.map((item) => ({ value: item.code, label: item.name }))
+	);
+	const villageOptions = $derived(villages.map((item) => ({ value: item.code, label: item.name })));
+
+	const onProvinceSelect = (code: string) => {
+		provinceCode = code;
+		void onProvinceChange();
+	};
+	const onRegencySelect = (code: string) => {
+		regencyCode = code;
+		void onRegencyChange();
+	};
+	const onDistrictSelect = (code: string) => {
+		districtCode = code;
+		void onDistrictChange();
+	};
+
+	$effect(() => {
+		if (form?.success && form.message) {
+			popup.success({ message: form.message });
+		} else if (form?.error) {
+			popup.error({ message: form.error });
+		}
+	});
 </script>
 
 <svelte:head>
@@ -87,13 +130,6 @@
 </svelte:head>
 
 <div class="mx-auto flex max-w-5xl flex-col gap-4 pb-8 md:gap-6">
-	{#if form?.error}
-		<p class="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{form.error}</p>
-	{/if}
-	{#if form?.success}
-		<p class="rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{form.message}</p>
-	{/if}
-
 	<form
 		method="POST"
 		enctype="multipart/form-data"
@@ -240,33 +276,30 @@
 					/>
 				</div>
 				<div>
-					<label class="block text-[13px] font-medium text-gray-700" for="birthplaceCode">
-						{t.birthplace}
-					</label>
-					<select
+					<input type="hidden" name="birthplaceCode" value={birthplaceCode} />
+					<DropdownSelect
 						id="birthplaceCode"
-						name="birthplaceCode"
-						bind:value={birthplaceCode}
-						class="mt-1 block h-10 w-full rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-900 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
-					>
-						<option value="">{t.select}</option>
-						{#each data.allRegencies as item (item.code)}
-							<option value={item.code}>{item.name}</option>
-						{/each}
-					</select>
+						label={t.birthplace}
+						value={birthplaceCode}
+						options={birthplaceOptions}
+						onChange={(code) => (birthplaceCode = code)}
+						placeholder={t.select}
+						searchable
+						searchPlaceholder={t.birthplacePlaceholder}
+						class="mt-1"
+					/>
 				</div>
 				<div>
-					<label class="block text-[13px] font-medium text-gray-700" for="gender">{t.gender}</label>
-					<select
+					<input type="hidden" name="gender" value={gender} />
+					<DropdownSelect
 						id="gender"
-						name="gender"
-						bind:value={gender}
-						class="mt-1 block h-10 w-full rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-900 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
-					>
-						<option value="">{t.selectGender}</option>
-						<option value="male">{t.male}</option>
-						<option value="female">{t.female}</option>
-					</select>
+						label={t.gender}
+						value={gender}
+						options={genderOptions}
+						onChange={(value) => (gender = value)}
+						placeholder={t.selectGender}
+						class="mt-1"
+					/>
 				</div>
 			</div>
 		</section>
@@ -292,74 +325,59 @@
 
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 					<div>
-						<label class="block text-[13px] font-medium text-gray-700" for="provinceCode">
-							{t.province}
-						</label>
-						<select
+						<input type="hidden" name="provinceCode" value={provinceCode} />
+						<DropdownSelect
 							id="provinceCode"
-							name="provinceCode"
-							bind:value={provinceCode}
-							onchange={onProvinceChange}
-							class="mt-1 block h-10 w-full rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-900 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
-						>
-							<option value="">{t.select}</option>
-							{#each data.provinces as item (item.code)}
-								<option value={item.code}>{item.name}</option>
-							{/each}
-						</select>
+							label={t.province}
+							value={provinceCode}
+							options={provinceOptions}
+							onChange={onProvinceSelect}
+							placeholder={t.select}
+							searchable
+							class="mt-1"
+						/>
 					</div>
 					<div>
-						<label class="block text-[13px] font-medium text-gray-700" for="regencyCode">
-							{t.regency}
-						</label>
-						<select
+						<input type="hidden" name="regencyCode" value={regencyCode} />
+						<DropdownSelect
 							id="regencyCode"
-							name="regencyCode"
-							bind:value={regencyCode}
-							onchange={onRegencyChange}
+							label={t.regency}
+							value={regencyCode}
+							options={regencyOptions}
+							onChange={onRegencySelect}
+							placeholder={provinceCode ? t.select : t.selectProvinceFirst}
 							disabled={!provinceCode}
-							class="mt-1 block h-10 w-full rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-900 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none disabled:bg-gray-50 disabled:text-gray-500"
-						>
-							<option value="">{provinceCode ? t.select : t.selectProvinceFirst}</option>
-							{#each regencies as item (item.code)}
-								<option value={item.code}>{item.name}</option>
-							{/each}
-						</select>
+							searchable
+							class="mt-1"
+						/>
 					</div>
 					<div>
-						<label class="block text-[13px] font-medium text-gray-700" for="districtCode">
-							{t.district}
-						</label>
-						<select
+						<input type="hidden" name="districtCode" value={districtCode} />
+						<DropdownSelect
 							id="districtCode"
-							name="districtCode"
-							bind:value={districtCode}
-							onchange={onDistrictChange}
+							label={t.district}
+							value={districtCode}
+							options={districtOptions}
+							onChange={onDistrictSelect}
+							placeholder={regencyCode ? t.select : t.selectRegencyFirst}
 							disabled={!regencyCode}
-							class="mt-1 block h-10 w-full rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-900 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none disabled:bg-gray-50 disabled:text-gray-500"
-						>
-							<option value="">{regencyCode ? t.select : t.selectRegencyFirst}</option>
-							{#each districts as item (item.code)}
-								<option value={item.code}>{item.name}</option>
-							{/each}
-						</select>
+							searchable
+							class="mt-1"
+						/>
 					</div>
 					<div>
-						<label class="block text-[13px] font-medium text-gray-700" for="villageCode">
-							{t.village}
-						</label>
-						<select
+						<input type="hidden" name="villageCode" value={villageCode} />
+						<DropdownSelect
 							id="villageCode"
-							name="villageCode"
-							bind:value={villageCode}
+							label={t.village}
+							value={villageCode}
+							options={villageOptions}
+							onChange={(code) => (villageCode = code)}
+							placeholder={districtCode ? t.select : t.selectDistrictFirst}
 							disabled={!districtCode}
-							class="mt-1 block h-10 w-full rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-900 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none disabled:bg-gray-50 disabled:text-gray-500"
-						>
-							<option value="">{districtCode ? t.select : t.selectDistrictFirst}</option>
-							{#each villages as item (item.code)}
-								<option value={item.code}>{item.name}</option>
-							{/each}
-						</select>
+							searchable
+							class="mt-1"
+						/>
 					</div>
 				</div>
 			</div>
