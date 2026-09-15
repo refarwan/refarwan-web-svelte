@@ -11,3 +11,10 @@ export type {
 	VideoCategoryItem,
 	VideoCategoryTranslationItem
 } from './video-category';
+export type {
+	VideoDetail,
+	VideoItem,
+	VideoStatus,
+	VideoTranslationItem,
+	VideoUploader
+} from './video';
