@@ -1,0 +1,9 @@
+services:
+  refarwan-web-svelte:
+    restart: 'no'
+    image: refarwan-web-svelte:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        API_URL: ${API_URL}

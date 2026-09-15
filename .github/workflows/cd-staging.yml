@@ -1,0 +1,76 @@
+name: CD Staging
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository }}:staging
+          build-args: |
+            API_URL=${{ secrets.API_URL_STAGING || 'https://api-staging2.refarwan.com' }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy using SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_STAGING }}
+          username: ${{ secrets.USERNAME_STAGING }}
+          key: ${{ secrets.PRIVATE_KEY_STAGING }}
+          port: ${{ secrets.PORT_STAGING || 22 }}
+          script: |
+            set -e
+            cd ${{ secrets.PATH_STAGING }}
+
+            # Pull git terbaru dari branch staging
+            git fetch origin
+            git reset --hard origin/staging
+
+            # 1. Login ke GHCR di VPS
+            echo ${{ secrets.CR_PAT }} | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            # 2. Pull image versi staging dari Github Actions (gunakan inline env var)
+            sudo IMAGE_VERSION=staging docker compose pull refarwan-web-svelte
+
+            # 3. Jalankan container
+            sudo IMAGE_VERSION=staging docker compose up -d refarwan-web-svelte
+
+            # 4. Cleanup background
+            (sudo docker image prune -a -f) > /dev/null 2>&1 &
+            echo "Deployment Staging selesai!"
+
+      - name: Hapus image lama di GHCR
+        uses: vlaurin/action-ghcr-prune@v0.6.0
+        with:
+          token: ${{ secrets.CR_PAT }}
+          user: ${{ github.actor }}
+          container: refarwan-web-svelte
+          dry-run: false
+          keep-last: 0
+          prune-untagged: true

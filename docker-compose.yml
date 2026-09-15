@@ -1,0 +1,17 @@
+services:
+  refarwan-web-svelte:
+    container_name: refarwan-web-svelte
+    image: ghcr.io/refarwan/refarwan-web-svelte:${IMAGE_VERSION:-staging}
+
+    # Runtime env dibaca dari file .env di masing-masing server (staging / production)
+    env_file:
+      - path: ${ENV_FILE:-.env}
+        required: false
+    environment:
+      PORT: ${PORT:-3110}
+      NODE_ENV: ${NODE_ENV:-production}
+    ports:
+      - 127.0.0.1:${PORT:-3110}:${PORT:-3110}
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    restart: always
