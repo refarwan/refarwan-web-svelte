@@ -148,5 +148,43 @@ export const enUS: AdminTranslation = {
 		subtext:
 			'Sorry, the page you are looking for in the admin panel is unavailable or has been moved.',
 		backToDashboard: 'Back to Dashboard'
+	},
+	watchCategory: {
+		pageTitle: 'Video Categories',
+		searchPlaceholder: 'Search categories...',
+		addCategory: '+ Add Category',
+		tableName: 'Category Name',
+		tableSlug: 'Slug',
+		tableVideos: 'Total Videos',
+		tableAction: 'Action',
+		videosSuffix: 'videos',
+		edit: 'Edit',
+		delete: 'Delete',
+		empty: 'No categories yet. Add your first video category.',
+		emptySearch: 'No categories match your search.',
+		addModalTitle: 'Add Video Category',
+		editModalTitle: 'Edit Video Category',
+		nameLabel: 'Category Name',
+		namePlaceholder: 'e.g. Tutorial',
+		slugLabel: 'Slug',
+		slugHelper: 'Used in the video category URL. Only editable in English.',
+		slugCheckingLabel: 'Checking availability...',
+		slugAvailableLabel: 'Slug is available',
+		slugTakenLabel: 'Slug is already taken.',
+		useSuggestion: 'Use suggested slug',
+		saveCategory: 'Save Category',
+		saveChanges: 'Save Changes',
+		saving: 'Saving...',
+		nameRequired: 'Enter a category name in at least one language',
+		deleteConfirmTitle: 'Delete Category',
+		deleteConfirmMessage:
+			'Are you sure you want to delete this category? Videos in this category will become uncategorized.',
+		deleteConfirmButton: 'Delete',
+		created: 'Video category created successfully',
+		updated: 'Video category updated successfully',
+		deleted: 'Video category deleted successfully',
+		prev: 'Previous',
+		next: 'Next',
+		pageOf: 'Page {current} of {total}'
 	}
 };

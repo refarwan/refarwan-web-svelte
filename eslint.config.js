@@ -48,5 +48,13 @@ export default defineConfig(
 		rules: {
 			'svelte/no-navigation-without-resolve': 'off'
 		}
+	},
+	{
+		// Pagination/search links append a dynamic query string onto a resolve()'d base
+		// path, so resolve() can't type-check the final href/goto() target here.
+		files: ['src/routes/admin-panel/(protected)/watch/category/+page.svelte'],
+		rules: {
+			'svelte/no-navigation-without-resolve': 'off'
+		}
 	}
 );
