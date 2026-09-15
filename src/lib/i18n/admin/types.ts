@@ -107,6 +107,8 @@ export interface AdminTranslation {
 		done: string;
 		adminLanguageTitle: string;
 		adminLanguageDescription: string;
+		displayLanguage: string;
+		languageHelper: string;
 		autoSaved: string;
 		save: string;
 		saving: string;

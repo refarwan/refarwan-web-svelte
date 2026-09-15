@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { untrack } from 'svelte';
+	import { tick, untrack } from 'svelte';
 
 	import { beforeNavigate } from '$app/navigation';
 	import { enhance } from '$app/forms';
@@ -33,6 +33,7 @@
 
 	let adminLang = $state(data.adminLang);
 	let adminLangForm: HTMLFormElement | undefined = $state();
+	let adminLangPending = $state(false);
 
 	let snapshot = $state(
 		untrack(() => ({
@@ -65,8 +66,8 @@
 	);
 
 	const adminLangOptions = [
-		{ value: 'en-US', label: 'English' },
-		{ value: 'id-ID', label: 'Indonesia' }
+		{ value: 'en-US', label: 'English', icon: '🇬🇧' },
+		{ value: 'id-ID', label: 'Indonesia', icon: '🇮🇩' }
 	];
 
 	const onFaviconChange = (event: Event) => {
@@ -92,9 +93,14 @@
 		otherContentLanguages = otherContentLanguages.filter((code) => code !== locale);
 	};
 
-	const onAdminLangChange = (lang: string) => {
+	const onAdminLangChange = async (lang: string) => {
 		if (lang !== 'en-US' && lang !== 'id-ID') return;
 		adminLang = lang;
+		adminLangPending = true;
+		// The hidden input's value is bound reactively, so wait for Svelte to flush
+		// the DOM update before reading it via requestSubmit(), otherwise the form
+		// would submit the previous (stale) language value.
+		await tick();
 		adminLangForm?.requestSubmit();
 	};
 
@@ -358,21 +364,40 @@
 
 	<!-- Admin Panel Language (auto-saved, independent of the form above) -->
 	<section class="rounded-lg border border-gray-200 bg-white p-5 md:px-6 md:py-5">
-		<div class="flex items-center justify-between">
+		<div class="flex items-start justify-between gap-4">
 			<div>
 				<h2 class="text-base font-semibold text-gray-900">{t.adminLanguageTitle}</h2>
-				<p class="text-[13px] text-gray-500">{t.adminLanguageDescription}</p>
+				<p class="mt-1 text-xs text-gray-500">{t.adminLanguageDescription}</p>
 			</div>
-			<span class="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
+			<span
+				class="inline-flex shrink-0 items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-medium text-emerald-700"
+			>
 				{t.autoSaved}
 			</span>
 		</div>
 		<hr class="my-4 border-gray-200" />
 
-		<form method="POST" action="?/setAdminLang" bind:this={adminLangForm} use:enhance>
+		<form
+			method="POST"
+			action="?/setAdminLang"
+			bind:this={adminLangForm}
+			use:enhance={() => {
+				return async ({ update }) => {
+					await update();
+					adminLangPending = false;
+				};
+			}}
+		>
 			<input type="hidden" name="lang" value={adminLang} />
 			<div class="max-w-xs">
-				<DropdownSelect value={adminLang} options={adminLangOptions} onChange={onAdminLangChange} />
+				<DropdownSelect
+					label={t.displayLanguage}
+					value={adminLang}
+					options={adminLangOptions}
+					onChange={onAdminLangChange}
+					helperText={t.languageHelper}
+					disabled={adminLangPending}
+				/>
 			</div>
 		</form>
 	</section>
