@@ -4,7 +4,8 @@ import { redis } from "./redis";
 export const getApiData = async <T>(
     endpoint: string,
     tag?: string,
-    fetchFn: typeof fetch = fetch
+    fetchFn: typeof fetch = fetch,
+    headers?: HeadersInit
 ): Promise<T | undefined> => {
     const cacheKey = tag ? `${tag}:${endpoint}` : null;
 
@@ -16,7 +17,7 @@ export const getApiData = async <T>(
             if (cached) return JSON.parse(cached) as T | undefined;
         }
 
-        const res = await fetchFn(`${apiUrl}/${endpoint}`, { method: "GET" });
+        const res = await fetchFn(`${apiUrl}/${endpoint}`, { method: "GET", headers });
 
         if (!res.ok) {
             if (res.status === 404 && cacheKey)
