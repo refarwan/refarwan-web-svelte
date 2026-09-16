@@ -65,14 +65,12 @@
                 <div
                     class="flex flex-col gap-3 px-5 py-3.5 md:grid md:grid-cols-[72px_1fr_160px_120px_90px_110px_170px] md:items-center md:gap-4"
                 >
-                    <div
-                        class="grid h-11 w-18 shrink-0 place-content-center overflow-hidden rounded-md border bg-gray-950"
-                    >
+                    <div class="h-11 w-18 shrink-0 overflow-hidden rounded-md border bg-gray-950">
                         {#if item.thumbnail}
                             <img
                                 src={item.thumbnail.small}
                                 alt={item.title ?? ""}
-                                class="h-auto max-h-full w-auto max-w-full"
+                                class="h-full w-full object-contain"
                             />
                         {/if}
                     </div>
