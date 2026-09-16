@@ -1,7 +1,7 @@
 <script lang="ts">
     interface Props {
-        logoUrl: string;
-        title: string;
+        logoUrl?: string;
+        title?: string;
         watchUrl?: string;
     }
 
@@ -9,11 +9,15 @@
 </script>
 
 <div
-    class="absolute top-0 right-0 left-0 z-10 flex items-center justify-between gap-3 bg-gradient-to-b from-black/70 to-transparent p-3 sm:p-4"
+    class="absolute top-0 right-0 left-0 z-10 flex items-center justify-between gap-3 bg-linear-to-b from-black/70 to-transparent p-3 sm:p-4"
 >
     <div class="flex min-w-0 items-center gap-2.5">
-        <img src={logoUrl} alt="" class="h-6 w-auto shrink-0 object-contain sm:h-7" />
-        <span class="truncate text-sm font-medium text-white sm:text-base">{title}</span>
+        {#if logoUrl}
+            <img src={logoUrl} alt="" class="h-6 w-auto shrink-0 object-contain sm:h-7" />
+        {/if}
+        {#if title}
+            <span class="truncate text-sm font-medium text-white sm:text-base">{title}</span>
+        {/if}
     </div>
     {#if watchUrl}
         <a

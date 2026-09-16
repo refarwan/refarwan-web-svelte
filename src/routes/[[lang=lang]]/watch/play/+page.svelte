@@ -63,7 +63,7 @@
 </script>
 
 <svelte:head>
-    <title>{video.title ?? t.videoNotFound}</title>
+    <title>{video.title ?? t.videoNotFound} |</title>
     {#if video.description}
         <meta name="description" content={video.description} />
     {/if}
@@ -78,8 +78,6 @@
                 >
                     <VideoPlayer
                         source={playSource}
-                        logoUrl={data.logoUrl}
-                        title={video.title ?? ""}
                         on:play={() => (isPlaying = true)}
                         on:pause={() => (isPlaying = false)}
                         on:ended={() => (isPlaying = false)}

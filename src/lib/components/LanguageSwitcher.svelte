@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { resolve } from "$app/paths";
+    import { page } from "$app/state";
 
     import type { ContentLanguage } from "$lib/types";
 
@@ -18,6 +18,21 @@
         contentLanguages.find((opt) => opt.code === activeLanguage) ??
             contentLanguages[0] ?? { code: "en", locale: "en-US", name: "English", flag: "🇺🇸" }
     );
+
+    // The current locale prefix (if any) is exposed as the [[lang]] route param, so
+    // stripping it off the pathname gives the path relative to the language segment.
+    const pathWithoutLang = $derived.by(() => {
+        const currentLang = page.params.lang;
+        const pathname = page.url.pathname;
+        if (!currentLang) return pathname;
+        return pathname.slice(`/${currentLang}`.length) || "/";
+    });
+
+    const hrefFor = (option: ContentLanguage): string => {
+        const rest = pathWithoutLang === "/" ? "" : pathWithoutLang;
+        const base = option.code === "en" ? rest || "/" : `/${option.locale}${rest}`;
+        return `${base}${page.url.search}`;
+    };
 
     $effect(() => {
         if (!isOpen) return;
@@ -66,10 +81,11 @@
             >
                 {#each contentLanguages as option (option.code)}
                     {@const isSelected = option.code === currentOption.code}
+                    <!-- hrefFor swaps the locale segment of the *current* URL, whatever route
+                        it is, so the target can't be a compile-time resolve() call. -->
+                    <!-- eslint-disable svelte/no-navigation-without-resolve -->
                     <a
-                        href={resolve("/[[lang=lang]]", {
-                            lang: option.code === "en" ? undefined : option.locale
-                        })}
+                        href={hrefFor(option)}
                         role="option"
                         aria-selected={isSelected}
                         onclick={() => (isOpen = false)}
@@ -82,6 +98,7 @@
                         <span class="text-[12px] leading-none">{option.flag}</span>
                         <span class="leading-none whitespace-nowrap">{option.name}</span>
                     </a>
+                    <!-- eslint-enable svelte/no-navigation-without-resolve -->
                 {/each}
             </div>
         {/if}

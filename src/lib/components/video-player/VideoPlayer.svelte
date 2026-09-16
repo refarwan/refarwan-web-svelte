@@ -10,8 +10,8 @@
 
     interface Props {
         source: string;
-        logoUrl: string;
-        title: string;
+        logoUrl?: string;
+        title?: string;
         watchUrl?: string;
     }
 
