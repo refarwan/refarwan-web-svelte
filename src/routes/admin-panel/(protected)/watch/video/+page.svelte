@@ -1,13 +1,11 @@
 <script lang="ts">
+    import { PlusIcon, SearchIcon } from "lucide-svelte/icons";
     import { tick, untrack } from "svelte";
     import { SvelteURLSearchParams } from "svelte/reactivity";
 
     import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
     import { enhance } from "$app/forms";
-
-    import Plus from "lucide-svelte/icons/plus";
-    import Search from "lucide-svelte/icons/search";
 
     import CategoryFilterDropdown from "./_components/CategoryFilterDropdown.svelte";
     import Pagination from "$lib/components/Pagination.svelte";
@@ -153,7 +151,9 @@
     >
         <div class="flex flex-wrap items-center gap-2.5">
             <div class="relative flex-1 sm:w-72 md:w-80">
-                <Search class="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <SearchIcon
+                    class="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-gray-400"
+                />
                 <input
                     type="text"
                     bind:value={searchInput}
@@ -177,7 +177,7 @@
                 href={resolve("/admin-panel/watch/create")}
                 class="inline-flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg bg-theme-600 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition-colors hover:bg-theme-700"
             >
-                <Plus class="h-4 w-4" />
+                <PlusIcon class="h-4 w-4" />
                 <span>{t.addVideo}</span>
             </a>
         </div>

@@ -1,7 +1,5 @@
 <script lang="ts">
-    import Check from "lucide-svelte/icons/check";
-    import Copy from "lucide-svelte/icons/copy";
-
+    import { CheckIcon, CopyIcon } from "lucide-svelte/icons";
     interface Props {
         t: Record<string, string>;
         embedUrl: string;
@@ -46,10 +44,10 @@
                 class="flex h-9 shrink-0 items-center gap-1.5 rounded-md border border-gray-200 px-3 text-xs font-medium text-gray-600 hover:bg-gray-50"
             >
                 {#if copiedField === "url"}
-                    <Check class="h-3.5 w-3.5 text-emerald-600" />
+                    <CheckIcon class="h-3.5 w-3.5 text-emerald-600" />
                     {t.copiedLabel}
                 {:else}
-                    <Copy class="h-3.5 w-3.5" />
+                    <CopyIcon class="h-3.5 w-3.5" />
                     {t.copyLabel}
                 {/if}
             </button>
@@ -71,10 +69,10 @@
                 class="flex h-9 shrink-0 items-center gap-1.5 rounded-md border border-gray-200 px-3 text-xs font-medium text-gray-600 hover:bg-gray-50"
             >
                 {#if copiedField === "code"}
-                    <Check class="h-3.5 w-3.5 text-emerald-600" />
+                    <CheckIcon class="h-3.5 w-3.5 text-emerald-600" />
                     {t.copiedLabel}
                 {:else}
-                    <Copy class="h-3.5 w-3.5" />
+                    <CopyIcon class="h-3.5 w-3.5" />
                     {t.copyLabel}
                 {/if}
             </button>

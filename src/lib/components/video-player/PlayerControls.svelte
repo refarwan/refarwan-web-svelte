@@ -1,11 +1,13 @@
 <script lang="ts">
-    import Maximize from "lucide-svelte/icons/maximize";
-    import Minimize from "lucide-svelte/icons/minimize";
-    import Pause from "lucide-svelte/icons/pause";
-    import Play from "lucide-svelte/icons/play";
-    import Volume1 from "lucide-svelte/icons/volume-1";
-    import Volume2 from "lucide-svelte/icons/volume-2";
-    import VolumeX from "lucide-svelte/icons/volume-x";
+    import {
+        MaximizeIcon,
+        MinimizeIcon,
+        PauseIcon,
+        PlayIcon,
+        Volume1Icon,
+        Volume2Icon,
+        VolumeXIcon
+    } from "lucide-svelte/icons";
 
     import PlayerSettingsMenu from "./PlayerSettingsMenu.svelte";
     import { formatTime } from "./format-time";
@@ -46,7 +48,7 @@
         duration > 0 ? Math.min(100, (currentTime / duration) * 100) : 0
     );
     const VolumeIcon = $derived(
-        isMuted || volume === 0 ? VolumeX : volume < 0.5 ? Volume1 : Volume2
+        isMuted || volume === 0 ? VolumeXIcon : volume < 0.5 ? Volume1Icon : Volume2Icon
     );
 
     let trackEl: HTMLDivElement | undefined = $state();
@@ -72,7 +74,7 @@
 </script>
 
 <div
-    class="absolute right-0 bottom-0 left-0 z-10 flex flex-col gap-1.5 bg-gradient-to-t from-black/80 to-transparent px-3 pt-8 pb-2.5 sm:px-4"
+    class="absolute right-0 bottom-0 left-0 z-10 flex flex-col gap-1.5 bg-linear-to-t from-black/80 to-transparent px-3 pt-8 pb-2.5 sm:px-4"
 >
     <div
         bind:this={trackEl}
@@ -106,9 +108,9 @@
             aria-label={isPlaying ? "Pause" : "Play"}
         >
             {#if isPlaying}
-                <Pause class="h-4.5 w-4.5" fill="currentColor" />
+                <PauseIcon class="h-4.5 w-4.5" fill="currentColor" />
             {:else}
-                <Play class="h-4.5 w-4.5" fill="currentColor" />
+                <PlayIcon class="h-4.5 w-4.5" fill="currentColor" />
             {/if}
         </button>
 
@@ -148,9 +150,9 @@
             aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
         >
             {#if isFullscreen}
-                <Minimize class="h-4.5 w-4.5" />
+                <MinimizeIcon class="h-4.5 w-4.5" />
             {:else}
-                <Maximize class="h-4.5 w-4.5" />
+                <MaximizeIcon class="h-4.5 w-4.5" />
             {/if}
         </button>
     </div>

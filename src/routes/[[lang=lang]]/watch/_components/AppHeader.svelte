@@ -1,6 +1,5 @@
 <script lang="ts">
-    import Search from "lucide-svelte/icons/search";
-
+    import { SearchIcon } from "lucide-svelte/icons";
     import { resolve } from "$app/paths";
 
     import LanguageSwitcher from "$lib/components/LanguageSwitcher.svelte";
@@ -60,7 +59,7 @@
                 aria-expanded={searchOverlay.open}
                 class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 md:hidden"
             >
-                <Search class="h-5 w-5" />
+                <SearchIcon class="h-5 w-5" />
             </button>
 
             <LanguageSwitcher {language} {contentLanguages} />

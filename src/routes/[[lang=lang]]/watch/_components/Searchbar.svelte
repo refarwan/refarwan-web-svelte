@@ -1,6 +1,5 @@
 <script lang="ts">
-    import ArrowLeft from "lucide-svelte/icons/arrow-left";
-    import Search from "lucide-svelte/icons/search";
+    import { ArrowLeftIcon, SearchIcon } from "lucide-svelte/icons";
     import { SvelteURLSearchParams } from "svelte/reactivity";
 
     import { goto } from "$app/navigation";
@@ -60,7 +59,7 @@
             aria-label={closeLabel}
             class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 md:hidden"
         >
-            <ArrowLeft class="h-5 w-5" />
+            <ArrowLeftIcon class="h-5 w-5" />
         </button>
     {/if}
 
@@ -68,7 +67,7 @@
         onsubmit={handleSubmit}
         class="pointer-events-auto flex h-10 w-full flex-1 items-center gap-2 rounded-full border-[1.5px] border-gray-200 bg-white px-3 py-2 transition-all focus-within:border-theme-500 focus-within:ring-1 focus-within:ring-theme-500 md:w-full md:max-w-62.5 md:flex-initial lg:max-w-97.5"
     >
-        <Search class="h-4 w-4 shrink-0 text-gray-400" />
+        <SearchIcon class="h-4 w-4 shrink-0 text-gray-400" />
         <input
             bind:this={inputEl}
             type="search"

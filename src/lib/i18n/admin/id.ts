@@ -116,7 +116,9 @@ export const idID: AdminTranslation = {
         save: "Simpan Pengaturan",
         saving: "Menyimpan...",
         noChanges: "Tidak ada perubahan untuk disimpan",
-        updated: "Pengaturan berhasil diperbarui"
+        updated: "Pengaturan berhasil diperbarui",
+        loadFailed: "Gagal memuat pengaturan",
+        resetFailed: "Gagal mereset tema"
     },
     common: {
         cancel: "Batal",

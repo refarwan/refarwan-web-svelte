@@ -1,6 +1,5 @@
 <script lang="ts">
-    import Menu from "lucide-svelte/icons/menu";
-
+    import { MenuIcon } from "lucide-svelte/icons";
     import { resolve } from "$app/paths";
 
     import { mobileMenu } from "$lib/stores/mobile-menu.svelte";
@@ -49,7 +48,7 @@
                 aria-expanded={mobileMenu.open}
                 class="flex h-10 w-10 items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 md:hidden"
             >
-                <Menu class="h-6 w-6" />
+                <MenuIcon class="h-6 w-6" />
             </button>
         </div>
     </div>

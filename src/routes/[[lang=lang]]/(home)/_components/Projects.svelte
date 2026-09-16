@@ -1,6 +1,5 @@
 <script lang="ts">
-    import ArrowRight from "lucide-svelte/icons/arrow-right";
-
+    import { ArrowRightIcon } from "lucide-svelte/icons";
     import type { ProjectsTranslation } from "$lib/i18n/home";
 
     interface Props {
@@ -66,7 +65,7 @@
                             class="group mt-6 inline-flex items-center gap-2 text-base font-semibold text-theme-600 transition-colors hover:text-theme-700"
                         >
                             <span>{project.visitWebsite}</span>
-                            <ArrowRight
+                            <ArrowRightIcon
                                 class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
                             />
                         </a>

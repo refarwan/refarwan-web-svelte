@@ -114,6 +114,8 @@ export interface AdminTranslation {
         saving: string;
         noChanges: string;
         updated: string;
+        loadFailed: string;
+        resetFailed: string;
     };
     common: {
         cancel: string;

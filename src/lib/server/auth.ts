@@ -1,5 +1,3 @@
-import { redirect } from "@sveltejs/kit";
-
 import { env } from "$env/dynamic/private";
 
 import type { Cookies } from "@sveltejs/kit";
@@ -41,12 +39,6 @@ const decodeJwtExpiry = (token: string): Date | null => {
     return claims ? new Date(claims.exp * 1000) : null;
 };
 
-const extractRefreshTokenValue = (setCookieHeader: string | null): string | null => {
-    if (!setCookieHeader) return null;
-    const match = /refreshToken=([^;]+)/.exec(setCookieHeader);
-    return match ? decodeURIComponent(match[1]) : null;
-};
-
 const setAccessTokenCookie = (
     cookies: Cookies,
     accessToken: string,
@@ -58,32 +50,6 @@ const setAccessTokenCookie = (
         sameSite: "lax",
         ...(expires ? { expires } : { maxAge: SESSION_MAX_AGE })
     });
-};
-
-/** Stores the tokens issued by a successful POST /auth/login call. */
-export const startSession = (
-    cookies: Cookies,
-    accessToken: string,
-    loginSetCookieHeader: string | null
-): void => {
-    const refreshToken = extractRefreshTokenValue(loginSetCookieHeader);
-    const expires = refreshToken ? decodeJwtExpiry(refreshToken) : null;
-
-    setAccessTokenCookie(cookies, accessToken, expires);
-
-    if (refreshToken) {
-        cookies.set(REFRESH_TOKEN_COOKIE, refreshToken, {
-            path: "/",
-            httpOnly: true,
-            sameSite: "lax",
-            ...(expires ? { expires } : { maxAge: SESSION_MAX_AGE })
-        });
-    }
-};
-
-export const endSession = (cookies: Cookies): void => {
-    cookies.delete(ACCESS_TOKEN_COOKIE, { path: "/" });
-    cookies.delete(REFRESH_TOKEN_COOKIE, { path: "/" });
 };
 
 const refreshAccessToken = async (
@@ -117,34 +83,6 @@ export const getAccessToken = async (
     if (claims && !isExpired(claims)) return existing as string;
 
     return refreshAccessToken(cookies, fetchFn);
-};
-
-/** Same as getAccessToken, but redirects to the login page instead of returning null. */
-export const requireAccessToken = async (
-    cookies: Cookies,
-    fetchFn: typeof fetch
-): Promise<string> => {
-    const token = await getAccessToken(cookies, fetchFn);
-    if (!token) redirect(303, "/admin-panel/login");
-    return token;
-};
-
-/** Revokes the session on the API (best-effort) and clears the local session cookies. */
-export const logout = async (cookies: Cookies, fetchFn: typeof fetch): Promise<void> => {
-    const accessToken = cookies.get(ACCESS_TOKEN_COOKIE);
-    const refreshToken = cookies.get(REFRESH_TOKEN_COOKIE);
-
-    if (accessToken) {
-        await fetchFn(`${apiUrl()}/auth/logout`, {
-            method: "DELETE",
-            headers: {
-                authorization: `Bearer ${accessToken}`,
-                ...(refreshToken ? { cookie: `refreshToken=${refreshToken}` } : {})
-            }
-        }).catch(() => undefined);
-    }
-
-    endSession(cookies);
 };
 
 export { refreshAccessToken };

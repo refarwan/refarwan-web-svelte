@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { CircleCheckBigIcon, CircleHelpIcon, CircleXIcon } from "lucide-svelte/icons";
+    import { CircleCheckBigIcon, CircleQuestionMark, CircleXIcon } from "lucide-svelte/icons";
 
     import { popup } from "$lib/stores/popup.svelte";
 </script>
@@ -29,7 +29,9 @@
                     </div>
                 {:else if item.type === "confirm"}
                     <div class="flex items-center gap-3">
-                        <CircleHelpIcon class="animate-popup-icon h-8 w-8 shrink-0 text-sky-600" />
+                        <CircleQuestionMark
+                            class="animate-popup-icon h-8 w-8 shrink-0 text-sky-600"
+                        />
                         <h3 class="text-lg font-bold text-gray-900">
                             {item.title ?? "Confirm Action"}
                         </h3>

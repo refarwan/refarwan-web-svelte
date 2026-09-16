@@ -1,8 +1,5 @@
 <script lang="ts">
-    import Eye from "lucide-svelte/icons/eye";
-    import ExternalLink from "lucide-svelte/icons/external-link";
-    import X from "lucide-svelte/icons/x";
-
+    import { ExternalLinkIcon, EyeIcon, XIcon } from "lucide-svelte/icons";
     import { page } from "$app/state";
     import { resolve } from "$app/paths";
 
@@ -64,7 +61,7 @@
             class="cursor-pointer rounded-lg p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
             title={t.closeLabel}
         >
-            <X class="h-5 w-5" />
+            <XIcon class="h-5 w-5" />
         </button>
     </div>
 
@@ -77,7 +74,7 @@
             rel="noopener noreferrer"
             class="inline-flex items-center gap-1.5 text-xs font-medium text-theme-600 hover:underline"
         >
-            <ExternalLink class="h-3.5 w-3.5" />
+            <ExternalLinkIcon class="h-3.5 w-3.5" />
             {t.watchOnSiteLabel}
         </a>
 
@@ -89,7 +86,7 @@
             </span>
             <span>{video.category ?? t.noCategory}</span>
             <span class="flex items-center gap-1">
-                <Eye class="h-3.5 w-3.5" />
+                <EyeIcon class="h-3.5 w-3.5" />
                 {video.viewsCount}
                 {t.viewsSuffix}
             </span>

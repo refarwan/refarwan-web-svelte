@@ -1,7 +1,5 @@
 <script lang="ts">
-    import Check from "lucide-svelte/icons/check";
-    import Share2 from "lucide-svelte/icons/share-2";
-
+    import { CheckIcon, Share2Icon } from "lucide-svelte/icons";
     import { formatTimeAgo, formatViews } from "$lib/utils/watch-format";
 
     import type { WatchTranslation } from "$lib/i18n/watch";
@@ -54,10 +52,10 @@
             class="flex cursor-pointer items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-50"
         >
             {#if copied}
-                <Check class="h-3.5 w-3.5 text-emerald-600" />
+                <CheckIcon class="h-3.5 w-3.5 text-emerald-600" />
                 {t.copied}
             {:else}
-                <Share2 class="h-3.5 w-3.5" />
+                <Share2Icon class="h-3.5 w-3.5" />
                 {t.share}
             {/if}
         </button>

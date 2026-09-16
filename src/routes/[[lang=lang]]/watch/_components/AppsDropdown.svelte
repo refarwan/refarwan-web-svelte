@@ -1,14 +1,15 @@
 <script lang="ts">
-    import Clapperboard from "lucide-svelte/icons/clapperboard";
-    import FolderGit2 from "lucide-svelte/icons/folder-git-2";
-    import House from "lucide-svelte/icons/house";
-    import Newspaper from "lucide-svelte/icons/newspaper";
-
+    import {
+        ClapperboardIcon,
+        FolderGit2Icon,
+        HouseIcon,
+        NewspaperIcon
+    } from "lucide-svelte/icons";
     interface AppItem {
         name: "home" | "project" | "watch" | "blog";
         href: string;
         label: string;
-        icon: typeof House;
+        icon: typeof HouseIcon;
     }
 
     interface Props {
@@ -42,10 +43,10 @@
     let dropdownRef: HTMLDivElement | undefined = $state();
 
     const apps: AppItem[] = $derived([
-        { name: "home", href: homeHref, label: homeLabel, icon: House },
-        { name: "project", href: projectHref, label: projectLabel, icon: FolderGit2 },
-        { name: "watch", href: watchHref, label: watchLabel, icon: Clapperboard },
-        { name: "blog", href: blogHref, label: blogLabel, icon: Newspaper }
+        { name: "home", href: homeHref, label: homeLabel, icon: HouseIcon },
+        { name: "project", href: projectHref, label: projectLabel, icon: FolderGit2Icon },
+        { name: "watch", href: watchHref, label: watchLabel, icon: ClapperboardIcon },
+        { name: "blog", href: blogHref, label: blogLabel, icon: NewspaperIcon }
     ]);
 
     $effect(() => {

@@ -1,10 +1,11 @@
 <script lang="ts">
-    import Archive from "lucide-svelte/icons/archive";
-    import ArchiveRestore from "lucide-svelte/icons/archive-restore";
-    import Eye from "lucide-svelte/icons/eye";
-    import SquarePen from "lucide-svelte/icons/square-pen";
-    import Trash2 from "lucide-svelte/icons/trash-2";
-
+    import {
+        ArchiveIcon,
+        ArchiveRestoreIcon,
+        EyeIcon,
+        SquarePenIcon,
+        Trash2Icon
+    } from "lucide-svelte/icons";
     import { resolve } from "$app/paths";
 
     import type { VideoItem } from "$lib/types";
@@ -103,7 +104,7 @@
                             title={t.viewDetail}
                             class="flex h-8 w-8 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-gray-100 hover:text-theme-600"
                         >
-                            <Eye class="h-4 w-4" />
+                            <EyeIcon class="h-4 w-4" />
                         </button>
                         <a
                             href={resolve("/admin-panel/(protected)/watch/video/edit/[id]", {
@@ -113,7 +114,7 @@
                             title={t.edit}
                             class="flex h-8 w-8 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-gray-100 hover:text-theme-600"
                         >
-                            <SquarePen class="h-4 w-4" />
+                            <SquarePenIcon class="h-4 w-4" />
                         </a>
                         {#if item.status === "archived"}
                             <button
@@ -123,7 +124,7 @@
                                 title={t.unarchive}
                                 class="flex h-8 w-8 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-gray-100 hover:text-theme-600"
                             >
-                                <ArchiveRestore class="h-4 w-4" />
+                                <ArchiveRestoreIcon class="h-4 w-4" />
                             </button>
                         {:else}
                             <button
@@ -133,7 +134,7 @@
                                 title={t.archive}
                                 class="flex h-8 w-8 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-gray-100 hover:text-theme-600"
                             >
-                                <Archive class="h-4 w-4" />
+                                <ArchiveIcon class="h-4 w-4" />
                             </button>
                         {/if}
                         <button
@@ -143,7 +144,7 @@
                             title={t.delete}
                             class="flex h-8 w-8 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600"
                         >
-                            <Trash2 class="h-4 w-4" />
+                            <Trash2Icon class="h-4 w-4" />
                         </button>
                     </div>
                 </div>

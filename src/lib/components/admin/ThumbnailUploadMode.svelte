@@ -1,7 +1,5 @@
 <script lang="ts">
-    import ArrowUp from "lucide-svelte/icons/arrow-up";
-    import X from "lucide-svelte/icons/x";
-
+    import { ArrowUpIcon, XIcon } from "lucide-svelte/icons";
     interface Props {
         t: Record<string, string>;
         previewUrl: string;
@@ -57,7 +55,7 @@
                     class="cursor-pointer rounded-lg bg-red-600/80 p-1 text-white transition-colors hover:bg-red-600"
                     title={t.removeFile}
                 >
-                    <X class="h-4 w-4" />
+                    <XIcon class="h-4 w-4" />
                 </button>
             </div>
         </div>
@@ -82,7 +80,7 @@
             <div
                 class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 text-gray-500"
             >
-                <ArrowUp class="stroke-2.5 h-4 w-4" />
+                <ArrowUpIcon class="stroke-2.5 h-4 w-4" />
             </div>
             <div>
                 <p class="text-xs font-medium text-gray-700">{t.thumbnailDropzoneHint}</p>

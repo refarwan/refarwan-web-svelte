@@ -116,7 +116,9 @@ export const enUS: AdminTranslation = {
         save: "Save Settings",
         saving: "Saving...",
         noChanges: "No changes to save",
-        updated: "Settings updated successfully"
+        updated: "Settings updated successfully",
+        loadFailed: "Failed to load settings",
+        resetFailed: "Failed to reset theme"
     },
     common: {
         cancel: "Cancel",
