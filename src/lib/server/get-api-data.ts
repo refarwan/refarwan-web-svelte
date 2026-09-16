@@ -39,6 +39,7 @@ export const getApiData = async <T>(
 export const clearApiCache = async (tag: string) => {
     try {
         const keys = await redis.keys(`${tag}:*`);
+        console.log(keys);
         if (keys.length > 0) await redis.del(...keys);
     } catch (error) {
         console.error(error);

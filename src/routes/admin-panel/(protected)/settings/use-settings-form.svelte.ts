@@ -7,6 +7,7 @@ import { useUnsavedChangesGuard } from "$lib/utils/unsaved-changes-guard.svelte"
 
 import type { AdminTranslation } from "$lib/i18n/admin";
 import type { AdminSettingsData, DataResponse, ThemeShades } from "$lib/types";
+import { clearFrontendCache } from "$lib/api/clear-frontend-cache";
 
 type SettingsT = AdminTranslation["settings"];
 type CommonT = AdminTranslation["common"];
@@ -139,6 +140,7 @@ class SettingsFormState {
             this.faviconFile = null;
             this.isThemeChanged = false;
             popup.success({ message: this.getT().updated });
+            await clearFrontendCache("settings");
         } catch (err) {
             popup.error({ message: axiosErrorMessage(err, "Update failed") });
         } finally {

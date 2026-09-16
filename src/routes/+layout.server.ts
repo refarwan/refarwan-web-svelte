@@ -11,9 +11,9 @@ export const load = async () => {
     const themeShades = themeShadesRes?.data;
     const themeCss = themeShades
         ? `:root { ${Object.entries(themeShades)
-            .map(([k, v]) => `--color-theme-${k}: ${v};`)
-            .join(" ")} }`
-        : '';
+              .map(([k, v]) => `--color-theme-${k}: ${v};`)
+              .join(" ")} }`
+        : "";
 
     return { favicon: faviconRes?.data, themeCss };
 };
