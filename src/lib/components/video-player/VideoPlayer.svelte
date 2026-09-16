@@ -55,7 +55,10 @@
         () => sources
     );
     const controls = usePlayerControls(() => videoEl);
-    const fullscreen = useFullscreen(() => containerEl);
+    const fullscreen = useFullscreen(
+        () => containerEl,
+        () => videoEl
+    );
 
     const scheduleHideControls = () => {
         clearTimeout(hideControlsTimer);
