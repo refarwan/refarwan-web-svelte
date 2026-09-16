@@ -1,14 +1,16 @@
 <script lang="ts">
-	import CircleCheck from 'lucide-svelte/icons/circle-check';
 	import Loader2 from 'lucide-svelte/icons/loader-2';
-	import TriangleAlert from 'lucide-svelte/icons/triangle-alert';
 	import X from 'lucide-svelte/icons/x';
 
 	import { enhance } from '$app/forms';
 
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
+	import CategoryNameField from './CategoryNameField.svelte';
+	import LanguageTabs from '$lib/components/admin/LanguageTabs.svelte';
+	import SlugField from './SlugField.svelte';
 	import { popup } from '$lib/stores/popup.svelte';
+	import { slugify } from '$lib/utils/slugify';
 
 	import type { AdminTranslation } from '$lib/i18n/admin';
 	import type { ContentLanguage, VideoCategoryDetail } from '$lib/types';
@@ -23,17 +25,6 @@
 	}
 
 	let { mode, category, contentLanguages, onClose, t, cancelLabel }: Props = $props();
-
-	const slugify = (text: string): string =>
-		text
-			.toString()
-			.toLowerCase()
-			.trim()
-			.replace(/[\s_]+/g, '-')
-			.replace(/[^\w-]+/g, '')
-			.replace(/--+/g, '-')
-			.replace(/^-+/, '')
-			.replace(/-+$/, '');
 
 	const seedNames = (): Record<string, string> => {
 		const names: Record<string, string> = { en: category?.name ?? '' };
@@ -93,19 +84,12 @@
 		}, 400);
 	};
 
-	const onNameInput = (event: Event) => {
-		const value = (event.target as HTMLInputElement).value;
+	const onNameInput = (value: string) => {
 		names[activeLangCode] = value;
 		if (activeLangCode === 'en' && !slugManuallyEdited) {
 			slug = slugify(value);
 			scheduleSlugCheck(slug);
 		}
-	};
-
-	const onSlugInput = (event: Event) => {
-		slug = (event.target as HTMLInputElement).value;
-		slugManuallyEdited = true;
-		scheduleSlugCheck(slug);
 	};
 
 	const applySuggestedSlug = () => {
@@ -182,78 +166,32 @@
 		<input type="hidden" name="slug" value={slug} />
 		<input type="hidden" name="translations" value={translationsPayload} />
 
-		{#if contentLanguages.length > 1}
-			<div class="flex flex-wrap gap-1.5">
-				{#each contentLanguages as lang (lang.code)}
-					<button
-						type="button"
-						onclick={() => (activeLangCode = lang.code)}
-						class={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-							activeLangCode === lang.code
-								? 'border-theme-600 bg-theme-50 text-theme-700'
-								: 'border-gray-200 text-gray-500 hover:bg-gray-50'
-						}`}
-					>
-						<span class="leading-none">{lang.flag}</span>
-						<span>{lang.name}</span>
-					</button>
-				{/each}
-			</div>
-		{/if}
+		<LanguageTabs
+			languages={contentLanguages}
+			activeCode={activeLangCode}
+			onSelect={(code) => (activeLangCode = code)}
+		/>
 
-		<div class="flex flex-col gap-1.5">
-			<label class="block text-[13px] font-medium text-gray-700" for="category-name">
-				{t.nameLabel}
-				{#if activeLang}
-					<span class="font-normal text-gray-400">({activeLang.name})</span>
-				{/if}
-			</label>
-			<input
-				id="category-name"
-				type="text"
-				value={names[activeLangCode] ?? ''}
-				oninput={onNameInput}
-				placeholder={t.namePlaceholder}
-				class="h-10 w-full rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-900 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
-			/>
-		</div>
+		<CategoryNameField
+			{t}
+			{activeLang}
+			value={names[activeLangCode] ?? ''}
+			onInput={onNameInput}
+		/>
 
-		<div class="flex flex-col gap-1.5">
-			<label class="block text-[13px] font-medium text-gray-700" for="category-slug">
-				{t.slugLabel}
-			</label>
-			<input
-				id="category-slug"
-				type="text"
-				value={slug}
-				oninput={onSlugInput}
-				disabled={activeLangCode !== 'en'}
-				class="h-10 w-full rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-900 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none disabled:bg-gray-50 disabled:text-gray-400"
-			/>
-			<p class="text-[11px] text-gray-500">{t.slugHelper}</p>
-
-			{#if activeLangCode === 'en' && slug.trim()}
-				<div class="flex items-center gap-1.5 text-xs">
-					{#if slugStatus === 'checking'}
-						<Loader2 class="h-3.5 w-3.5 animate-spin text-gray-400" />
-						<span class="text-gray-400">{t.slugCheckingLabel}</span>
-					{:else if slugStatus === 'available'}
-						<CircleCheck class="h-3.5 w-3.5 text-emerald-600" />
-						<span class="text-emerald-600">{t.slugAvailableLabel}</span>
-					{:else if slugStatus === 'taken'}
-						<TriangleAlert class="h-3.5 w-3.5 text-amber-500" />
-						<span class="text-amber-600">{t.slugTakenLabel}</span>
-						<button
-							type="button"
-							onclick={applySuggestedSlug}
-							class="cursor-pointer font-medium text-theme-600 underline hover:text-theme-700"
-						>
-							{t.useSuggestion} ({suggestedSlug})
-						</button>
-					{/if}
-				</div>
-			{/if}
-		</div>
+		<SlugField
+			{t}
+			{slug}
+			disabled={activeLangCode !== 'en'}
+			status={slugStatus}
+			{suggestedSlug}
+			onInput={(value) => {
+				slug = value;
+				slugManuallyEdited = true;
+				scheduleSlugCheck(slug);
+			}}
+			onApplySuggestion={applySuggestedSlug}
+		/>
 
 		<div class="mt-2 flex justify-end gap-2 border-t border-gray-100 pt-4">
 			<button

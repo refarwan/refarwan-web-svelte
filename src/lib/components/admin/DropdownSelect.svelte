@@ -1,7 +1,8 @@
 <script lang="ts">
-	import Check from 'lucide-svelte/icons/check';
-	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 	import Search from 'lucide-svelte/icons/search';
+
+	import DropdownOptionItem from './DropdownOptionItem.svelte';
+	import DropdownTrigger from './DropdownTrigger.svelte';
 
 	export interface DropdownOption {
 		value: string;
@@ -133,29 +134,16 @@
 	{/if}
 
 	<div class="relative">
-		<button
-			bind:this={triggerRef}
+		<DropdownTrigger
 			{id}
-			type="button"
 			{disabled}
-			onclick={() => (isOpen ? closeDropdown() : openDropdown())}
-			onkeydown={handleKeyDown}
-			class="flex w-full cursor-pointer items-center justify-between rounded-md border border-gray-300 bg-white px-3.5 py-2 text-left text-sm text-gray-900 transition-colors hover:border-gray-400 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400"
-			aria-haspopup="listbox"
-			aria-expanded={isOpen}
-		>
-			<span class="flex items-center gap-2.5 truncate">
-				{#if selectedOption?.icon}
-					<span class="shrink-0 text-base select-none">{selectedOption.icon}</span>
-				{/if}
-				<span class="truncate text-sm font-normal text-gray-900">
-					{selectedOption ? selectedOption.label : placeholder}
-				</span>
-			</span>
-			<ChevronDown
-				class={`h-4 w-4 shrink-0 text-gray-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-			/>
-		</button>
+			{isOpen}
+			{selectedOption}
+			{placeholder}
+			onToggle={() => (isOpen ? closeDropdown() : openDropdown())}
+			onKeyDown={handleKeyDown}
+			bind:triggerRef
+		/>
 
 		{#if isOpen}
 			<div
@@ -185,31 +173,14 @@
 					<div class="px-3.5 py-3 text-center text-xs text-gray-400">{noResultsText}</div>
 				{:else}
 					{#each filteredOptions as opt, index (opt.value)}
-						{@const isSelected = opt.value === value}
-						{@const isActive = index === activeIndex}
-						<button
-							bind:this={itemRefs[index]}
-							type="button"
-							role="option"
-							aria-selected={isSelected}
-							onmouseenter={() => (activeIndex = index)}
-							onclick={() => handleSelect(opt.value)}
-							class={`flex w-full cursor-pointer items-center justify-between px-3.5 py-2 text-left text-[13px] transition-colors ${
-								isActive ? 'bg-theme-50 text-theme-900' : 'text-gray-800 hover:bg-gray-50'
-							}`}
-						>
-							<span class="flex items-center gap-2.5 truncate">
-								{#if opt.icon}
-									<span class="shrink-0 text-base select-none">{opt.icon}</span>
-								{/if}
-								<span class={`truncate ${isActive || isSelected ? 'font-medium' : 'font-normal'}`}>
-									{opt.label}
-								</span>
-							</span>
-							{#if isSelected}
-								<Check class="h-4 w-4 shrink-0 text-theme-600" />
-							{/if}
-						</button>
+						<DropdownOptionItem
+							option={opt}
+							isSelected={opt.value === value}
+							isActive={index === activeIndex}
+							onHover={() => (activeIndex = index)}
+							onSelect={() => handleSelect(opt.value)}
+							bind:itemRef={itemRefs[index]}
+						/>
 					{/each}
 				{/if}
 			</div>

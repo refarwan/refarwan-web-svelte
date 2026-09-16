@@ -2,15 +2,15 @@
 	import { tick, untrack } from 'svelte';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
-	import Pencil from 'lucide-svelte/icons/pencil';
 	import Search from 'lucide-svelte/icons/search';
-	import Trash2 from 'lucide-svelte/icons/trash-2';
 
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { enhance } from '$app/forms';
 
-	import VideoCategoryFormModal from '$lib/components/admin/VideoCategoryFormModal.svelte';
+	import CategoryTable from './_components/CategoryTable.svelte';
+	import Pagination from '$lib/components/admin/Pagination.svelte';
+	import VideoCategoryFormModal from './_components/VideoCategoryFormModal.svelte';
 	import { popup } from '$lib/stores/popup.svelte';
 
 	import type { VideoCategoryDetail, VideoCategoryItem } from '$lib/types';
@@ -145,87 +145,22 @@
 		</button>
 	</div>
 
-	<div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
-		<div
-			class="hidden grid-cols-[1fr_240px_130px_90px] gap-4 border-b border-gray-100 bg-gray-50 px-5 py-3 text-xs font-semibold text-gray-500 uppercase md:grid"
-		>
-			<span>{t.tableName}</span>
-			<span>{t.tableSlug}</span>
-			<span>{t.tableVideos}</span>
-			<span class="text-right">{t.tableAction}</span>
-		</div>
+	<CategoryTable
+		{t}
+		items={data.list?.data ?? []}
+		search={data.search}
+		{loadingEditId}
+		onEdit={openEditModal}
+		onDelete={confirmDelete}
+	/>
 
-		{#if !data.list || data.list.data.length === 0}
-			<div class="px-5 py-12 text-center text-sm text-gray-500">
-				{data.search ? t.emptySearch : t.empty}
-			</div>
-		{:else}
-			<div class="divide-y divide-gray-100">
-				{#each data.list.data as item (item.id)}
-					<div
-						class="flex flex-col gap-2 px-5 py-3.5 md:grid md:grid-cols-[1fr_240px_130px_90px] md:items-center md:gap-4"
-					>
-						<span class="text-sm font-medium text-gray-800">{item.name}</span>
-						<span class="text-xs text-gray-500 md:text-sm">{item.slug}</span>
-						<span class="text-xs text-gray-500 md:text-sm">
-							{item.videoCount}
-							{t.videosSuffix}
-						</span>
-						<div class="flex items-center gap-2 md:justify-end">
-							<button
-								type="button"
-								onclick={() => openEditModal(item)}
-								disabled={loadingEditId === item.id}
-								aria-label={t.edit}
-								title={t.edit}
-								class="flex h-8 w-8 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-gray-100 hover:text-theme-600 disabled:opacity-50"
-							>
-								<Pencil class="h-4 w-4" />
-							</button>
-							<button
-								type="button"
-								onclick={() => confirmDelete(item)}
-								aria-label={t.delete}
-								title={t.delete}
-								class="flex h-8 w-8 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600"
-							>
-								<Trash2 class="h-4 w-4" />
-							</button>
-						</div>
-					</div>
-				{/each}
-			</div>
-		{/if}
-	</div>
-
-	{#if data.list && data.list.totalPage > 1}
-		<div class="flex items-center justify-between text-sm">
-			<a
-				href={buildHref(data.page - 1, data.search)}
-				aria-disabled={data.page <= 1}
-				class={`rounded-md border border-gray-300 px-3 py-1.5 font-medium transition-colors ${
-					data.page <= 1 ? 'pointer-events-none text-gray-300' : 'text-gray-700 hover:bg-gray-50'
-				}`}
-			>
-				{t.prev}
-			</a>
-			<span class="text-gray-500">
-				{t.pageOf
-					.replace('{current}', String(data.page))
-					.replace('{total}', String(data.list.totalPage))}
-			</span>
-			<a
-				href={buildHref(data.page + 1, data.search)}
-				aria-disabled={data.page >= data.list.totalPage}
-				class={`rounded-md border border-gray-300 px-3 py-1.5 font-medium transition-colors ${
-					data.page >= data.list.totalPage
-						? 'pointer-events-none text-gray-300'
-						: 'text-gray-700 hover:bg-gray-50'
-				}`}
-			>
-				{t.next}
-			</a>
-		</div>
+	{#if data.list}
+		<Pagination
+			{t}
+			page={data.page}
+			totalPage={data.list.totalPage}
+			buildHref={(page) => buildHref(page, data.search)}
+		/>
 	{/if}
 </div>
 

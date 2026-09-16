@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 
-	import AdminNotFoundContent from '$lib/components/admin/AdminNotFoundContent.svelte';
+	import AdminNotFoundContent from './_components/AdminNotFoundContent.svelte';
 	import { getAdminTranslation } from '$lib/i18n/admin';
 
 	const notFoundT = $derived(getAdminTranslation(page.data.adminLang).notFound);

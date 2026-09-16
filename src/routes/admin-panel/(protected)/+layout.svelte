@@ -1,6 +1,6 @@
 <script lang="ts">
-	import AdminHeader from '$lib/components/admin/AdminHeader.svelte';
-	import AdminSidebar from '$lib/components/admin/AdminSidebar.svelte';
+	import AdminHeader from './_components/AdminHeader.svelte';
+	import AdminSidebar from './_components/AdminSidebar.svelte';
 
 	let { data, children } = $props();
 </script>

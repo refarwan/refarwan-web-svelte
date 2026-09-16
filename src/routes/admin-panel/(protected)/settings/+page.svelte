@@ -1,15 +1,18 @@
 <script lang="ts">
-	import { tick, untrack } from 'svelte';
+	import { untrack } from 'svelte';
 
-	import { beforeNavigate } from '$app/navigation';
 	import { enhance } from '$app/forms';
 
-	import AddLanguageModal from '$lib/components/admin/AddLanguageModal.svelte';
-	import ColorPickerModal from '$lib/components/admin/ColorPickerModal.svelte';
-	import DropdownSelect from '$lib/components/admin/DropdownSelect.svelte';
+	import AddLanguageModal from './_components/AddLanguageModal.svelte';
+	import AdminLanguageSection from './_components/AdminLanguageSection.svelte';
+	import ColorPickerModal from './_components/ColorPickerModal.svelte';
+	import LanguagesFormSection from './_components/LanguagesFormSection.svelte';
+	import MetadataFormSection from './_components/MetadataFormSection.svelte';
+	import ThemeFormSection from './_components/ThemeFormSection.svelte';
 	import { CONTENT_LANGUAGES, DEFAULT_THEME_SHADES } from '$lib/constants';
 	import { popup } from '$lib/stores/popup.svelte';
 	import { generateColorShades } from '$lib/utils/generate-color-shades';
+	import { useUnsavedChangesGuard } from '$lib/utils/unsaved-changes-guard.svelte';
 
 	import type { ThemeShades } from '$lib/types';
 
@@ -23,17 +26,12 @@
 	let description = $state(setting?.appMetadata.description ?? '');
 	let faviconPreview = $state(setting?.appMetadata.favicon ?? '');
 	let faviconFile: File | null = $state(null);
-	let faviconInput: HTMLInputElement | undefined = $state();
 
 	let selectedColor = $state(setting?.theme['500'] ?? DEFAULT_THEME_SHADES['500']);
 	let themeShades = $state<ThemeShades>(setting?.theme ?? DEFAULT_THEME_SHADES);
 	let isThemeChanged = $state(false);
 
 	let otherContentLanguages = $state<string[]>(setting?.otherContentLanguages ?? []);
-
-	let adminLang = $state(data.adminLang);
-	let adminLangForm: HTMLFormElement | undefined = $state();
-	let adminLangPending = $state(false);
 
 	let snapshot = $state(
 		untrack(() => ({
@@ -65,18 +63,6 @@
 			.filter((lang) => lang !== undefined)
 	);
 
-	const adminLangOptions = [
-		{ value: 'en-US', label: 'English', icon: '🇺🇸' },
-		{ value: 'id-ID', label: 'Indonesia', icon: '🇮🇩' }
-	];
-
-	const onFaviconChange = (event: Event) => {
-		const file = (event.target as HTMLInputElement).files?.[0];
-		if (!file) return;
-		faviconFile = file;
-		faviconPreview = URL.createObjectURL(file);
-	};
-
 	const onColorChange = (color: string) => {
 		selectedColor = color;
 		isThemeChanged = true;
@@ -91,17 +77,6 @@
 
 	const onRemoveLanguage = (locale: string) => {
 		otherContentLanguages = otherContentLanguages.filter((code) => code !== locale);
-	};
-
-	const onAdminLangChange = async (lang: string) => {
-		if (lang !== 'en-US' && lang !== 'id-ID') return;
-		adminLang = lang;
-		adminLangPending = true;
-		// The hidden input's value is bound reactively, so wait for Svelte to flush
-		// the DOM update before reading it via requestSubmit(), otherwise the form
-		// would submit the previous (stale) language value.
-		await tick();
-		adminLangForm?.requestSubmit();
 	};
 
 	let colorPickerPopupId = $state('');
@@ -135,11 +110,10 @@
 	let mainForm: HTMLFormElement | undefined = $state();
 	let resetButton: HTMLButtonElement | undefined = $state();
 
-	beforeNavigate(({ cancel }) => {
-		if (isDirty && !confirm(commonT.unsavedMessage)) {
-			cancel();
-		}
-	});
+	useUnsavedChangesGuard(
+		() => isDirty,
+		() => commonT.unsavedMessage
+	);
 
 	$effect(() => {
 		// popup.success/error read and write the popup store's own state, so calling
@@ -150,14 +124,6 @@
 		} else if (form?.error) {
 			untrack(() => popup.error({ message: form.error ?? '' }));
 		}
-	});
-
-	$effect(() => {
-		const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-			if (isDirty) event.preventDefault();
-		};
-		window.addEventListener('beforeunload', handleBeforeUnload);
-		return () => window.removeEventListener('beforeunload', handleBeforeUnload);
 	});
 </script>
 
@@ -197,162 +163,27 @@
 		}}
 		class="flex flex-col gap-4"
 	>
-		<!-- Metadata -->
-		<section class="rounded-lg border border-gray-200 bg-white p-5 md:px-6 md:py-5">
-			<h2 class="text-base font-semibold text-gray-900">{t.metadataTitle}</h2>
-			<p class="text-[13px] text-gray-500">{t.metadataDescription}</p>
-			<hr class="my-4 border-gray-200" />
+		<MetadataFormSection {t} bind:title bind:description bind:faviconPreview bind:faviconFile />
 
-			<div class="flex flex-col gap-4">
-				<div>
-					<label class="block text-[13px] font-medium text-gray-700" for="title">
-						{t.siteTitle}
-					</label>
-					<input
-						id="title"
-						name="title"
-						bind:value={title}
-						required
-						class="mt-1 block h-10 w-full rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-900 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
-					/>
-				</div>
-				<div>
-					<label class="block text-[13px] font-medium text-gray-700" for="description">
-						{t.siteDescription}
-					</label>
-					<input
-						id="description"
-						name="description"
-						bind:value={description}
-						required
-						class="mt-1 block h-10 w-full rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-900 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
-					/>
-				</div>
+		<ThemeFormSection
+			{t}
+			{themeShades}
+			{isThemeChanged}
+			{selectedColor}
+			{resetting}
+			onOpenColorPicker={openColorPicker}
+			onResetTheme={handleResetTheme}
+			bind:resetButton
+		/>
 
-				<button
-					type="button"
-					onclick={() => faviconInput?.click()}
-					class="flex items-center gap-3 rounded-lg border border-dashed border-gray-300 p-3 text-left hover:border-theme-400"
-				>
-					{#if faviconPreview}
-						<img src={faviconPreview} alt={t.favicon} class="h-10 w-10 rounded object-cover" />
-					{/if}
-					<span class="text-sm text-gray-600">{t.faviconHint}</span>
-				</button>
-				<input
-					bind:this={faviconInput}
-					onchange={onFaviconChange}
-					type="file"
-					name="favicon"
-					accept="image/png"
-					class="hidden"
-				/>
-			</div>
-		</section>
-
-		<!-- Theme -->
-		<section class="rounded-lg border border-gray-200 bg-white p-5 md:px-6 md:py-5">
-			<div class="flex items-center justify-between">
-				<div>
-					<h2 class="text-base font-semibold text-gray-900">{t.themeTitle}</h2>
-					<p class="text-[13px] text-gray-500">{t.themeDescription}</p>
-				</div>
-				<div class="flex items-center gap-2">
-					<button
-						type="submit"
-						formaction="?/resetTheme"
-						bind:this={resetButton}
-						disabled={resetting}
-						onclick={(event) => {
-							event.preventDefault();
-							handleResetTheme();
-						}}
-						class="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
-					>
-						{resetting ? t.saving : t.resetDefault}
-					</button>
-					<button
-						type="button"
-						onclick={openColorPicker}
-						class="flex cursor-pointer items-center gap-1.5 rounded-lg border border-theme-600 px-3 py-1.5 text-sm font-medium text-theme-600 transition-colors hover:bg-theme-50"
-					>
-						<span
-							class="inline-block h-3.5 w-3.5 shrink-0 rounded-full"
-							style="background: conic-gradient(from 90deg, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)"
-						></span>
-						<span>{t.pickColor}</span>
-					</button>
-				</div>
-			</div>
-			<input type="hidden" name="colorCode" value={isThemeChanged ? selectedColor : ''} />
-			<hr class="my-4 border-gray-200" />
-
-			<div class="flex flex-wrap gap-3">
-				{#each Object.entries(themeShades) as [shade, hex] (shade)}
-					<div class="flex flex-col items-center gap-1">
-						<div
-							class="h-10 w-10 rounded-lg border border-gray-200"
-							style={`background:${hex}`}
-						></div>
-						<span class="text-xs text-gray-500">{shade}</span>
-					</div>
-				{/each}
-			</div>
-		</section>
-
-		<!-- Content Languages -->
-		<section class="rounded-lg border border-gray-200 bg-white p-5 md:px-6 md:py-5">
-			<h2 class="text-base font-semibold text-gray-900">{t.languagesTitle}</h2>
-			<p class="text-[13px] text-gray-500">{t.languagesDescription}</p>
-			<hr class="my-4 border-gray-200" />
-
-			<input
-				type="hidden"
-				name="otherContentLanguages"
-				value={JSON.stringify(otherContentLanguages)}
-			/>
-
-			<div class="flex flex-col gap-2">
-				<div class="flex items-center justify-between rounded-lg border border-gray-100 px-3 py-2">
-					<span class="flex items-center gap-2 text-sm text-gray-700">
-						<span>🇺🇸</span>
-						English
-					</span>
-					<span class="rounded-full bg-theme-50 px-2.5 py-0.5 text-xs font-medium text-theme-700">
-						{t.defaultLanguage}
-					</span>
-				</div>
-				{#each activeLanguages as lang (lang.locale)}
-					<div
-						class="flex items-center justify-between rounded-lg border border-gray-100 px-3 py-2"
-					>
-						<span class="flex items-center gap-2 text-sm text-gray-700">
-							<span>{lang.flag}</span>
-							{lang.name}
-						</span>
-						<button
-							type="button"
-							onclick={() => onRemoveLanguage(lang.locale)}
-							class="rounded-lg border border-red-200 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50"
-						>
-							{t.removeLanguage}
-						</button>
-					</div>
-				{/each}
-			</div>
-
-			{#if availableLanguages.length > 0}
-				<div class="mt-3">
-					<button
-						type="button"
-						onclick={openAddLanguageModal}
-						class="inline-flex cursor-pointer items-center rounded-md border border-theme-600 px-4 py-2 text-[13px] font-medium text-theme-600 transition-colors hover:bg-theme-50"
-					>
-						{t.addLanguage}
-					</button>
-				</div>
-			{/if}
-		</section>
+		<LanguagesFormSection
+			{t}
+			{otherContentLanguages}
+			{availableLanguages}
+			{activeLanguages}
+			{onRemoveLanguage}
+			onOpenAddLanguageModal={openAddLanguageModal}
+		/>
 
 		<div class="flex justify-end">
 			<button
@@ -365,45 +196,7 @@
 		</div>
 	</form>
 
-	<!-- Admin Panel Language (auto-saved, independent of the form above) -->
-	<section class="rounded-lg border border-gray-200 bg-white p-5 md:px-6 md:py-5">
-		<div class="flex items-start justify-between gap-4">
-			<div>
-				<h2 class="text-base font-semibold text-gray-900">{t.adminLanguageTitle}</h2>
-				<p class="mt-1 text-xs text-gray-500">{t.adminLanguageDescription}</p>
-			</div>
-			<span
-				class="inline-flex shrink-0 items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-medium text-emerald-700"
-			>
-				{t.autoSaved}
-			</span>
-		</div>
-		<hr class="my-4 border-gray-200" />
-
-		<form
-			method="POST"
-			action="?/setAdminLang"
-			bind:this={adminLangForm}
-			use:enhance={() => {
-				return async ({ update }) => {
-					await update();
-					adminLangPending = false;
-				};
-			}}
-		>
-			<input type="hidden" name="lang" value={adminLang} />
-			<div class="max-w-xs">
-				<DropdownSelect
-					label={t.displayLanguage}
-					value={adminLang}
-					options={adminLangOptions}
-					onChange={onAdminLangChange}
-					helperText={t.languageHelper}
-					disabled={adminLangPending}
-				/>
-			</div>
-		</form>
-	</section>
+	<AdminLanguageSection {t} initialLang={data.adminLang} />
 </div>
 
 {#snippet colorPickerSnippet()}

@@ -3,9 +3,9 @@
 	import FolderGit2 from 'lucide-svelte/icons/folder-git-2';
 	import Video from 'lucide-svelte/icons/video';
 
-	import AnalyticsChart from '$lib/components/admin/AnalyticsChart.svelte';
-	import PopularListCard from '$lib/components/admin/PopularListCard.svelte';
-	import StatCard from '$lib/components/admin/StatCard.svelte';
+	import AnalyticsChart from './_components/AnalyticsChart.svelte';
+	import PopularListCard from './_components/PopularListCard.svelte';
+	import StatCard from './_components/StatCard.svelte';
 	import { ANALYTICS_DATA, POPULAR_SECTIONS } from '$lib/data/admin-dashboard';
 
 	let { data } = $props();
