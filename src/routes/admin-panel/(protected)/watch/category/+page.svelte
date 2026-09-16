@@ -2,6 +2,7 @@
 	import { tick, untrack } from 'svelte';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
+	import Plus from 'lucide-svelte/icons/plus';
 	import Search from 'lucide-svelte/icons/search';
 
 	import { goto } from '$app/navigation';
@@ -54,7 +55,6 @@
 	let modalPopupId = $state('');
 	let modalMode = $state<'create' | 'edit'>('create');
 	let editingCategory = $state<VideoCategoryDetail | null>(null);
-	let loadingEditId = $state('');
 
 	const closeModal = () => {
 		popup.remove(modalPopupId);
@@ -68,21 +68,16 @@
 	};
 
 	const openEditModal = async (item: VideoCategoryItem) => {
-		loadingEditId = item.id;
-		try {
-			const res = await fetch(`/admin-panel/api/video-category/${item.id}`);
-			if (!res.ok) {
-				popup.error({ message: 'Failed to load category details' });
-				return;
-			}
-			const body = (await res.json()) as { data: VideoCategoryDetail };
-			modalMode = 'edit';
-			editingCategory = body.data;
-			modalPopupId = popup.generateId();
-			popup.custom({ id: modalPopupId, component: formModalSnippet });
-		} finally {
-			loadingEditId = '';
+		const res = await fetch(`/admin-panel/api/video-category/${item.id}`);
+		if (!res.ok) {
+			popup.error({ message: t.loadDetailFailed });
+			return;
 		}
+		const body = (await res.json()) as { data: VideoCategoryDetail };
+		modalMode = 'edit';
+		editingCategory = body.data;
+		modalPopupId = popup.generateId();
+		popup.custom({ id: modalPopupId, component: formModalSnippet });
 	};
 
 	// --- Delete ---
@@ -92,7 +87,7 @@
 	const confirmDelete = (item: VideoCategoryItem) => {
 		popup.confirm({
 			title: t.deleteConfirmTitle,
-			message: t.deleteConfirmMessage,
+			message: t.deleteConfirmMessage.replace('{name}', item.name),
 			confirmText: t.deleteConfirmButton,
 			cancelText: commonT.cancel,
 			onConfirm: async () => {
@@ -123,33 +118,32 @@
 </form>
 
 <div class="flex flex-col gap-4">
-	<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-		<div class="relative w-full max-w-sm">
-			<Search
-				class="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400"
-			/>
+	<div
+		class="flex flex-col items-stretch justify-between gap-3 md:flex-row md:items-center md:gap-4"
+	>
+		<div class="relative w-full md:max-w-xs xl:max-w-sm">
+			<Search class="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-gray-400" />
 			<input
 				type="text"
 				bind:value={searchInput}
 				oninput={onSearchInput}
 				placeholder={t.searchPlaceholder}
-				class="h-10 w-full rounded-md border border-gray-300 bg-white py-2 pr-3 pl-9 text-sm text-gray-900 placeholder:text-gray-400 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
+				class="w-full rounded-lg border border-gray-300 bg-white py-2.5 pr-4 pl-10 text-sm text-gray-900 placeholder-gray-400 transition-all focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
 			/>
 		</div>
 		<button
 			type="button"
 			onclick={openCreateModal}
-			class="inline-flex items-center justify-center rounded-md bg-theme-600 px-4 py-2 text-sm font-medium text-white shadow-2xs transition-colors hover:bg-theme-700"
+			class="inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg bg-theme-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-theme-700"
 		>
-			{t.addCategory}
+			<Plus class="h-4 w-4" />
+			<span>{t.addCategory}</span>
 		</button>
 	</div>
 
 	<CategoryTable
 		{t}
 		items={data.list?.data ?? []}
-		search={data.search}
-		{loadingEditId}
 		onEdit={openEditModal}
 		onDelete={confirmDelete}
 	/>

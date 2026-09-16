@@ -157,30 +157,32 @@ export interface AdminTranslation {
 		edit: string;
 		delete: string;
 		empty: string;
-		emptySearch: string;
 		addModalTitle: string;
 		editModalTitle: string;
+		closeModal: string;
 		nameLabel: string;
 		namePlaceholder: string;
+		namePlaceholderLang: string;
 		slugLabel: string;
-		slugHelper: string;
-		slugCheckingLabel: string;
-		slugAvailableLabel: string;
+		slugHelperEnglish: string;
+		slugHelperOtherLang: string;
 		slugTakenLabel: string;
-		useSuggestion: string;
 		saveCategory: string;
 		saveChanges: string;
-		saving: string;
 		nameRequired: string;
+		slugRequired: string;
 		deleteConfirmTitle: string;
 		deleteConfirmMessage: string;
 		deleteConfirmButton: string;
 		created: string;
 		updated: string;
 		deleted: string;
+		createFailed: string;
+		updateFailed: string;
+		deleteFailed: string;
+		loadDetailFailed: string;
 		prev: string;
 		next: string;
-		pageOf: string;
 	};
 	watchVideo: {
 		pageTitle: string;
@@ -242,6 +244,5 @@ export interface AdminTranslation {
 		invalidVideoType: string;
 		prev: string;
 		next: string;
-		pageOf: string;
 	};
 }

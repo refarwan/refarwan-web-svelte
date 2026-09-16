@@ -1,29 +1,33 @@
 <script lang="ts">
-	import type { ContentLanguage } from '$lib/types';
-
 	interface Props {
 		t: Record<string, string>;
-		activeLang?: ContentLanguage;
+		activeLangCode: string;
 		value: string;
+		disabled: boolean;
 		onInput: (value: string) => void;
 	}
 
-	let { t, activeLang, value, onInput }: Props = $props();
+	let { t, activeLangCode, value, disabled, onInput }: Props = $props();
+
+	const isEnglishTab = $derived(activeLangCode.toLowerCase() === 'en');
+	const placeholder = $derived(
+		isEnglishTab
+			? t.namePlaceholder
+			: t.namePlaceholderLang.replace('{lang}', activeLangCode.toUpperCase())
+	);
 </script>
 
-<div class="flex flex-col gap-1.5">
-	<label class="block text-[13px] font-medium text-gray-700" for="category-name">
+<div class="space-y-1.5">
+	<label class="block text-sm font-medium text-gray-900" for="category-name">
 		{t.nameLabel}
-		{#if activeLang}
-			<span class="font-normal text-gray-400">({activeLang.name})</span>
-		{/if}
 	</label>
 	<input
 		id="category-name"
 		type="text"
+		{disabled}
 		{value}
 		oninput={(event) => onInput((event.target as HTMLInputElement).value)}
-		placeholder={t.namePlaceholder}
-		class="h-10 w-full rounded-md border border-gray-300 bg-white px-3.5 py-2 text-sm text-gray-900 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
+		{placeholder}
+		class="w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-gray-900 shadow-2xs transition-all focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none disabled:opacity-60"
 	/>
 </div>

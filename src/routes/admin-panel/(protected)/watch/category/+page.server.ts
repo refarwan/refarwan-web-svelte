@@ -51,7 +51,7 @@ export const actions: Actions = {
 		});
 
 		if (!res.ok) {
-			const { message, fieldErrors } = await parseApiError(res, 'Failed to create category');
+			const { message, fieldErrors } = await parseApiError(res, t.createFailed);
 			return fail(res.status, { error: message, fieldErrors });
 		}
 
@@ -74,7 +74,7 @@ export const actions: Actions = {
 		});
 
 		if (!res.ok) {
-			const { message, fieldErrors } = await parseApiError(res, 'Failed to update category');
+			const { message, fieldErrors } = await parseApiError(res, t.updateFailed);
 			return fail(res.status, { error: message, fieldErrors });
 		}
 
@@ -89,7 +89,7 @@ export const actions: Actions = {
 		const res = await authFetch(cookies, fetch, `/video-category/${id}`, { method: 'DELETE' });
 
 		if (!res.ok) {
-			const { message } = await parseApiError(res, 'Failed to delete category');
+			const { message } = await parseApiError(res, t.deleteFailed);
 			return fail(res.status, { error: message });
 		}
 
