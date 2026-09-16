@@ -23,7 +23,7 @@ services:
             NODE_ENV: production
             BODY_SIZE_LIMIT: ${BODY_SIZE_LIMIT:-1G}
             PUBLIC_API_URL: ${PUBLIC_API_URL}
-            REDIS_URL: redis://:${REDIS_PASSWORD}@refarwan-web-redis:${REDIS_PORT}
+            REDIS_URL: redis://:${REDIS_PASSWORD}@refarwan-web-redis:6379
         ports:
             - 127.0.0.1:${PORT:-5173}:${PORT:-5173}
         extra_hosts:
