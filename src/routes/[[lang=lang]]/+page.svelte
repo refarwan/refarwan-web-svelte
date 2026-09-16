@@ -1,9 +1,9 @@
 <script lang="ts">
-	import About from '$lib/components/home/About.svelte';
-	import Cta from '$lib/components/home/Cta.svelte';
-	import Hero from '$lib/components/home/Hero.svelte';
-	import Projects from '$lib/components/home/Projects.svelte';
-	import Skills from '$lib/components/home/Skills.svelte';
+	import About from './_components/About.svelte';
+	import Cta from './_components/Cta.svelte';
+	import Hero from './_components/Hero.svelte';
+	import Projects from './_components/Projects.svelte';
+	import Skills from './_components/Skills.svelte';
 	import { getHomeTranslation } from '$lib/i18n/home';
 
 	let { data } = $props();

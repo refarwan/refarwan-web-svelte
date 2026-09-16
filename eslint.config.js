@@ -36,7 +36,7 @@ export default defineConfig(
 	{
 		// Nav items mix same-page fragments (#about, #skills, ...) with /watch, a route
 		// not yet migrated to this app, so resolve() can't type-check every href here.
-		files: ['src/lib/components/HomeNavigation.svelte'],
+		files: ['src/routes/\\[\\[lang=lang\\]\\]/_components/HomeNavigation.svelte'],
 		rules: {
 			'svelte/no-navigation-without-resolve': 'off'
 		}

@@ -2,8 +2,8 @@
     import { afterNavigate, invalidateAll } from "$app/navigation";
 
     import Footer from "$lib/components/Footer.svelte";
-    import HomeHeader from "$lib/components/HomeHeader.svelte";
-    import HomeNavigation from "$lib/components/HomeNavigation.svelte";
+    import HomeHeader from "./_components/HomeHeader.svelte";
+    import HomeNavigation from "./_components/HomeNavigation.svelte";
     import { getFooterTranslation } from "$lib/i18n/footer";
     import { getNavTranslation } from "$lib/i18n/nav";
 
