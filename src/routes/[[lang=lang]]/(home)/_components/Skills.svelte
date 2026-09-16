@@ -1,21 +1,29 @@
 <script lang="ts">
     import {
+        siBun,
         siCss,
         siDocker,
+        siDrizzle,
         siExpress,
         siFigma,
         siGit,
         siGithub,
+        siGithubactions,
+        siHono,
         siHtml5,
         siJavascript,
+        siLaravel,
         siLinux,
         siMysql,
+        siNestjs,
         siNextdotjs,
         siNginx,
         siNodedotjs,
+        siPhp,
         siPostgresql,
         siPrisma,
         siReact,
+        siSvelte,
         siTailwindcss,
         siTypescript,
         siUbuntu
@@ -33,13 +41,21 @@
         { name: "CSS", icon: siCss },
         { name: "JavaScript", icon: siJavascript },
         { name: "TypeScript", icon: siTypescript },
+        { name: "PHP", icon: siPhp },
         { name: "Node.Js", icon: siNodedotjs },
+        { name: "Bun", icon: siBun },
         { name: "Express.Js", icon: siExpress },
+        { name: "NestJs", icon: siNestjs },
+        { name: "Hono", icon: siHono },
+        { name: "Laravel", icon: siLaravel },
         { name: "React.Js", icon: siReact },
         { name: "Next.Js", icon: siNextdotjs },
+        { name: "Svelte", icon: siSvelte },
+        { name: "SvelteKit", icon: siSvelte },
         { name: "Tailwindcss", icon: siTailwindcss },
         { name: "Git", icon: siGit },
         { name: "Github", icon: siGithub },
+        { name: "CI/CD Github Actions", icon: siGithubactions },
         { name: "Docker", icon: siDocker },
         { name: "VPS", icon: siLinux },
         { name: "Ubuntu Server", icon: siUbuntu },
@@ -47,7 +63,8 @@
         { name: "Figma", icon: siFigma },
         { name: "MySQL", icon: siMysql },
         { name: "PostgreSQL", icon: siPostgresql },
-        { name: "Prisma", icon: siPrisma }
+        { name: "Prisma", icon: siPrisma },
+        { name: "Drizzle", icon: siDrizzle }
     ];
 
     interface Props {
@@ -58,7 +75,7 @@
 </script>
 
 <section id="skills" class="w-full bg-white py-16 md:py-20 lg:py-28">
-    <div class="mx-auto max-w-320 px-5 md:px-10 lg:px-16">
+    <div class="mx-auto max-w-7xl px-5 md:px-10 lg:px-16">
         <div class="max-w-2xl">
             <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 md:text-4xl">
                 {t.title}

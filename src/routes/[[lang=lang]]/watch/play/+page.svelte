@@ -3,6 +3,7 @@
     import { env } from "$env/dynamic/public";
 
     import VideoPlayer from "$lib/components/video-player/VideoPlayer.svelte";
+    import { resolutionsFromFields } from "$lib/components/video-player/resolution";
     import { getWatchTranslation } from "$lib/i18n/watch";
 
     import AppMainSection from "../_components/AppMainSection.svelte";
@@ -20,15 +21,7 @@
         video.categorySlug ? `${basePath}?category=${video.categorySlug}` : basePath
     );
 
-    const playSource = $derived(
-        video.p1080 && video.p1080 !== "processing"
-            ? video.p1080
-            : video.p720 && video.p720 !== "processing"
-              ? video.p720
-              : video.p360 && video.p360 !== "processing"
-                ? video.p360
-                : "processing"
-    );
+    const playSources = $derived(resolutionsFromFields(video.p360, video.p720, video.p1080));
 
     let isPlaying = $state(false);
     let watchedSeconds = 0;
@@ -70,14 +63,15 @@
 </svelte:head>
 
 <AppMainSection>
-    <div class="pt-0 pb-10 md:pt-6 md:pb-16 lg:pt-8 lg:pb-16">
+    <div>
         <div class="grid grid-cols-1 gap-5 md:gap-7 lg:grid-cols-[1fr_380px] lg:gap-8">
             <div class="min-w-0">
                 <div
                     class="relative -mx-5 aspect-video w-auto overflow-hidden rounded-none bg-black shadow-lg md:mx-0 md:w-full md:rounded-2xl"
                 >
                     <VideoPlayer
-                        source={playSource}
+                        sources={playSources}
+                        thumbnailUrl={video.thumbnail.large}
                         on:play={() => (isPlaying = true)}
                         on:pause={() => (isPlaying = false)}
                         on:ended={() => (isPlaying = false)}

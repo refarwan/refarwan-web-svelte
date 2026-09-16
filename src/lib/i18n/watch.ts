@@ -19,6 +19,7 @@ export interface WatchTranslation {
     appsProjectLabel: string;
     appsWatchLabel: string;
     appsBlogLabel: string;
+    playOnWatch: string;
 }
 
 export const WATCH_TRANSLATIONS: Record<string, WatchTranslation> = {
@@ -43,7 +44,8 @@ export const WATCH_TRANSLATIONS: Record<string, WatchTranslation> = {
         appsHomeLabel: "Home",
         appsProjectLabel: "Project",
         appsWatchLabel: "Watch",
-        appsBlogLabel: "Blog"
+        appsBlogLabel: "Blog",
+        playOnWatch: "Play on Watch"
     },
     id: {
         pageTitle: "Video Tutorial & Diskusi Teknis",
@@ -66,7 +68,8 @@ export const WATCH_TRANSLATIONS: Record<string, WatchTranslation> = {
         appsHomeLabel: "Beranda",
         appsProjectLabel: "Proyek",
         appsWatchLabel: "Watch",
-        appsBlogLabel: "Blog"
+        appsBlogLabel: "Blog",
+        playOnWatch: "Putar di Watch"
     },
     ja: {
         pageTitle: "ビデオチュートリアル＆技術トーク",
@@ -89,7 +92,8 @@ export const WATCH_TRANSLATIONS: Record<string, WatchTranslation> = {
         appsHomeLabel: "ホーム",
         appsProjectLabel: "プロジェクト",
         appsWatchLabel: "Watch",
-        appsBlogLabel: "ブログ"
+        appsBlogLabel: "ブログ",
+        playOnWatch: "Watch で再生"
     }
 };
 

@@ -6,6 +6,7 @@ export function usePlayerControls(getVideoEl: () => HTMLVideoElement | undefined
     let volume = $state(1);
     let isMuted = $state(false);
     let playbackRate = $state(1);
+    let isBuffering = $state(false);
 
     const togglePlay = () => {
         const el = getVideoEl();
@@ -55,6 +56,13 @@ export function usePlayerControls(getVideoEl: () => HTMLVideoElement | undefined
     const onPlay = () => (isPlaying = true);
     const onPause = () => (isPlaying = false);
 
+    // "waiting" fires when playback stalls for lack of data; "playing" fires
+    // once frames are actually rendering again (after "waiting", after a
+    // seek, or on initial start), so together they track real buffering
+    // rather than just the play/pause intent.
+    const onWaiting = () => (isBuffering = true);
+    const onPlaying = () => (isBuffering = false);
+
     return {
         get isPlaying() {
             return isPlaying;
@@ -74,6 +82,9 @@ export function usePlayerControls(getVideoEl: () => HTMLVideoElement | undefined
         get playbackRate() {
             return playbackRate;
         },
+        get isBuffering() {
+            return isBuffering;
+        },
         togglePlay,
         seek,
         setVolume,
@@ -82,6 +93,8 @@ export function usePlayerControls(getVideoEl: () => HTMLVideoElement | undefined
         onTimeUpdate,
         onLoadedMetadata,
         onPlay,
-        onPause
+        onPause,
+        onWaiting,
+        onPlaying
     };
 }

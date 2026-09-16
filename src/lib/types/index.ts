@@ -24,3 +24,4 @@ export type {
     VideoTranslationItem,
     VideoUploader
 } from "./video";
+export type { ImageVariant } from "./image";

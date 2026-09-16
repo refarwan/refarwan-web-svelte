@@ -12,6 +12,8 @@
     import PlayerSettingsMenu from "./PlayerSettingsMenu.svelte";
     import { formatTime } from "./format-time";
 
+    import type { ResolutionOption } from "./resolution";
+
     interface Props {
         isPlaying: boolean;
         currentTime: number;
@@ -20,10 +22,13 @@
         isMuted: boolean;
         playbackRate: number;
         isFullscreen: boolean;
+        resolutions: ResolutionOption[];
+        selectedQuality: number | "auto";
         onTogglePlay: () => void;
         onToggleMute: () => void;
         onVolumeChange: (value: number) => void;
         onSelectRate: (rate: number) => void;
+        onSelectQuality: (quality: number | "auto") => void;
         onToggleFullscreen: () => void;
         onSeek: (time: number) => void;
     }
@@ -36,10 +41,13 @@
         isMuted,
         playbackRate,
         isFullscreen,
+        resolutions,
+        selectedQuality,
         onTogglePlay,
         onToggleMute,
         onVolumeChange,
         onSelectRate,
+        onSelectQuality,
         onToggleFullscreen,
         onSeek
     }: Props = $props();
@@ -141,7 +149,13 @@
 
         <div class="flex-1"></div>
 
-        <PlayerSettingsMenu {playbackRate} {onSelectRate} />
+        <PlayerSettingsMenu
+            {playbackRate}
+            {onSelectRate}
+            {resolutions}
+            {selectedQuality}
+            {onSelectQuality}
+        />
 
         <button
             type="button"

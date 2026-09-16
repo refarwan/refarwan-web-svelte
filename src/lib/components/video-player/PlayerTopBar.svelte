@@ -1,11 +1,14 @@
 <script lang="ts">
+    import { ExternalLinkIcon } from "lucide-svelte";
+
     interface Props {
         logoUrl?: string;
         title?: string;
         watchUrl?: string;
+        playOnWatchLabel?: string;
     }
 
-    let { logoUrl, title, watchUrl }: Props = $props();
+    let { logoUrl, title, watchUrl, playOnWatchLabel = "Play on Watch" }: Props = $props();
 </script>
 
 <div
@@ -24,9 +27,10 @@
             href={watchUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="shrink-0 rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/25"
+            class="flex shrink-0 items-center gap-1 rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/25"
         >
-            Watch
+            <span>{playOnWatchLabel}</span>
+            <ExternalLinkIcon size={16} />
         </a>
     {/if}
 </div>

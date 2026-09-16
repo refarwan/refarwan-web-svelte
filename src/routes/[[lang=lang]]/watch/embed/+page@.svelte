@@ -2,12 +2,18 @@
     import { page } from "$app/state";
 
     import VideoPlayer from "$lib/components/video-player/VideoPlayer.svelte";
+    import { resolutionsFromSources } from "$lib/components/video-player/resolution";
+    import { getWatchTranslation } from "$lib/i18n/watch";
 
     let { data } = $props();
 
+    const t = $derived(getWatchTranslation(data.lang));
     const video = $derived(data.video);
-    const playSource = $derived(video?.sources[0]?.url ?? "processing");
-    const watchUrl = $derived(video ? `${page.url.origin}/watch/play?v=${video.id}` : undefined);
+    const playSources = $derived(video ? resolutionsFromSources(video.sources) : []);
+    const basePath = $derived(page.params.lang ? `/${page.params.lang}/watch` : "/watch");
+    const watchUrl = $derived(
+        video ? `${page.url.origin}${basePath}/play?v=${video.id}` : undefined
+    );
 </script>
 
 <svelte:head>
@@ -18,10 +24,13 @@
 <main class="relative h-screen w-screen overflow-hidden bg-black">
     {#if video}
         <VideoPlayer
-            source={playSource}
+            sources={playSources}
             logoUrl={data.logoUrl}
             title={video.title ?? ""}
+            thumbnailUrl={video.thumbnail.large}
             {watchUrl}
+            playOnWatchLabel={t.playOnWatch}
+            class="h-full w-full"
         />
     {:else}
         <div

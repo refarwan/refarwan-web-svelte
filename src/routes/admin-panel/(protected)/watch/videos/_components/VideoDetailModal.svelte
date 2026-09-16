@@ -1,9 +1,10 @@
 <script lang="ts">
-    import { ExternalLinkIcon, EyeIcon, XIcon } from "lucide-svelte/icons";
+    import { EyeIcon, XIcon } from "lucide-svelte/icons";
     import { page } from "$app/state";
     import { resolve } from "$app/paths";
 
     import VideoPlayer from "$lib/components/video-player/VideoPlayer.svelte";
+    import { resolutionsFromFields } from "$lib/components/video-player/resolution";
 
     import VideoEmbedSection from "./VideoEmbedSection.svelte";
     import VideoResolutionChips from "./VideoResolutionChips.svelte";
@@ -19,15 +20,7 @@
 
     let { t, video, logoUrl, onClose }: Props = $props();
 
-    const playSource = $derived(
-        video.p1080 && video.p1080 !== "processing"
-            ? video.p1080
-            : video.p720 && video.p720 !== "processing"
-              ? video.p720
-              : video.p360 && video.p360 !== "processing"
-                ? video.p360
-                : "processing"
-    );
+    const playSources = $derived(resolutionsFromFields(video.p360, video.p720, video.p1080));
 
     const watchUrl = $derived(`${page.url.origin}/watch/play?v=${video.id}`);
     const embedUrl = $derived(`${page.url.origin}/watch/embed?v=${video.id}`);
@@ -66,21 +59,13 @@
     </div>
 
     <div class="max-h-[75vh] space-y-4 overflow-y-auto p-6">
-        <VideoPlayer source={playSource} {logoUrl} title={video.title ?? ""} />
-
-        <!-- watchUrl points to the public site's own route tree, outside this app's
-            resolve()-typed routes, and opens in a new tab. -->
-        <!-- eslint-disable svelte/no-navigation-without-resolve -->
-        <a
-            href={watchUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 text-xs font-medium text-theme-600 hover:underline"
-        >
-            <ExternalLinkIcon class="h-3.5 w-3.5" />
-            {t.watchOnSiteLabel}
-        </a>
-        <!-- eslint-enable svelte/no-navigation-without-resolve -->
+        <VideoPlayer
+            sources={playSources}
+            {logoUrl}
+            title={video.title ?? ""}
+            thumbnailUrl={video.thumbnail.medium}
+            {watchUrl}
+        />
 
         <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500">
             <span

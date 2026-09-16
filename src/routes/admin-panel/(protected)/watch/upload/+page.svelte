@@ -195,6 +195,7 @@
             },
             onProcessing: () => (uploadPhase = "processing"),
             onSuccess: () => {
+                submitting = false;
                 popup.remove(uploadPopupId);
                 const message =
                     status === "draft"

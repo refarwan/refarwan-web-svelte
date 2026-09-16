@@ -1,3 +1,5 @@
+import type { ImageVariant } from "./image";
+
 export type VideoStatus = "published" | "draft" | "archived";
 
 export interface VideoUploader {
@@ -20,7 +22,7 @@ export interface VideoItem {
     title: string | null;
     status: VideoStatus;
     category: string | null;
-    thumbnail: { small: string; medium: string; large: string } | null;
+    thumbnail: ImageVariant;
     viewsCount: number;
     createdAt: string;
 }
@@ -46,7 +48,7 @@ export interface VideoStreamSource {
 export interface PublicVideoItem {
     id: string;
     title: string | null;
-    thumbnail: { small: string; medium: string; large: string } | null;
+    thumbnail: ImageVariant;
     viewsCount: number;
     duration: number;
     createdAt: string;
@@ -65,6 +67,6 @@ export interface VideoEmbedDetail {
     id: string;
     title: string | null;
     duration: number;
-    thumbnail: { small: string; medium: string; large: string } | null;
+    thumbnail: ImageVariant;
     sources: VideoStreamSource[];
 }
