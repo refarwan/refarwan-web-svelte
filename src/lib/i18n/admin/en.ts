@@ -192,9 +192,12 @@ export const enUS: AdminTranslation = {
 	watchVideo: {
 		pageTitle: 'Videos',
 		searchPlaceholder: 'Search videos...',
-		addVideo: '+ Add Video',
+		addVideo: 'Add Video',
 		tableTitle: 'Title',
 		tableCategory: 'Category',
+		filterCategory: 'Filter Category',
+		noCategoriesFound: 'No categories found',
+		apply: 'Apply',
 		tableStatus: 'Status',
 		tableViews: 'Views',
 		tableDate: 'Uploaded',

@@ -192,9 +192,12 @@ export const idID: AdminTranslation = {
 	watchVideo: {
 		pageTitle: 'Video',
 		searchPlaceholder: 'Cari video...',
-		addVideo: '+ Tambah Video',
+		addVideo: 'Tambah Video',
 		tableTitle: 'Judul',
 		tableCategory: 'Kategori',
+		filterCategory: 'Filter Kategori',
+		noCategoriesFound: 'Kategori tidak ditemukan',
+		apply: 'Terapkan',
 		tableStatus: 'Status',
 		tableViews: 'Tayangan',
 		tableDate: 'Diunggah',

@@ -190,6 +190,9 @@ export interface AdminTranslation {
 		addVideo: string;
 		tableTitle: string;
 		tableCategory: string;
+		filterCategory: string;
+		noCategoriesFound: string;
+		apply: string;
 		tableStatus: string;
 		tableViews: string;
 		tableDate: string;

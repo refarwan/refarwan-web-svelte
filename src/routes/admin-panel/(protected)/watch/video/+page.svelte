@@ -6,10 +6,12 @@
 	import { resolve } from '$app/paths';
 	import { enhance } from '$app/forms';
 
-	import CategoryFilterChips from './_components/CategoryFilterChips.svelte';
+	import Plus from 'lucide-svelte/icons/plus';
+	import Search from 'lucide-svelte/icons/search';
+
+	import CategoryFilterDropdown from './_components/CategoryFilterDropdown.svelte';
 	import Pagination from '$lib/components/admin/Pagination.svelte';
 	import StatusFilterTabs from './_components/StatusFilterTabs.svelte';
-	import VideoSearchHeader from './_components/VideoSearchHeader.svelte';
 	import VideoTable from './_components/VideoTable.svelte';
 	import { popup } from '$lib/stores/popup.svelte';
 
@@ -35,12 +37,12 @@
 		page: number,
 		search: string,
 		status: string,
-		categoryId: string = data.categoryIds[0] ?? ''
+		categoryIds: string[] = data.categoryIds
 	): string => {
 		const params = new SvelteURLSearchParams();
 		if (search) params.set('search', search);
 		if (status) params.set('status', status);
-		if (categoryId) params.set('category', categoryId);
+		if (categoryIds.length > 0) params.set('category', categoryIds.join(','));
 		if (page > 1) params.set('page', String(page));
 		const qs = params.toString();
 		return qs ? `${basePath}?${qs}` : basePath;
@@ -125,24 +127,45 @@
 </form>
 
 <div class="flex flex-col gap-4">
-	<VideoSearchHeader
-		{t}
-		bind:value={searchInput}
-		onInput={onSearchInput}
-		addHref={resolve('/admin-panel/watch/create')}
-	/>
+	<div
+		class="flex flex-col items-stretch justify-between gap-3 md:flex-row md:items-center md:gap-4"
+	>
+		<div class="flex flex-wrap items-center gap-2.5">
+			<div class="relative flex-1 sm:w-72 md:w-80">
+				<Search class="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-gray-400" />
+				<input
+					type="text"
+					bind:value={searchInput}
+					oninput={onSearchInput}
+					placeholder={t.searchPlaceholder}
+					class="w-full rounded-lg border border-gray-300 bg-white py-2.5 pr-4 pl-10 text-sm text-gray-900 placeholder-gray-400 transition-all focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
+				/>
+			</div>
+
+			<CategoryFilterDropdown
+				{t}
+				categories={data.categories}
+				activeCategoryIds={data.categoryIds}
+				onApply={(ids) => goto(buildHref(1, data.search, data.status, ids))}
+				onReset={() => goto(buildHref(1, data.search, data.status, []))}
+			/>
+		</div>
+
+		<div class="flex flex-wrap items-center gap-2.5">
+			<a
+				href={resolve('/admin-panel/watch/create')}
+				class="inline-flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg bg-theme-600 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition-colors hover:bg-theme-700"
+			>
+				<Plus class="h-4 w-4" />
+				<span>{t.addVideo}</span>
+			</a>
+		</div>
+	</div>
 
 	<StatusFilterTabs
 		tabs={statusTabs}
 		activeValue={data.status}
 		buildHref={(value) => buildHref(1, data.search, value)}
-	/>
-
-	<CategoryFilterChips
-		{t}
-		categories={data.categories}
-		activeCategoryIds={data.categoryIds}
-		buildHref={(categoryId) => buildHref(1, data.search, data.status, categoryId)}
 	/>
 
 	<VideoTable
