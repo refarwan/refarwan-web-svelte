@@ -66,7 +66,7 @@ export const WATCH_TRANSLATIONS: Record<string, WatchTranslation> = {
         openSearchAriaLabel: "Buka pencarian",
         closeSearchAriaLabel: "Tutup pencarian",
         appsHomeLabel: "Beranda",
-        appsProjectLabel: "Proyek",
+        appsProjectLabel: "Project",
         appsWatchLabel: "Watch",
         appsBlogLabel: "Blog",
         playOnWatch: "Putar di Watch"
@@ -90,9 +90,9 @@ export const WATCH_TRANSLATIONS: Record<string, WatchTranslation> = {
         openSearchAriaLabel: "検索を開く",
         closeSearchAriaLabel: "検索を閉じる",
         appsHomeLabel: "ホーム",
-        appsProjectLabel: "プロジェクト",
+        appsProjectLabel: "Project",
         appsWatchLabel: "Watch",
-        appsBlogLabel: "ブログ",
+        appsBlogLabel: "Blog",
         playOnWatch: "Watch で再生"
     }
 };

@@ -15,7 +15,7 @@
     interface Props {
         isOpen: boolean;
         onClose: () => void;
-        currentApp: "home" | "watch";
+        currentApp: "home" | "watch" | "project" | "blog";
         homeHref: string;
         projectHref: string;
         watchHref: string;
@@ -79,6 +79,9 @@
             {#each apps as app (app.name)}
                 {@const isActive = currentApp === app.name}
                 {@const Icon = app.icon}
+                <!-- app.href is built from resolve()-derived hrefs passed in as props, which
+                    the linter can't trace through the derived apps array. -->
+                <!-- eslint-disable svelte/no-navigation-without-resolve -->
                 <a
                     href={app.href}
                     onclick={onClose}
@@ -103,6 +106,7 @@
                         {app.label}
                     </span>
                 </a>
+                <!-- eslint-enable svelte/no-navigation-without-resolve -->
             {/each}
         </div>
     </div>

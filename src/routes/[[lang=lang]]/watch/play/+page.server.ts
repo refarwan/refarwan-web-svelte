@@ -4,7 +4,13 @@ import { getApiData } from "$lib/server/get-api-data";
 import { getSiteLogoUrl } from "$lib/server/site-logo";
 
 import type { PageServerLoad } from "./$types";
-import type { DataResponse, ListResponse, PublicVideoDetail, PublicVideoItem } from "$lib/types";
+import type {
+    DataResponse,
+    ListResponse,
+    PublicSettingsData,
+    PublicVideoDetail,
+    PublicVideoItem
+} from "$lib/types";
 
 export const load: PageServerLoad = async ({ locals, url, fetch }) => {
     const videoId = url.searchParams.get("v");
@@ -12,7 +18,7 @@ export const load: PageServerLoad = async ({ locals, url, fetch }) => {
 
     const headers = { "Accept-Language": locals.locale };
 
-    const [videoRes, recommendedRes, logoUrl] = await Promise.all([
+    const [videoRes, recommendedRes, logoUrl, publicSettingRes] = await Promise.all([
         getApiData<DataResponse<PublicVideoDetail>>(
             `video/${videoId}/public`,
             undefined,
@@ -25,7 +31,8 @@ export const load: PageServerLoad = async ({ locals, url, fetch }) => {
             fetch,
             headers
         ),
-        getSiteLogoUrl(fetch)
+        getSiteLogoUrl(fetch),
+        getApiData<DataResponse<PublicSettingsData>>("setting/public", "settings")
     ]);
 
     if (!videoRes?.data) error(404, "Video not found");
@@ -33,6 +40,7 @@ export const load: PageServerLoad = async ({ locals, url, fetch }) => {
     return {
         video: videoRes.data,
         recommended: (recommendedRes?.data ?? []).filter((item) => item.id !== videoId),
-        logoUrl
+        logoUrl,
+        metadata: publicSettingRes?.data.appMetadata
     };
 };

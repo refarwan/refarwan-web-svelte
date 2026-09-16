@@ -6,28 +6,31 @@
     import Pagination from "$lib/components/Pagination.svelte";
     import { getWatchTranslation } from "$lib/i18n/watch";
 
-    import AppMainSection from "./_components/AppMainSection.svelte";
-    import VideoGrid from "./_components/VideoGrid.svelte";
-    import WatchCategoryFilter from "./_components/WatchCategoryFilter.svelte";
+    import AppMainSection from "../_components/AppMainSection.svelte";
+    import WatchCategoryFilter from "../_components/WatchCategoryFilter.svelte";
+    import SearchResultList from "./_components/SearchResultList.svelte";
 
     let { data } = $props();
 
     const t = $derived(getWatchTranslation(data.lang));
 
     const basePath = $derived(page.params.lang ? `/${page.params.lang}/watch` : "/watch");
+    const resultPath = $derived(`${basePath}/result`);
 
     const buildCategoryHref = (slug: string): string => {
         const params = new SvelteURLSearchParams();
         if (slug !== "all") params.set("category", slug);
+        if (data.search) params.set("search", data.search);
         const qs = params.toString();
-        return qs ? `${basePath}?${qs}` : basePath;
+        return qs ? `${resultPath}?${qs}` : resultPath;
     };
 
     const buildPageHref = (targetPage: number): string => {
         const params = new SvelteURLSearchParams();
         if (data.activeCategory !== "all") params.set("category", data.activeCategory);
+        if (data.search) params.set("search", data.search);
         params.set("page", `${targetPage}`);
-        return `${basePath}?${params.toString()}`;
+        return `${resultPath}?${params.toString()}`;
     };
 
     const buildPlayHref = (id: string): string => `${basePath}/play?v=${id}`;
@@ -36,7 +39,7 @@
 </script>
 
 <svelte:head>
-    <title>{data.appMetadata?.title} Watch</title>
+    <title>{data.search || t.pageTitle} | {data.metadata?.title} Watch</title>
     <meta name="description" content={t.pageDescription} />
 </svelte:head>
 
@@ -49,8 +52,9 @@
     />
 
     <div class="mt-6 md:mt-7 lg:mt-8">
-        <VideoGrid
+        <SearchResultList
             videos={data.videos}
+            search={data.search}
             lang={data.lang}
             viewsLabel={t.views}
             noVideosLabel={t.noVideos}

@@ -12,22 +12,26 @@
     import type { ContentLanguage } from "$lib/types";
 
     interface Props {
+        appName: string;
+        currentApp: "watch" | "project" | "blog";
         language: string;
         locale: string;
         contentLanguages: ContentLanguage[];
-        basePath: string;
         t: WatchTranslation;
     }
 
-    let { language, locale, contentLanguages, basePath, t }: Props = $props();
+    let { appName, currentApp, language, locale, contentLanguages, t }: Props = $props();
 
     let isAppsOpen = $state(false);
 
-    const homeHref = $derived(
-        resolve("/[[lang=lang]]", { lang: language === "en" ? undefined : locale })
+    const langParam = $derived(language === "en" ? undefined : locale);
+    const homeHref = $derived(resolve("/[[lang=lang]]", { lang: langParam }));
+    const projectHref = $derived(resolve("/[[lang=lang]]/project", { lang: langParam }));
+    const watchHref = $derived(resolve("/[[lang=lang]]/watch", { lang: langParam }));
+    const blogHref = $derived(resolve("/[[lang=lang]]/blog", { lang: langParam }));
+    const appHref = $derived(
+        currentApp === "project" ? projectHref : currentApp === "blog" ? blogHref : watchHref
     );
-    const projectHref = $derived(`${homeHref}#projects`);
-    const blogHref = $derived(homeHref);
 </script>
 
 <header
@@ -38,7 +42,7 @@
     >
         <div class="flex shrink-0 items-center">
             <a
-                href={basePath}
+                href={appHref}
                 class="text-2xl font-bold tracking-tight text-theme-700 transition-colors hover:text-theme-800 md:text-[22px]"
             >
                 <span class="hidden md:inline">Aan Refarwan</span>
@@ -46,21 +50,23 @@
                 <span
                     class="ml-1.5 text-2xl font-medium tracking-tight text-theme-400 md:text-[22px]"
                 >
-                    Watch
+                    {appName}
                 </span>
             </a>
         </div>
 
         <div class="flex shrink-0 items-center gap-2.5">
-            <button
-                type="button"
-                onclick={() => (searchOverlay.open = !searchOverlay.open)}
-                aria-label={t.openSearchAriaLabel}
-                aria-expanded={searchOverlay.open}
-                class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 md:hidden"
-            >
-                <SearchIcon class="h-5 w-5" />
-            </button>
+            {#if currentApp === "watch"}
+                <button
+                    type="button"
+                    onclick={() => (searchOverlay.open = !searchOverlay.open)}
+                    aria-label={t.openSearchAriaLabel}
+                    aria-expanded={searchOverlay.open}
+                    class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 md:hidden"
+                >
+                    <SearchIcon class="h-5 w-5" />
+                </button>
+            {/if}
 
             <LanguageSwitcher {language} {contentLanguages} />
 
@@ -80,10 +86,10 @@
                 <AppsDropdown
                     isOpen={isAppsOpen}
                     onClose={() => (isAppsOpen = false)}
-                    currentApp="watch"
+                    {currentApp}
                     {homeHref}
                     {projectHref}
-                    watchHref={basePath}
+                    {watchHref}
                     {blogHref}
                     homeLabel={t.appsHomeLabel}
                     projectLabel={t.appsProjectLabel}

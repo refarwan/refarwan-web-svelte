@@ -56,7 +56,7 @@
 </script>
 
 <svelte:head>
-    <title>{video.title ?? t.videoNotFound} |</title>
+    <title>{video.title ?? t.videoNotFound} | {data.metadata?.title} Watch</title>
     {#if video.description}
         <meta name="description" content={video.description} />
     {/if}

@@ -1,5 +1,3 @@
-import { redirect } from "@sveltejs/kit";
-
 import { getApiData } from "$lib/server/get-api-data";
 
 import type { PageServerLoad } from "./$types";
@@ -11,23 +9,18 @@ import type {
     PublicVideoItem
 } from "$lib/types";
 
-export const load: PageServerLoad = async ({ locals, params, url, fetch }) => {
+export const load: PageServerLoad = async ({ locals, url, fetch }) => {
     const activeCategory = url.searchParams.get("category") ?? "all";
     const search = url.searchParams.get("search")?.trim() ?? "";
     const page = url.searchParams.get("page") ?? "1";
-
-    // Search results live on their own page; forward any ?search= here to it.
-    if (search) {
-        const prefix = params.lang ? `/${params.lang}` : "";
-        redirect(307, `${prefix}/watch/result?search=${encodeURIComponent(search)}`);
-    }
 
     const headers = { "Accept-Language": locals.locale };
 
     const query = new URLSearchParams({ page });
     if (activeCategory !== "all") query.set("categorySlug", activeCategory);
+    if (search) query.set("search", search);
 
-    const [categoriesRes, videosRes, settingRes] = await Promise.all([
+    const [categoriesRes, videosRes, publicSettingRes] = await Promise.all([
         getApiData<DataResponse<PublicVideoCategoryItem[]>>(
             "video-category/all",
             undefined,
@@ -49,6 +42,7 @@ export const load: PageServerLoad = async ({ locals, params, url, fetch }) => {
         currentPage: videosRes?.currentPage ?? 1,
         totalPage: videosRes?.totalPage ?? 1,
         activeCategory,
-        appMetadata: settingRes?.data.appMetadata
+        search,
+        metadata: publicSettingRes?.data.appMetadata
     };
 };

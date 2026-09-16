@@ -9,11 +9,12 @@
 
     interface Props {
         basePath: string;
+        resultPath: string;
         placeholder: string;
         closeLabel: string;
     }
 
-    let { basePath, placeholder, closeLabel }: Props = $props();
+    let { basePath, resultPath, placeholder, closeLabel }: Props = $props();
 
     let query = $derived(page.url.searchParams.get("search") ?? "");
     let inputEl: HTMLInputElement | undefined = $state();
@@ -36,11 +37,12 @@
         if (trimmed) {
             params.set("search", trimmed);
             params.delete("category");
+            void goto(`${resultPath}?${params.toString()}`);
         } else {
             params.delete("search");
+            const qs = params.toString();
+            void goto(qs ? `${basePath}?${qs}` : basePath);
         }
-        const qs = params.toString();
-        void goto(qs ? `${basePath}?${qs}` : basePath);
         searchOverlay.open = false;
     };
 </script>
@@ -65,7 +67,7 @@
 
     <form
         onsubmit={handleSubmit}
-        class="pointer-events-auto flex h-10 w-full flex-1 items-center gap-2 rounded-full border-[1.5px] border-gray-200 bg-white px-3 py-2 transition-all focus-within:border-theme-500 focus-within:ring-1 focus-within:ring-theme-500 md:w-full md:max-w-62.5 md:flex-initial lg:max-w-97.5"
+        class="pointer-events-auto flex h-10 w-full flex-1 items-center gap-2 rounded-full border-[1.5px] border-gray-200 bg-white px-3 py-2 transition-all md:w-full md:max-w-62.5 md:flex-initial lg:max-w-97.5"
     >
         <SearchIcon class="h-4 w-4 shrink-0 text-gray-400" />
         <input
@@ -73,7 +75,7 @@
             type="search"
             bind:value={query}
             {placeholder}
-            class="w-full appearance-none border-0 bg-transparent text-sm text-gray-800 outline-hidden placeholder:text-gray-400"
+            class="w-full appearance-none border-0 bg-transparent text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:ring-0"
         />
     </form>
 </div>
