@@ -54,7 +54,7 @@
 		use:enhance={() => {
 			submitting = true;
 			return async ({ update }) => {
-				await update();
+				await update({ reset: false });
 				submitting = false;
 			};
 		}}

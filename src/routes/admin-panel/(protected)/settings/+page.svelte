@@ -141,7 +141,7 @@
 			const wasResetting = resetting;
 			submitting = !wasResetting;
 			return async ({ result, update }) => {
-				await update();
+				await update({ reset: false });
 				submitting = false;
 				resetting = false;
 				if (result.type === 'success') {
