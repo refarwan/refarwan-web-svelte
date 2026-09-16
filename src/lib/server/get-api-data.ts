@@ -1,4 +1,4 @@
-import { env } from "$env/dynamic/private";
+import { env } from "$env/dynamic/public";
 import { redis } from "./redis";
 
 export const getApiData = async <T>(
@@ -10,7 +10,7 @@ export const getApiData = async <T>(
     const cacheKey = tag ? `${tag}:${endpoint}` : null;
 
     try {
-        const apiUrl = env.API_URL || "http://localhost:3000";
+        const apiUrl = env.PUBLIC_API_URL || "http://localhost:3000";
 
         if (cacheKey) {
             const cached = await redis.get(cacheKey);

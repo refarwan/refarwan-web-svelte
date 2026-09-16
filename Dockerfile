@@ -5,10 +5,6 @@ WORKDIR /app
 COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
 
-# Build-time arg: only used so `vite build` can prerender/typecheck against a real API URL.
-ARG API_URL
-ENV API_URL=$API_URL
-
 COPY . .
 RUN bun run build
 
