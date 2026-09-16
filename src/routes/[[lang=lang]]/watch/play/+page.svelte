@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from "$app/state";
-    import { PUBLIC_API_URL } from "$env/static/public";
+    import { env } from "$env/dynamic/public";
 
     import VideoPlayer from "$lib/components/video-player/VideoPlayer.svelte";
     import { getWatchTranslation } from "$lib/i18n/watch";
@@ -37,7 +37,7 @@
 
     const recordView = async () => {
         try {
-            await fetch(`${PUBLIC_API_URL}/video/${video.id}/view`, { method: "POST" });
+            await fetch(`${env.PUBLIC_API_URL}/video/${video.id}/view`, { method: "POST" });
         } catch {
             // view tracking is non-critical — fail silently
         }

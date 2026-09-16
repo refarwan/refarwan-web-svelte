@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import { PUBLIC_API_URL } from "$env/static/public";
-
 import { authStore } from "$lib/stores/auth.svelte";
 import { popup } from "$lib/stores/popup.svelte";
 import { getAdminLangCookie } from "$lib/utils/admin-lang-cookie";
@@ -10,6 +8,7 @@ import { decodeJwt } from "$lib/utils/decode-jwt";
 import { http } from "./http";
 
 import type { AxiosError } from "axios";
+import { env } from "$env/dynamic/public";
 
 interface ErrorResponseData {
     message?: string;
@@ -36,7 +35,7 @@ export const ensureAccessToken = async (): Promise<string | null> => {
 };
 
 export const authorizedHttp = axios.create({
-    baseURL: PUBLIC_API_URL,
+    baseURL: env.PUBLIC_API_URL,
     withCredentials: true
 });
 

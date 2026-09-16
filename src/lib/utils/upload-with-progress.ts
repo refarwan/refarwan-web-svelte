@@ -1,5 +1,4 @@
-import { PUBLIC_API_URL } from "$env/static/public";
-
+import { env } from "$env/dynamic/public";
 import { ensureAccessToken } from "$lib/api/authorized-http";
 import { getAdminLangCookie } from "$lib/utils/admin-lang-cookie";
 
@@ -52,7 +51,7 @@ export const uploadWithProgress = (
 
     void (async () => {
         const token = await ensureAccessToken();
-        request.open("POST", `${PUBLIC_API_URL}${path}`);
+        request.open("POST", `${env.PUBLIC_API_URL}${path}`);
         request.withCredentials = true;
         if (token) request.setRequestHeader("Authorization", `Bearer ${token}`);
         request.setRequestHeader("Accept-Language", getAdminLangCookie());

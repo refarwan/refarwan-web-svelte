@@ -1,18 +1,17 @@
 import axios from "axios";
 
-import { PUBLIC_API_URL } from "$env/static/public";
-
 import { popup } from "$lib/stores/popup.svelte";
 import { getAdminLangCookie } from "$lib/utils/admin-lang-cookie";
 
 import type { AxiosError } from "axios";
+import { env } from "$env/dynamic/public";
 
 interface ErrorResponseData {
     message?: string;
 }
 
 export const http = axios.create({
-    baseURL: PUBLIC_API_URL,
+    baseURL: env.PUBLIC_API_URL,
     withCredentials: true
 });
 
