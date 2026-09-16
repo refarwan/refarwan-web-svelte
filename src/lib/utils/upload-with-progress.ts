@@ -1,5 +1,5 @@
 export interface UploadCallbacks {
-	onProgress: (percent: number) => void;
+	onProgress: (percent: number, loaded: number, total: number) => void;
 	onProcessing: () => void;
 	onSuccess: () => void;
 	onError: (message: string) => void;
@@ -29,7 +29,7 @@ export const uploadWithProgress = (
 	request.upload.addEventListener('progress', (event) => {
 		if (!event.lengthComputable) return;
 		const percent = Math.round((event.loaded / event.total) * 100);
-		callbacks.onProgress(Math.min(99, percent));
+		callbacks.onProgress(Math.min(99, percent), event.loaded, event.total);
 		if (percent >= 100) callbacks.onProcessing();
 	});
 
