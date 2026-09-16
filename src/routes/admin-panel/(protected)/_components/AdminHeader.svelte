@@ -1,40 +1,39 @@
 <script lang="ts">
     import { CircleUserRoundIcon, KeyRoundIcon, LogOutIcon, MenuIcon } from "lucide-svelte/icons";
-    import { goto } from "$app/navigation";
-    import { page } from "$app/state";
+    import { beforeNavigate, goto } from "$app/navigation";
     import { resolve } from "$app/paths";
 
+    import { onMount } from "svelte";
+
     import { authorizedHttp } from "$lib/api/authorized-http";
+    import { accountStore } from "$lib/stores/account.svelte";
     import { adminSidebar } from "$lib/stores/admin-sidebar.svelte";
     import { authStore } from "$lib/stores/auth.svelte";
+    import { pageTitleStore } from "$lib/stores/page-title.svelte";
 
     import type { AdminTranslation } from "$lib/i18n/admin";
-    import type { AccountItem } from "$lib/types";
 
     interface Props {
-        account: AccountItem | null;
         t: AdminTranslation["shell"];
     }
 
-    let { account, t }: Props = $props();
+    let { t }: Props = $props();
 
     let isOpen = $state(false);
     let containerRef: HTMLDivElement | undefined = $state();
 
-    const title = $derived.by(() => {
-        const path = page.url.pathname;
-        if (path.startsWith("/admin-panel/blog/categories")) return t.blogCategories;
-        if (path.startsWith("/admin-panel/blog")) return t.blog;
-        if (path.startsWith("/admin-panel/watch/category")) return t.watchCategories;
-        if (path.startsWith("/admin-panel/watch/video")) return t.watchVideo;
-        if (path.startsWith("/admin-panel/watch")) return t.watch;
-        if (path.startsWith("/admin-panel/project")) return t.project;
-        if (path.startsWith("/admin-panel/landing-page")) return t.landingPage;
-        if (path.startsWith("/admin-panel/settings")) return t.settings;
-        if (path.startsWith("/admin-panel/change-password")) return t.changePassword;
-        if (path.startsWith("/admin-panel/my-account")) return t.myAccount;
-        return t.dashboard;
+    onMount(() => {
+        void accountStore.load();
     });
+
+    // Each page sets its own title via pageTitleStore.set(); reset it before every
+    // navigation so a page that doesn't set one (e.g. the 404 catchall) falls back
+    // to notFound instead of showing the previous page's stale title.
+    beforeNavigate(() => {
+        pageTitleStore.reset();
+    });
+
+    const title = $derived(pageTitleStore.title ?? t.notFound);
 
     $effect(() => {
         if (!isOpen) return;
@@ -82,17 +81,17 @@
             aria-label="User menu"
             aria-expanded={isOpen}
         >
-            {#if account?.profilePicture}
+            {#if accountStore.account?.profilePicture}
                 <img
-                    src={account.profilePicture.small}
-                    alt={account.fullname}
+                    src={accountStore.account.profilePicture.small}
+                    alt={accountStore.account.fullname}
                     class="h-9 w-9 rounded-full object-cover"
                 />
             {:else}
                 <CircleUserRoundIcon class="h-9 w-9 shrink-0 text-gray-400" strokeWidth={2} />
             {/if}
             <span class="hidden text-sm font-medium text-gray-700 md:inline-block">
-                {account?.fullname ?? ""}
+                {accountStore.account?.fullname ?? ""}
             </span>
         </button>
 

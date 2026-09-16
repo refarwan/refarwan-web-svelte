@@ -1,12 +1,6 @@
 <script lang="ts">
-    import { onMount, untrack } from "svelte";
-
-    import { authorizedHttp } from "$lib/api/authorized-http";
-    import { CONTENT_LANGUAGES, DEFAULT_THEME_SHADES } from "$lib/constants";
     import { popup } from "$lib/stores/popup.svelte";
-    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
-    import { generateColorShades } from "$lib/utils/generate-color-shades";
-    import { useUnsavedChangesGuard } from "$lib/utils/unsaved-changes-guard.svelte";
+    import { pageTitleStore } from "$lib/stores/page-title.svelte";
 
     import AddLanguageModal from "./_components/AddLanguageModal.svelte";
     import AdminLanguageSection from "./_components/AdminLanguageSection.svelte";
@@ -15,92 +9,21 @@
     import MetadataFormSection from "./_components/MetadataFormSection.svelte";
     import SettingsSkeleton from "./_components/SettingsSkeleton.svelte";
     import ThemeFormSection from "./_components/ThemeFormSection.svelte";
-
-    import type { AdminSettingsData, DataResponse, ThemeShades } from "$lib/types";
+    import { useSettingsForm } from "./use-settings-form.svelte";
+    import { CONTENT_LANGUAGES } from "$lib/constants";
 
     let { data } = $props();
     const t = $derived(data.t);
     const commonT = $derived(data.common);
 
-    let loading = $state(true);
-    let loadError = $state("");
-
-    let title = $state("");
-    let description = $state("");
-    let faviconPreview = $state("");
-    let faviconFile: File | null = $state(null);
-
-    let selectedColor = $state(DEFAULT_THEME_SHADES["500"]);
-    let themeShades = $state<ThemeShades>(DEFAULT_THEME_SHADES);
-    let isThemeChanged = $state(false);
-
-    let otherContentLanguages = $state<string[]>([]);
-
-    let snapshot = $state(
-        untrack(() => ({ title, description, color: selectedColor, languages: [] as string[] }))
-    );
-
-    onMount(async () => {
-        try {
-            const res = await authorizedHttp.get<DataResponse<AdminSettingsData>>("/setting");
-            const setting = res.data.data;
-
-            title = setting.appMetadata.title;
-            description = setting.appMetadata.description;
-            faviconPreview = setting.appMetadata.favicon;
-            selectedColor = setting.theme["500"] ?? DEFAULT_THEME_SHADES["500"];
-            themeShades = setting.theme;
-            otherContentLanguages = setting.otherContentLanguages;
-
-            snapshot = {
-                title,
-                description,
-                color: selectedColor,
-                languages: [...otherContentLanguages]
-            };
-        } catch (err) {
-            loadError = axiosErrorMessage(err, t.loadFailed);
-        } finally {
-            loading = false;
-        }
+    $effect(() => {
+        pageTitleStore.set(data.shellT.settings);
     });
 
-    const isDirty = $derived(
-        title !== snapshot.title ||
-            description !== snapshot.description ||
-            faviconFile !== null ||
-            isThemeChanged ||
-            selectedColor !== snapshot.color ||
-            otherContentLanguages.join(",") !== snapshot.languages.join(",")
+    const form = useSettingsForm(
+        () => t,
+        () => commonT
     );
-
-    const availableLanguages = $derived(
-        CONTENT_LANGUAGES.filter(
-            (lang) => lang.code !== "en" && !otherContentLanguages.includes(lang.locale)
-        )
-    );
-
-    const activeLanguages = $derived(
-        otherContentLanguages
-            .map((locale) => CONTENT_LANGUAGES.find((lang) => lang.locale === locale))
-            .filter((lang) => lang !== undefined)
-    );
-
-    const onColorChange = (color: string) => {
-        selectedColor = color;
-        isThemeChanged = true;
-        const shades = generateColorShades(selectedColor);
-        if (shades) themeShades = shades;
-    };
-
-    const onAddLanguage = (locale: string) => {
-        if (otherContentLanguages.includes(locale)) return;
-        otherContentLanguages = [...otherContentLanguages, locale];
-    };
-
-    const onRemoveLanguage = (locale: string) => {
-        otherContentLanguages = otherContentLanguages.filter((code) => code !== locale);
-    };
 
     let colorPickerPopupId = $state("");
     let addLanguagePopupId = $state("");
@@ -114,113 +37,55 @@
         addLanguagePopupId = popup.generateId();
         popup.custom({ id: addLanguagePopupId, component: addLanguageSnippet });
     };
-
-    let submitting = $state(false);
-    let resetting = $state(false);
-
-    const handleSubmit = async (event: SubmitEvent) => {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget as HTMLFormElement);
-        if (!isThemeChanged) formData.delete("colorCode");
-        if (!faviconFile) formData.delete("favicon");
-
-        submitting = true;
-        try {
-            await authorizedHttp.put("/setting", formData);
-            snapshot = {
-                title,
-                description,
-                color: selectedColor,
-                languages: [...otherContentLanguages]
-            };
-            faviconFile = null;
-            isThemeChanged = false;
-            popup.success({ message: t.updated });
-        } catch (err) {
-            popup.error({ message: axiosErrorMessage(err, "Update failed") });
-        } finally {
-            submitting = false;
-        }
-    };
-
-    const submitResetTheme = async () => {
-        resetting = true;
-        try {
-            await authorizedHttp.delete("/setting/theme-shades");
-            themeShades = DEFAULT_THEME_SHADES;
-            selectedColor = DEFAULT_THEME_SHADES["500"];
-            isThemeChanged = false;
-            popup.success({ message: t.resetDone });
-        } catch (err) {
-            popup.error({ message: axiosErrorMessage(err, t.resetFailed) });
-        } finally {
-            resetting = false;
-        }
-    };
-
-    const handleResetTheme = () => {
-        popup.confirm({
-            title: t.resetTitle,
-            message: t.resetConfirm,
-            confirmText: t.resetDefault,
-            cancelText: commonT.cancel,
-            onConfirm: submitResetTheme
-        });
-    };
-
-    useUnsavedChangesGuard(
-        () => isDirty,
-        () => commonT.unsavedMessage
-    );
 </script>
 
-<svelte:head>
-    <title>{t.metadataTitle}</title>
-</svelte:head>
-
 <div class="flex flex-col gap-4">
-    {#if loading}
+    {#if form.loading}
         <SettingsSkeleton />
-    {:else if loadError}
+    {:else if form.loadError}
         <div class="rounded-lg border border-red-200 bg-red-50 p-5 text-sm text-red-700">
-            {loadError}
+            {form.loadError}
         </div>
     {:else}
-        <form onsubmit={handleSubmit} enctype="multipart/form-data" class="flex flex-col gap-4">
+        <form
+            onsubmit={form.handleSubmit}
+            enctype="multipart/form-data"
+            class="flex flex-col gap-4"
+        >
             <MetadataFormSection
                 {t}
-                bind:title
-                bind:description
-                bind:faviconPreview
-                bind:faviconFile
+                bind:title={form.title}
+                bind:description={form.description}
+                bind:faviconPreview={form.faviconPreview}
+                bind:faviconFile={form.faviconFile}
             />
 
             <ThemeFormSection
                 {t}
-                {themeShades}
-                {isThemeChanged}
-                {selectedColor}
-                {resetting}
+                themeShades={form.themeShades}
+                isThemeChanged={form.isThemeChanged}
+                selectedColor={form.selectedColor}
+                resetting={form.resetting}
                 onOpenColorPicker={openColorPicker}
-                onResetTheme={handleResetTheme}
+                onResetTheme={form.handleResetTheme}
             />
 
             <LanguagesFormSection
                 {t}
-                {otherContentLanguages}
-                {availableLanguages}
-                {activeLanguages}
-                {onRemoveLanguage}
+                otherContentLanguages={form.otherContentLanguages}
+                availableLanguages={form.availableLanguages}
+                activeLanguages={form.activeLanguages}
+                onRemoveLanguage={form.onRemoveLanguage}
                 onOpenAddLanguageModal={openAddLanguageModal}
             />
 
             <div class="flex justify-end">
                 <button
                     type="submit"
-                    disabled={submitting || !isDirty}
+                    disabled={form.submitting || !form.isDirty}
                     class="rounded-lg bg-theme-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-theme-700 disabled:opacity-50"
                 >
-                    {submitting ? t.saving : t.save}
+                    {form.submitting ? t.saving : t.save}
                 </button>
             </div>
         </form>
@@ -231,9 +96,9 @@
 
 {#snippet colorPickerSnippet()}
     <ColorPickerModal
-        initialColor={selectedColor}
+        initialColor={form.selectedColor}
         onClose={() => popup.remove(colorPickerPopupId)}
-        onSelectColor={onColorChange}
+        onSelectColor={form.onColorChange}
         title={t.pickColor}
         shadesPreviewLabel={t.shadesPreview}
         cancelLabel={commonT.cancel}
@@ -244,10 +109,10 @@
 {#snippet addLanguageSnippet()}
     <AddLanguageModal
         activeCodes={CONTENT_LANGUAGES.filter((lang) =>
-            lang.code === "en" ? true : otherContentLanguages.includes(lang.locale)
+            lang.code === "en" ? true : form.otherContentLanguages.includes(lang.locale)
         ).map((lang) => lang.code)}
         onClose={() => popup.remove(addLanguagePopupId)}
-        {onAddLanguage}
+        onAddLanguage={form.onAddLanguage}
         title={t.addLanguageModalTitle}
         searchPlaceholder={t.addLanguagePlaceholder}
         defaultLabel={t.defaultLanguage}

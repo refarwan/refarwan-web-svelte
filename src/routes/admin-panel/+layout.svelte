@@ -12,21 +12,20 @@
 
     onMount(async () => {
         try {
-            const res = await http.get<DataResponse<AuthCheckResult>>("/auth/check");
-            // A manual login/logout may have already resolved the auth state while this
-            // request was in flight — don't let a stale response clobber it.
             if (authStore.initialized) return;
-
-            if (res.data.data.status === "authenticated") {
+            const res = await http.get<DataResponse<AuthCheckResult>>("/auth/check");
+            if (res.data.data.status === "authenticated")
                 authStore.setAccessToken(res.data.data.accessToken);
-            } else {
-                authStore.clear();
-            }
+            else authStore.clear();
         } catch {
             if (!authStore.initialized) authStore.clear();
         }
     });
 </script>
+
+<svelte:head>
+    <title>ERCMS Dashboard</title>
+</svelte:head>
 
 <div class="min-h-screen bg-gray-50 font-sans text-gray-900 antialiased">
     {#if authStore.initialized}

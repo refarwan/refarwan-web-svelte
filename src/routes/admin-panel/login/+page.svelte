@@ -50,10 +50,6 @@
     };
 </script>
 
-<svelte:head>
-    <title>{data.t.pageTitle}</title>
-</svelte:head>
-
 <main class="flex min-h-screen w-full flex-col md:flex-row">
     <div class="grid h-48.5 place-content-center bg-theme-700 md:h-screen md:w-76.75 xl:w-xl">
         <img src="/ercms-logo-cell.png" alt="ERCMS Logo" class="h-auto w-26.25 md:w-50" />

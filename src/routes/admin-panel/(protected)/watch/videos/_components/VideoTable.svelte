@@ -66,13 +66,13 @@
                     class="flex flex-col gap-3 px-5 py-3.5 md:grid md:grid-cols-[72px_1fr_160px_120px_90px_110px_170px] md:items-center md:gap-4"
                 >
                     <div
-                        class="h-11 w-18 shrink-0 overflow-hidden rounded-md border border-gray-100 bg-gray-100"
+                        class="grid h-11 w-18 shrink-0 place-content-center overflow-hidden rounded-md border bg-gray-950"
                     >
                         {#if item.thumbnail}
                             <img
                                 src={item.thumbnail.small}
                                 alt={item.title ?? ""}
-                                class="h-full w-full object-cover"
+                                class="h-auto max-h-full w-auto max-w-full"
                             />
                         {/if}
                     </div>
@@ -107,7 +107,7 @@
                             <EyeIcon class="h-4 w-4" />
                         </button>
                         <a
-                            href={resolve("/admin-panel/(protected)/watch/video/edit/[id]", {
+                            href={resolve("/admin-panel/(protected)/watch/videos/edit/[id]", {
                                 id: item.id
                             })}
                             aria-label={t.edit}

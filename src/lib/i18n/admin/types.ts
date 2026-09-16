@@ -1,6 +1,5 @@
 export interface AdminTranslation {
     login: {
-        pageTitle: string;
         title: string;
         subtitle: string;
         identifierLabel: string;
@@ -12,13 +11,13 @@ export interface AdminTranslation {
         passwordRequired: string;
     };
     shell: {
+        notFound: string;
         dashboard: string;
         landingPage: string;
-        blog: string;
         blogArticles: string;
         blogCategories: string;
-        watch: string;
-        watchVideo: string;
+        watchVideos: string;
+        watchUploadVideo: string;
         watchCategories: string;
         project: string;
         myAccount: string;
@@ -148,7 +147,6 @@ export interface AdminTranslation {
         backToDashboard: string;
     };
     watchCategory: {
-        pageTitle: string;
         searchPlaceholder: string;
         addCategory: string;
         tableName: string;
@@ -187,7 +185,6 @@ export interface AdminTranslation {
         next: string;
     };
     watchVideo: {
-        pageTitle: string;
         searchPlaceholder: string;
         addVideo: string;
         tableTitle: string;

@@ -1,11 +1,10 @@
 <script lang="ts">
     import { PlusIcon, SearchIcon } from "lucide-svelte/icons";
-    import { tick, untrack } from "svelte";
     import { SvelteURLSearchParams } from "svelte/reactivity";
 
     import { goto } from "$app/navigation";
+    import { page } from "$app/state";
     import { resolve } from "$app/paths";
-    import { enhance } from "$app/forms";
 
     import CategoryFilterDropdown from "./_components/CategoryFilterDropdown.svelte";
     import Pagination from "$lib/components/Pagination.svelte";
@@ -13,16 +12,32 @@
     import VideoDetailModal from "./_components/VideoDetailModal.svelte";
     import VideoTable from "./_components/VideoTable.svelte";
     import { popup } from "$lib/stores/popup.svelte";
+    import { pageTitleStore } from "$lib/stores/page-title.svelte";
+    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+    import { useVideoList } from "./use-video-list.svelte";
 
     import type { VideoDetail, VideoItem } from "$lib/types";
 
-    let { data, form } = $props();
+    let { data } = $props();
     const t = $derived(data.t);
     const commonT = $derived(data.common);
 
-    const basePath = resolve("/admin-panel/watch/video");
+    $effect(() => {
+        pageTitleStore.set(data.shellT.watchVideos);
+    });
 
-    let searchInput = $state(data.search);
+    const basePath = resolve("/admin-panel/watch/videos");
+
+    const videoList = useVideoList();
+
+    const currentPage = $derived(Math.max(1, Number(page.url.searchParams.get("page")) || 1));
+    const search = $derived(page.url.searchParams.get("search") ?? "");
+    const status = $derived(page.url.searchParams.get("status") ?? "");
+    const categoryIds = $derived(
+        (page.url.searchParams.get("category") ?? "").split(",").filter(Boolean)
+    );
+
+    let searchInput = $state(search);
     let searchDebounce: ReturnType<typeof setTimeout> | undefined;
 
     const statusTabs = $derived([
@@ -33,16 +48,16 @@
     ]);
 
     const buildHref = (
-        page: number,
-        search: string,
-        status: string,
-        categoryIds: string[] = data.categoryIds
+        pageNum: number,
+        searchValue: string,
+        statusValue: string,
+        categoryIdsValue: string[] = categoryIds
     ): string => {
         const params = new SvelteURLSearchParams();
-        if (search) params.set("search", search);
-        if (status) params.set("status", status);
-        if (categoryIds.length > 0) params.set("category", categoryIds.join(","));
-        if (page > 1) params.set("page", String(page));
+        if (searchValue) params.set("search", searchValue);
+        if (statusValue) params.set("status", statusValue);
+        if (categoryIdsValue.length > 0) params.set("category", categoryIdsValue.join(","));
+        if (pageNum > 1) params.set("page", String(pageNum));
         const qs = params.toString();
         return qs ? `${basePath}?${qs}` : basePath;
     };
@@ -50,30 +65,11 @@
     const onSearchInput = () => {
         clearTimeout(searchDebounce);
         searchDebounce = setTimeout(() => {
-            void goto(buildHref(1, searchInput, data.status), { keepFocus: true, noScroll: true });
+            // buildHref appends a query string to a resolve()-derived basePath; the linter
+            // can't trace resolve() through the helper function.
+            // eslint-disable-next-line svelte/no-navigation-without-resolve
+            void goto(buildHref(1, searchInput, status), { keepFocus: true, noScroll: true });
         }, 350);
-    };
-
-    $effect(() => {
-        // popup.success/error read and write the popup store's own state, so calling
-        // them untracked keeps this effect's only dependency on `form` — otherwise it
-        // re-triggers itself via the store write and floods duplicate popups.
-        if (form?.success && form.message) {
-            untrack(() => popup.success({ message: form.message ?? "" }));
-        } else if (form?.error) {
-            untrack(() => popup.error({ message: form.error ?? "" }));
-        }
-    });
-
-    let actionForm: HTMLFormElement | undefined = $state();
-    let actionId = $state("");
-    let actionName = $state<"archive" | "unarchive" | "delete">("delete");
-
-    const submitAction = async (id: string, action: "archive" | "unarchive" | "delete") => {
-        actionId = id;
-        actionName = action;
-        await tick();
-        actionForm?.requestSubmit();
     };
 
     const confirmDelete = (item: VideoItem) => {
@@ -82,7 +78,14 @@
             message: t.deleteConfirmMessage,
             confirmText: t.deleteConfirmButton,
             cancelText: commonT.cancel,
-            onConfirm: () => submitAction(item.id, "delete")
+            onConfirm: async () => {
+                try {
+                    await videoList.remove(item.id);
+                    popup.success({ message: t.deleted });
+                } catch (err) {
+                    popup.error({ message: axiosErrorMessage(err, "Failed to delete video") });
+                }
+            }
         });
     };
 
@@ -92,7 +95,14 @@
             message: t.archiveConfirmMessage,
             confirmText: t.archiveConfirmButton,
             cancelText: commonT.cancel,
-            onConfirm: () => submitAction(item.id, "archive")
+            onConfirm: async () => {
+                try {
+                    await videoList.archive(item.id);
+                    popup.success({ message: t.archived });
+                } catch (err) {
+                    popup.error({ message: axiosErrorMessage(err, "Failed to archive video") });
+                }
+            }
         });
     };
 
@@ -102,7 +112,14 @@
             message: t.unarchiveConfirmMessage,
             confirmText: t.unarchiveConfirmButton,
             cancelText: commonT.cancel,
-            onConfirm: () => submitAction(item.id, "unarchive")
+            onConfirm: async () => {
+                try {
+                    await videoList.unarchive(item.id);
+                    popup.success({ message: t.unarchived });
+                } catch (err) {
+                    popup.error({ message: axiosErrorMessage(err, "Failed to restore video") });
+                }
+            }
         });
     };
 
@@ -115,35 +132,16 @@
     };
 
     const openDetail = async (item: VideoItem) => {
-        const res = await fetch(`/admin-panel/api/video/${item.id}`);
-        if (!res.ok) {
+        const video = await videoList.fetchDetail(item.id);
+        if (!video) {
             popup.error({ message: t.loadDetailFailed });
             return;
         }
-        const body = (await res.json()) as { data: VideoDetail };
-        detailVideo = body.data;
+        detailVideo = video;
         detailPopupId = popup.generateId();
         popup.custom({ id: detailPopupId, component: detailModalSnippet });
     };
 </script>
-
-<svelte:head>
-    <title>{t.pageTitle}</title>
-</svelte:head>
-
-<form
-    method="POST"
-    action={`?/${actionName}`}
-    bind:this={actionForm}
-    use:enhance={() => {
-        return async ({ update }) => {
-            await update();
-        };
-    }}
-    class="hidden"
->
-    <input type="hidden" name="id" value={actionId} />
-</form>
 
 <div class="flex flex-col gap-4">
     <div
@@ -165,16 +163,24 @@
 
             <CategoryFilterDropdown
                 {t}
-                categories={data.categories}
-                activeCategoryIds={data.categoryIds}
-                onApply={(ids) => goto(buildHref(1, data.search, data.status, ids))}
-                onReset={() => goto(buildHref(1, data.search, data.status, []))}
+                categories={videoList.categories}
+                activeCategoryIds={categoryIds}
+                onApply={(ids) => {
+                    // buildHref appends a query string to a resolve()-derived basePath; the
+                    // linter can't trace resolve() through the helper function.
+                    // eslint-disable-next-line svelte/no-navigation-without-resolve
+                    goto(buildHref(1, search, status, ids));
+                }}
+                onReset={() => {
+                    // eslint-disable-next-line svelte/no-navigation-without-resolve
+                    goto(buildHref(1, search, status, []));
+                }}
             />
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5">
             <a
-                href={resolve("/admin-panel/watch/create")}
+                href={resolve("/admin-panel/watch/upload")}
                 class="inline-flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg bg-theme-600 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition-colors hover:bg-theme-700"
             >
                 <PlusIcon class="h-4 w-4" />
@@ -185,27 +191,35 @@
 
     <StatusFilterTabs
         tabs={statusTabs}
-        activeValue={data.status}
-        buildHref={(value) => buildHref(1, data.search, value)}
+        activeValue={status}
+        buildHref={(value) => buildHref(1, search, value)}
     />
 
-    <VideoTable
-        {t}
-        items={data.list?.data ?? []}
-        search={data.search}
-        onView={openDetail}
-        onArchive={confirmArchive}
-        onUnarchive={confirmUnarchive}
-        onDelete={confirmDelete}
-    />
-
-    {#if data.list}
-        <Pagination
+    {#if videoList.loading}
+        <div class="flex justify-center py-12">
+            <div
+                class="h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-theme-600"
+            ></div>
+        </div>
+    {:else}
+        <VideoTable
             {t}
-            page={data.page}
-            totalPage={data.list.totalPage}
-            buildHref={(page) => buildHref(page, data.search, data.status)}
+            items={videoList.list?.data ?? []}
+            {search}
+            onView={openDetail}
+            onArchive={confirmArchive}
+            onUnarchive={confirmUnarchive}
+            onDelete={confirmDelete}
         />
+
+        {#if videoList.list}
+            <Pagination
+                {t}
+                page={currentPage}
+                totalPage={videoList.list.totalPage}
+                buildHref={(pageNum) => buildHref(pageNum, search, status)}
+            />
+        {/if}
     {/if}
 </div>
 

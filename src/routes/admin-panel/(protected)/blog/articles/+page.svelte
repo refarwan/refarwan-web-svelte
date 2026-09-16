@@ -5,8 +5,8 @@
     let { data } = $props();
 
     $effect(() => {
-        pageTitleStore.set(data.t.blogCategories);
+        pageTitleStore.set(data.t.blogArticles);
     });
 </script>
 
-<ComingSoon title={data.t.blogCategories} description={data.t.comingSoon} />
+<ComingSoon title={data.t.blogArticles} description={data.t.comingSoon} />

@@ -2,7 +2,6 @@ import type { AdminTranslation } from "./types";
 
 export const idID: AdminTranslation = {
     login: {
-        pageTitle: "Panel Admin ERCMS",
         title: "Selamat Datang",
         subtitle: "Masuk ke akun Anda untuk melanjutkan",
         identifierLabel: "Email",
@@ -14,14 +13,14 @@ export const idID: AdminTranslation = {
         passwordRequired: "Kata sandi tidak boleh kosong"
     },
     shell: {
+        notFound: "Halaman Tidak Ditemukan",
         dashboard: "Dasbor",
         landingPage: "Halaman Beranda",
-        blog: "Blog",
         blogArticles: "Artikel",
-        blogCategories: "Kategori",
-        watch: "Watch",
-        watchVideo: "Video",
-        watchCategories: "Kategori",
+        blogCategories: "Kategori Artikel",
+        watchVideos: "Vidio",
+        watchUploadVideo: "Unggah Vidio",
+        watchCategories: "Kategori Vidio",
         project: "Proyek",
         myAccount: "Akun Saya",
         changePassword: "Ubah Password",
@@ -153,7 +152,6 @@ export const idID: AdminTranslation = {
         backToDashboard: "Kembali ke Dasbor"
     },
     watchCategory: {
-        pageTitle: "Kategori Video",
         searchPlaceholder: "Cari kategori...",
         addCategory: "Tambah Kategori",
         tableName: "Nama Kategori",
@@ -193,7 +191,6 @@ export const idID: AdminTranslation = {
         next: "Berikutnya"
     },
     watchVideo: {
-        pageTitle: "Video",
         searchPlaceholder: "Cari video...",
         addVideo: "Tambah Video",
         tableTitle: "Judul",

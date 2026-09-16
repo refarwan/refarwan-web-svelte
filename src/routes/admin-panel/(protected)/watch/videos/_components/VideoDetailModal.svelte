@@ -31,7 +31,7 @@
 
     const watchUrl = $derived(`${page.url.origin}/watch/play?v=${video.id}`);
     const embedUrl = $derived(`${page.url.origin}/watch/embed?v=${video.id}`);
-    const editHref = resolve("/admin-panel/(protected)/watch/video/edit/[id]", { id: video.id });
+    const editHref = resolve("/admin-panel/(protected)/watch/videos/edit/[id]", { id: video.id });
 
     const formattedDate = $derived(
         new Date(video.createdAt).toLocaleDateString(undefined, {
@@ -68,6 +68,9 @@
     <div class="max-h-[75vh] space-y-4 overflow-y-auto p-6">
         <VideoPlayer source={playSource} {logoUrl} title={video.title ?? ""} />
 
+        <!-- watchUrl points to the public site's own route tree, outside this app's
+            resolve()-typed routes, and opens in a new tab. -->
+        <!-- eslint-disable svelte/no-navigation-without-resolve -->
         <a
             href={watchUrl}
             target="_blank"
@@ -77,6 +80,7 @@
             <ExternalLinkIcon class="h-3.5 w-3.5" />
             {t.watchOnSiteLabel}
         </a>
+        <!-- eslint-enable svelte/no-navigation-without-resolve -->
 
         <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500">
             <span

@@ -38,11 +38,11 @@
             exact: true
         },
         {
-            label: t.blog,
-            href: resolve("/admin-panel/blog"),
+            label: "Blog",
+            href: resolve("/admin-panel/blog/articles"),
             icon: NewspaperIcon,
             subItems: [
-                { label: t.blogArticles, href: resolve("/admin-panel/blog"), exact: true },
+                { label: t.blogArticles, href: resolve("/admin-panel/blog/articles"), exact: true },
                 {
                     label: t.blogCategories,
                     href: resolve("/admin-panel/blog/categories"),
@@ -51,20 +51,20 @@
             ]
         },
         {
-            label: t.watch,
-            href: resolve("/admin-panel/watch"),
+            label: "Watch",
+            href: resolve("/admin-panel/watch/videos"),
             icon: VideoIcon,
             subItems: [
-                { label: t.watchVideo, href: resolve("/admin-panel/watch/video"), exact: true },
+                { label: t.watchVideos, href: resolve("/admin-panel/watch/videos"), exact: true },
                 {
                     label: t.watchCategories,
-                    href: resolve("/admin-panel/watch/category"),
+                    href: resolve("/admin-panel/watch/categories"),
                     exact: true
                 }
             ]
         },
         {
-            label: t.project,
+            label: "Project",
             href: resolve("/admin-panel/project"),
             icon: FolderGit2Icon,
             exact: true

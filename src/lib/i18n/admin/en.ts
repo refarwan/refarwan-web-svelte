@@ -2,7 +2,6 @@ import type { AdminTranslation } from "./types";
 
 export const enUS: AdminTranslation = {
     login: {
-        pageTitle: "ERCMS Admin Panel",
         title: "Welcome Back",
         subtitle: "Sign in to your account to continue",
         identifierLabel: "Email",
@@ -14,14 +13,14 @@ export const enUS: AdminTranslation = {
         passwordRequired: "Password cannot be empty"
     },
     shell: {
+        notFound: "Page Not Found",
         dashboard: "Dashboard",
         landingPage: "Landing Page",
-        blog: "Blog",
         blogArticles: "Articles",
-        blogCategories: "Categories",
-        watch: "Watch",
-        watchVideo: "Video",
-        watchCategories: "Categories",
+        blogCategories: "Article Categories",
+        watchVideos: "Videos",
+        watchUploadVideo: "Upload Video",
+        watchCategories: "Video Categories",
         project: "Project",
         myAccount: "My Account",
         changePassword: "Change Password",
@@ -152,7 +151,6 @@ export const enUS: AdminTranslation = {
         backToDashboard: "Back to Dashboard"
     },
     watchCategory: {
-        pageTitle: "Video Categories",
         searchPlaceholder: "Search categories...",
         addCategory: "Add Category",
         tableName: "Category Name",
@@ -192,7 +190,6 @@ export const enUS: AdminTranslation = {
         next: "Next"
     },
     watchVideo: {
-        pageTitle: "Videos",
         searchPlaceholder: "Search videos...",
         addVideo: "Add Video",
         tableTitle: "Title",
@@ -249,7 +246,7 @@ export const enUS: AdminTranslation = {
         noDescriptionPlaceholder: "No description provided.",
         watchOnSiteLabel: "Play on Watch",
         editPageTitle: "Edit Video",
-        createPageTitle: "Create New Video",
+        createPageTitle: "Upload New Video",
         videoDropzoneLabel: "Video",
         videoDropzoneHint: "Drag and drop video or click to select video",
         removeFile: "Delete",

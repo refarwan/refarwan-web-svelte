@@ -10,9 +10,6 @@
     let { data, children } = $props();
 
     $effect(() => {
-        // The root layout only renders children once authStore.initialized is true,
-        // so by the time this runs, an empty accessToken means the check genuinely
-        // found no session — safe to redirect without racing the initial /auth/check.
         if (!authStore.accessToken) {
             void goto(resolve("/admin-panel/login"));
         }
@@ -22,7 +19,7 @@
 {#if authStore.accessToken}
     <AdminSidebar t={data.shellT} />
     <div class="flex min-h-screen flex-col xl:pl-65">
-        <AdminHeader account={data.account} t={data.shellT} />
+        <AdminHeader t={data.shellT} />
         <main class="flex-1 p-4 md:p-6">
             {@render children()}
         </main>

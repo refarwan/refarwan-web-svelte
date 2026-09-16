@@ -1,27 +1,39 @@
 <script lang="ts">
     import { LoaderCircle, XIcon } from "lucide-svelte/icons";
-    import { enhance } from "$app/forms";
-
-    import { SvelteURLSearchParams } from "svelte/reactivity";
 
     import CategoryNameField from "./CategoryNameField.svelte";
     import LanguageTabs from "$lib/components/admin/LanguageTabs.svelte";
     import SlugField from "./SlugField.svelte";
+    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
     import { slugify } from "$lib/utils/slugify";
 
     import type { AdminTranslation } from "$lib/i18n/admin";
     import type { ContentLanguage, VideoCategoryDetail } from "$lib/types";
+    import type { CategoryPayload } from "../use-category-list.svelte";
 
     interface Props {
         mode: "create" | "edit";
         category: VideoCategoryDetail | null;
         contentLanguages: ContentLanguage[];
         onClose: () => void;
+        onCheckSlug: (slug: string, currentSlug?: string) => Promise<string>;
+        onCreate: (payload: CategoryPayload) => Promise<void>;
+        onUpdate: (id: string, payload: CategoryPayload) => Promise<void>;
         t: AdminTranslation["watchCategory"];
         cancelLabel: string;
     }
 
-    let { mode, category, contentLanguages, onClose, t, cancelLabel }: Props = $props();
+    let {
+        mode,
+        category,
+        contentLanguages,
+        onClose,
+        onCheckSlug,
+        onCreate,
+        onUpdate,
+        t,
+        cancelLabel
+    }: Props = $props();
 
     const seedNames = (): Record<string, string> => {
         const names: Record<string, string> = { en: category?.name ?? "" };
@@ -42,19 +54,7 @@
     let suggestedSlug = $state("");
     let submitting = $state(false);
     let formError = $state("");
-    let formEl: HTMLFormElement | undefined = $state();
-
     let slugCheckTimeout: ReturnType<typeof setTimeout> | undefined;
-
-    const checkSlug = async (candidate: string): Promise<string> => {
-        const params = new SvelteURLSearchParams({ slug: candidate });
-        if (category?.slug) params.set("currentSlug", category.slug);
-
-        const res = await fetch(`/admin-panel/api/video-category/slug-check?${params}`);
-        if (!res.ok) return candidate;
-        const body = (await res.json()) as { data: { slug: string } };
-        return body.data.slug;
-    };
 
     const verifySlug = async (targetSlug: string, isAutoFromTitle: boolean): Promise<string> => {
         const clean = slugify(targetSlug);
@@ -67,7 +67,7 @@
 
         isCheckingSlug = true;
         try {
-            const availableSlug = await checkSlug(clean);
+            const availableSlug = await onCheckSlug(clean, category?.slug);
             if (isAutoFromTitle) {
                 if (!isSlugTouched) {
                     slug = availableSlug;
@@ -143,20 +143,33 @@
 
     const isEnglishTab = $derived(activeLangCode.toLowerCase() === "en");
 
-    const onSubmit = (event: SubmitEvent) => {
+    const onSubmit = async (event: SubmitEvent) => {
+        event.preventDefault();
         if (!hasAnyName) {
-            event.preventDefault();
-            event.stopImmediatePropagation();
             formError = t.nameRequired;
             return;
         }
         if (!slug.trim()) {
-            event.preventDefault();
-            event.stopImmediatePropagation();
             formError = t.slugRequired;
             return;
         }
         formError = "";
+
+        const payload: CategoryPayload = {
+            name: primaryName,
+            slug: slug || undefined,
+            translations: JSON.parse(translationsPayload) as CategoryPayload["translations"]
+        };
+
+        submitting = true;
+        try {
+            if (mode === "create") await onCreate(payload);
+            else if (category) await onUpdate(category.id, payload);
+            onClose();
+        } catch (err) {
+            formError = axiosErrorMessage(err, mode === "create" ? t.createFailed : t.updateFailed);
+            submitting = false;
+        }
     };
 </script>
 
@@ -177,37 +190,13 @@
         </button>
     </div>
 
-    <form
-        method="POST"
-        action={mode === "create" ? "?/create" : "?/update"}
-        bind:this={formEl}
-        onsubmit={onSubmit}
-        use:enhance={() => {
-            submitting = true;
-            return async ({ result, update }) => {
-                await update({ reset: false });
-                if (result.type === "success") {
-                    onClose();
-                } else {
-                    submitting = false;
-                }
-            };
-        }}
-        class="w-full"
-    >
+    <form onsubmit={onSubmit} class="w-full">
         <div class="space-y-4 p-6">
             {#if formError}
                 <div class="rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-600">
                     {formError}
                 </div>
             {/if}
-
-            {#if mode === "edit" && category}
-                <input type="hidden" name="id" value={category.id} />
-            {/if}
-            <input type="hidden" name="name" value={primaryName} />
-            <input type="hidden" name="slug" value={slug} />
-            <input type="hidden" name="translations" value={translationsPayload} />
 
             <div class="pb-1">
                 <LanguageTabs

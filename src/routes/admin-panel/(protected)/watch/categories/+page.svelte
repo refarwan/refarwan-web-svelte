@@ -1,32 +1,40 @@
 <script lang="ts">
-    import { PlusIcon, SearchIcon } from "lucide-svelte/icons";
-    import { tick, untrack } from "svelte";
+    import { Plus as PlusIcon, Search as SearchIcon } from "lucide-svelte/icons";
     import { SvelteURLSearchParams } from "svelte/reactivity";
 
     import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
-    import { enhance } from "$app/forms";
+
+    import Pagination from "$lib/components/Pagination.svelte";
+    import { popup } from "$lib/stores/popup.svelte";
+    import { pageTitleStore } from "$lib/stores/page-title.svelte";
+    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
 
     import CategoryTable from "./_components/CategoryTable.svelte";
-    import Pagination from "$lib/components/Pagination.svelte";
     import VideoCategoryFormModal from "./_components/VideoCategoryFormModal.svelte";
-    import { popup } from "$lib/stores/popup.svelte";
+    import { useCategoryList } from "./use-category-list.svelte";
 
     import type { VideoCategoryDetail, VideoCategoryItem } from "$lib/types";
 
-    let { data, form } = $props();
+    let { data } = $props();
     const t = $derived(data.t);
     const commonT = $derived(data.common);
 
-    const basePath = resolve("/admin-panel/watch/category");
+    $effect(() => {
+        pageTitleStore.set(data.shellT.watchCategories);
+    });
 
-    let searchInput = $state(data.search);
+    const categoryList = useCategoryList();
+
+    const basePath = resolve("/admin-panel/watch/categories");
+
+    let searchInput = $state("");
     let searchDebounce: ReturnType<typeof setTimeout> | undefined;
 
-    const buildHref = (page: number, search: string): string => {
+    const buildHref = (pageNum: number, search: string): string => {
         const params = new SvelteURLSearchParams();
         if (search) params.set("search", search);
-        if (page > 1) params.set("page", String(page));
+        if (pageNum > 1) params.set("page", String(pageNum));
         const qs = params.toString();
         return qs ? `${basePath}?${qs}` : basePath;
     };
@@ -34,20 +42,12 @@
     const onSearchInput = () => {
         clearTimeout(searchDebounce);
         searchDebounce = setTimeout(() => {
+            // buildHref appends a query string to a resolve()-derived basePath; the linter
+            // can't trace resolve() through the helper function.
+            // eslint-disable-next-line svelte/no-navigation-without-resolve
             void goto(buildHref(1, searchInput), { keepFocus: true, noScroll: true });
         }, 350);
     };
-
-    $effect(() => {
-        // popup.success/error read and write the popup store's own state, so calling
-        // them untracked keeps this effect's only dependency on `form` — otherwise it
-        // re-triggers itself via the store write and floods duplicate popups.
-        if (form?.success && form.message) {
-            untrack(() => popup.success({ message: form.message ?? "" }));
-        } else if (form?.error) {
-            untrack(() => popup.error({ message: form.error ?? "" }));
-        }
-    });
 
     // --- Add / Edit modal ---
     let modalPopupId = $state("");
@@ -66,21 +66,16 @@
     };
 
     const openEditModal = async (item: VideoCategoryItem) => {
-        const res = await fetch(`/admin-panel/api/video-category/${item.id}`);
-        if (!res.ok) {
+        const detail = await categoryList.fetchDetail(item.id);
+        if (!detail) {
             popup.error({ message: t.loadDetailFailed });
             return;
         }
-        const body = (await res.json()) as { data: VideoCategoryDetail };
         modalMode = "edit";
-        editingCategory = body.data;
+        editingCategory = detail;
         modalPopupId = popup.generateId();
         popup.custom({ id: modalPopupId, component: formModalSnippet });
     };
-
-    // --- Delete ---
-    let deleteForm: HTMLFormElement | undefined = $state();
-    let deleteId = $state("");
 
     const confirmDelete = (item: VideoCategoryItem) => {
         popup.confirm({
@@ -89,31 +84,16 @@
             confirmText: t.deleteConfirmButton,
             cancelText: commonT.cancel,
             onConfirm: async () => {
-                deleteId = item.id;
-                await tick();
-                deleteForm?.requestSubmit();
+                try {
+                    await categoryList.remove(item.id);
+                    popup.success({ message: t.deleted });
+                } catch (err) {
+                    popup.error({ message: axiosErrorMessage(err, t.deleteFailed) });
+                }
             }
         });
     };
 </script>
-
-<svelte:head>
-    <title>{t.pageTitle}</title>
-</svelte:head>
-
-<form
-    method="POST"
-    action="?/delete"
-    bind:this={deleteForm}
-    use:enhance={() => {
-        return async ({ update }) => {
-            await update();
-        };
-    }}
-    class="hidden"
->
-    <input type="hidden" name="id" value={deleteId} />
-</form>
 
 <div class="flex flex-col gap-4">
     <div
@@ -139,20 +119,28 @@
         </button>
     </div>
 
-    <CategoryTable
-        {t}
-        items={data.list?.data ?? []}
-        onEdit={openEditModal}
-        onDelete={confirmDelete}
-    />
-
-    {#if data.list}
-        <Pagination
+    {#if categoryList.loading}
+        <div class="flex justify-center py-12">
+            <div
+                class="h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-theme-600"
+            ></div>
+        </div>
+    {:else}
+        <CategoryTable
             {t}
-            page={data.page}
-            totalPage={data.list.totalPage}
-            buildHref={(page) => buildHref(page, data.search)}
+            items={categoryList.list?.data ?? []}
+            onEdit={openEditModal}
+            onDelete={confirmDelete}
         />
+
+        {#if categoryList.list && categoryList.list.totalPage > 1}
+            <Pagination
+                {t}
+                page={categoryList.list.currentPage}
+                totalPage={categoryList.list.totalPage}
+                buildHref={(pageNum) => buildHref(pageNum, searchInput)}
+            />
+        {/if}
     {/if}
 </div>
 
@@ -162,6 +150,9 @@
         category={editingCategory}
         contentLanguages={data.contentLanguages}
         onClose={closeModal}
+        onCheckSlug={(slug, currentSlug) => categoryList.checkSlug(slug, currentSlug)}
+        onCreate={(payload) => categoryList.create(payload)}
+        onUpdate={(id, payload) => categoryList.update(id, payload)}
         {t}
         cancelLabel={commonT.cancel}
     />

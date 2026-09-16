@@ -27,20 +27,21 @@ const refreshAccessToken = async (): Promise<string | null> => {
     }
 };
 
+export const ensureAccessToken = async (): Promise<string | null> => {
+    const token = authStore.accessToken;
+    const decoded = token ? decodeJwt(token) : null;
+    const isExpired = !decoded || decoded.exp * 1000 < Date.now();
+    if (!token || isExpired) return refreshAccessToken();
+    return token;
+};
+
 export const authorizedHttp = axios.create({
     baseURL: PUBLIC_API_URL,
     withCredentials: true
 });
 
 authorizedHttp.interceptors.request.use(async (config) => {
-    let token = authStore.accessToken;
-    const decoded = token ? decodeJwt(token) : null;
-    const isExpired = !decoded || decoded.exp * 1000 < Date.now();
-
-    if (!token || isExpired) {
-        token = await refreshAccessToken();
-    }
-
+    const token = await ensureAccessToken();
     if (token) config.headers.set("Authorization", `Bearer ${token}`);
     config.headers.set("Accept-Language", getAdminLangCookie());
     return config;

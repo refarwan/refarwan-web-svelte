@@ -6,8 +6,10 @@ import type { Actions, PageServerLoad } from "./$types";
 export const load: PageServerLoad = async ({ parent }) => {
     const { adminLang } = await parent();
 
-    const translation = getAdminTranslation(adminLang);
-    return { t: translation.settings, common: translation.common, adminLang };
+    return {
+        t: getAdminTranslation(adminLang).settings,
+        common: getAdminTranslation(adminLang).common
+    };
 };
 
 export const actions: Actions = {
