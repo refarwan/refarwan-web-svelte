@@ -137,35 +137,28 @@
 	</nav>
 {/snippet}
 
-<!-- Desktop sidebar -->
-<aside class="hidden w-65 shrink-0 flex-col bg-theme-800 p-6 text-white xl:relative xl:flex">
-	<div class="mb-6 flex items-center">
-		{@render logo()}
-	</div>
-	{@render nav()}
-</aside>
-
-<!-- Mobile overlay sidebar -->
-{#if adminSidebar.open}
-	<div class="fixed inset-0 z-50 xl:hidden">
-		<div
-			class="fixed inset-0 bg-gray-600/50"
-			onclick={() => (adminSidebar.open = false)}
-			aria-hidden="true"
-		></div>
-		<aside class="fixed top-0 bottom-0 left-0 flex w-65 flex-col bg-theme-800 p-6 text-white">
-			<div class="mb-6 flex items-center justify-between">
-				{@render logo()}
-				<button
-					type="button"
-					onclick={() => (adminSidebar.open = false)}
-					aria-label="Close sidebar"
-					class="rounded-lg p-1.5 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-				>
-					<X class="h-5 w-5" />
-				</button>
-			</div>
-			{@render nav()}
-		</aside>
-	</div>
-{/if}
+<div
+	data-is-mobile-visible={adminSidebar.open}
+	onclick={() => (adminSidebar.open = false)}
+	role="presentation"
+	class="group invisible fixed top-0 left-0 z-40 h-screen w-screen bg-gray-600/50 opacity-0 transition-[visibility,opacity] duration-300 ease-in-out data-[is-mobile-visible=true]:visible data-[is-mobile-visible=true]:opacity-100 xl:visible xl:z-30 xl:w-max xl:opacity-100"
+>
+	<aside
+		onclick={(event) => event.stopPropagation()}
+		role="presentation"
+		class="fixed -left-full flex h-full min-h-screen w-65 flex-col bg-theme-800 p-6 text-white transition-[left] duration-300 ease-in-out select-none group-data-[is-mobile-visible=true]:left-0 xl:relative xl:left-0"
+	>
+		<div class="mb-6 flex items-center justify-between">
+			{@render logo()}
+			<button
+				type="button"
+				onclick={() => (adminSidebar.open = false)}
+				aria-label="Close sidebar"
+				class="rounded-lg p-1.5 text-white/80 transition-colors hover:bg-white/10 hover:text-white xl:hidden"
+			>
+				<X class="h-5 w-5" />
+			</button>
+		</div>
+		{@render nav()}
+	</aside>
+</div>

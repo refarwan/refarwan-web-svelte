@@ -5,12 +5,10 @@
 	let { data, children } = $props();
 </script>
 
-<div class="flex min-h-screen">
-	<AdminSidebar t={data.shellT} />
-	<div class="flex min-h-screen flex-1 flex-col">
-		<AdminHeader account={data.account} t={data.shellT} />
-		<main class="flex-1 p-4 md:p-6">
-			{@render children()}
-		</main>
-	</div>
+<AdminSidebar t={data.shellT} />
+<div class="flex min-h-screen flex-col xl:pl-65">
+	<AdminHeader account={data.account} t={data.shellT} />
+	<main class="flex-1 p-4 md:p-6">
+		{@render children()}
+	</main>
 </div>
