@@ -59,15 +59,13 @@
 		}}
 	>
 		<input type="hidden" name="lang" value={adminLang} />
-		<div class="max-w-xs">
-			<DropdownSelect
-				label={t.displayLanguage}
-				value={adminLang}
-				options={adminLangOptions}
-				onChange={onAdminLangChange}
-				helperText={t.languageHelper}
-				disabled={adminLangPending}
-			/>
-		</div>
+		<DropdownSelect
+			label={t.displayLanguage}
+			value={adminLang}
+			options={adminLangOptions}
+			onChange={onAdminLangChange}
+			helperText={t.languageHelper}
+			disabled={adminLangPending}
+		/>
 	</form>
 </section>
