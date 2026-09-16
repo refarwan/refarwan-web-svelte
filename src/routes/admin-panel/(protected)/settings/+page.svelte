@@ -131,7 +131,7 @@
 	<title>{t.metadataTitle}</title>
 </svelte:head>
 
-<div class="mx-auto flex max-w-3xl flex-col gap-4">
+<div class="flex flex-col gap-4">
 	<form
 		method="POST"
 		action="?/save"
