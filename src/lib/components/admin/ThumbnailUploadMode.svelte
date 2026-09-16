@@ -36,9 +36,9 @@
 
     {#if previewUrl}
         <div
-            class="group relative aspect-video w-full overflow-hidden rounded-lg border border-gray-200"
+            class="group relative aspect-video w-full overflow-hidden rounded-lg border border-gray-200 bg-gray-950"
         >
-            <img src={previewUrl} alt="Thumbnail preview" class="h-full w-full object-cover" />
+            <img src={previewUrl} alt="Thumbnail preview" class="h-full w-full object-contain" />
             <div
                 class="absolute inset-0 flex items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity group-hover:opacity-100"
             >
