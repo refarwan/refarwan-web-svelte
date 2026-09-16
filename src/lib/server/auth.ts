@@ -19,47 +19,44 @@ interface AccessTokenClaims {
 	exp: number;
 }
 
-const decodeAccessToken = (token: string): AccessTokenClaims | null => {
+const decodeJwtPayload = <T>(token: string): T | null => {
 	try {
 		const payload = token.split('.')[1];
 		const json = Buffer.from(payload, 'base64url').toString('utf-8');
-		return JSON.parse(json) as AccessTokenClaims;
+		return JSON.parse(json) as T;
 	} catch {
 		return null;
 	}
 };
 
+const decodeAccessToken = (token: string): AccessTokenClaims | null =>
+	decodeJwtPayload<AccessTokenClaims>(token);
+
 const isExpired = (claims: AccessTokenClaims): boolean =>
 	claims.exp * 1000 <= Date.now() + EXPIRY_LEEWAY_MS;
 
-interface ParsedRefreshTokenCookie {
-	value: string;
-	expires: Date | null;
-}
-
-const parseRefreshTokenCookie = (
-	setCookieHeader: string | null
-): ParsedRefreshTokenCookie | null => {
-	if (!setCookieHeader) return null;
-
-	const valueMatch = /refreshToken=([^;]+)/.exec(setCookieHeader);
-	if (!valueMatch) return null;
-
-	const expiresMatch = /expires=([^;]+)/i.exec(setCookieHeader);
-	const expires = expiresMatch ? new Date(expiresMatch[1]) : null;
-
-	return {
-		value: decodeURIComponent(valueMatch[1]),
-		expires: expires && !Number.isNaN(expires.getTime()) ? expires : null
-	};
+/** The refresh token is itself a JWT, so its real expiry can be read straight off its `exp` claim. */
+const decodeJwtExpiry = (token: string): Date | null => {
+	const claims = decodeJwtPayload<{ exp: number }>(token);
+	return claims ? new Date(claims.exp * 1000) : null;
 };
 
-const setAccessTokenCookie = (cookies: Cookies, accessToken: string): void => {
+const extractRefreshTokenValue = (setCookieHeader: string | null): string | null => {
+	if (!setCookieHeader) return null;
+	const match = /refreshToken=([^;]+)/.exec(setCookieHeader);
+	return match ? decodeURIComponent(match[1]) : null;
+};
+
+const setAccessTokenCookie = (
+	cookies: Cookies,
+	accessToken: string,
+	expires: Date | null
+): void => {
 	cookies.set(ACCESS_TOKEN_COOKIE, accessToken, {
 		path: '/',
 		httpOnly: true,
 		sameSite: 'lax',
-		maxAge: SESSION_MAX_AGE
+		...(expires ? { expires } : { maxAge: SESSION_MAX_AGE })
 	});
 };
 
@@ -69,17 +66,17 @@ export const startSession = (
 	accessToken: string,
 	loginSetCookieHeader: string | null
 ): void => {
-	setAccessTokenCookie(cookies, accessToken);
+	const refreshToken = extractRefreshTokenValue(loginSetCookieHeader);
+	const expires = refreshToken ? decodeJwtExpiry(refreshToken) : null;
 
-	const refreshCookie = parseRefreshTokenCookie(loginSetCookieHeader);
-	if (refreshCookie) {
-		cookies.set(REFRESH_TOKEN_COOKIE, refreshCookie.value, {
+	setAccessTokenCookie(cookies, accessToken, expires);
+
+	if (refreshToken) {
+		cookies.set(REFRESH_TOKEN_COOKIE, refreshToken, {
 			path: '/',
 			httpOnly: true,
 			sameSite: 'lax',
-			...(refreshCookie.expires
-				? { expires: refreshCookie.expires }
-				: { maxAge: SESSION_MAX_AGE })
+			...(expires ? { expires } : { maxAge: SESSION_MAX_AGE })
 		});
 	}
 };
@@ -105,7 +102,7 @@ const refreshAccessToken = async (
 	const accessToken = body.data?.accessToken;
 	if (!accessToken) return null;
 
-	setAccessTokenCookie(cookies, accessToken);
+	setAccessTokenCookie(cookies, accessToken, decodeJwtExpiry(refreshToken));
 	return accessToken;
 };
 
