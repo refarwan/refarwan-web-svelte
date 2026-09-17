@@ -15,18 +15,27 @@ import type {
 
 export const DEFAULT_HR_WIDTH_PERCENT = 100;
 export const MIN_HR_WIDTH_PERCENT = 10;
+export const DEFAULT_HR_ALIGN: HRAlign = "center";
+
+export type HRAlign = "left" | "center" | "right";
 
 export type SerializedResizableHorizontalRuleNode = Spread<
-    { widthPercent: number },
+    { widthPercent: number; align: HRAlign },
     SerializedLexicalNode
 >;
 
 export class ResizableHorizontalRuleNode extends DecoratorNode<unknown> {
     __widthPercent: number;
+    __align: HRAlign;
 
-    constructor(widthPercent: number = DEFAULT_HR_WIDTH_PERCENT, key?: string) {
+    constructor(
+        widthPercent: number = DEFAULT_HR_WIDTH_PERCENT,
+        align: HRAlign = DEFAULT_HR_ALIGN,
+        key?: string
+    ) {
         super(key);
         this.__widthPercent = widthPercent;
+        this.__align = align;
     }
 
     static getType(): string {
@@ -34,19 +43,20 @@ export class ResizableHorizontalRuleNode extends DecoratorNode<unknown> {
     }
 
     static clone(node: ResizableHorizontalRuleNode): ResizableHorizontalRuleNode {
-        return new ResizableHorizontalRuleNode(node.__widthPercent, node.__key);
+        return new ResizableHorizontalRuleNode(node.__widthPercent, node.__align, node.__key);
     }
 
     static importJSON(
         serializedNode: SerializedResizableHorizontalRuleNode
     ): ResizableHorizontalRuleNode {
-        return $createResizableHorizontalRuleNode(serializedNode.widthPercent).updateFromJSON(
-            serializedNode
-        );
+        return $createResizableHorizontalRuleNode(
+            serializedNode.widthPercent,
+            serializedNode.align
+        ).updateFromJSON(serializedNode);
     }
 
     exportJSON(): SerializedResizableHorizontalRuleNode {
-        return { ...super.exportJSON(), widthPercent: this.__widthPercent };
+        return { ...super.exportJSON(), widthPercent: this.__widthPercent, align: this.__align };
     }
 
     static importDOM(): DOMConversionMap | null {
@@ -71,6 +81,14 @@ export class ResizableHorizontalRuleNode extends DecoratorNode<unknown> {
     setWidthPercent(widthPercent: number): void {
         const writable = this.getWritable();
         writable.__widthPercent = Math.min(100, Math.max(MIN_HR_WIDTH_PERCENT, widthPercent));
+    }
+
+    getAlign(): HRAlign {
+        return this.__align;
+    }
+
+    setAlign(align: HRAlign): void {
+        this.getWritable().__align = align;
     }
 
     createDOM(_config: EditorConfig, editor: LexicalEditor): HTMLElement {
@@ -100,9 +118,10 @@ export class ResizableHorizontalRuleNode extends DecoratorNode<unknown> {
 }
 
 export function $createResizableHorizontalRuleNode(
-    widthPercent: number = DEFAULT_HR_WIDTH_PERCENT
+    widthPercent: number = DEFAULT_HR_WIDTH_PERCENT,
+    align: HRAlign = DEFAULT_HR_ALIGN
 ): ResizableHorizontalRuleNode {
-    return $applyNodeReplacement(new ResizableHorizontalRuleNode(widthPercent));
+    return $applyNodeReplacement(new ResizableHorizontalRuleNode(widthPercent, align));
 }
 
 export function $isResizableHorizontalRuleNode(
