@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { $getNodeByKey as getNodeByKey } from "lexical";
+    import { mergeRegister } from "@lexical/utils";
+    import { CLICK_COMMAND, COMMAND_PRIORITY_LOW, $getNodeByKey as getNodeByKey } from "lexical";
     import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon } from "lucide-svelte/icons";
 
     import { clearSelection, createNodeSelectionStore } from "svelte-lexical";
@@ -39,21 +40,28 @@
     let containerRef: HTMLDivElement | undefined = $state();
 
     $effect(() =>
-        editor.registerUpdateListener(() => {
-            const next = readState();
-            widthPercent = next.widthPercent;
-            align = next.align;
-        })
+        mergeRegister(
+            editor.registerUpdateListener(() => {
+                const next = readState();
+                widthPercent = next.widthPercent;
+                align = next.align;
+            }),
+            editor.registerCommand(
+                CLICK_COMMAND,
+                (event: MouseEvent) => {
+                    if (!containerRef?.contains(event.target as Node)) return false;
+                    if (!event.shiftKey) clearSelection(editor);
+                    $isSelected = !$isSelected;
+                    return true;
+                },
+                COMMAND_PRIORITY_LOW
+            )
+        )
     );
 
     const justifyClass = $derived(
         align === "left" ? "justify-start" : align === "right" ? "justify-end" : "justify-center"
     );
-
-    const onClick = (event: MouseEvent) => {
-        if (!event.shiftKey) clearSelection(editor);
-        $isSelected = !$isSelected;
-    };
 
     const onKeyDown = (event: KeyboardEvent) => {
         if (event.key !== "Enter" && event.key !== " ") return;
@@ -109,7 +117,6 @@
     role="button"
     tabindex="0"
     class={`relative flex items-center py-2 ${justifyClass}`}
-    onclick={onClick}
     onkeydown={onKeyDown}
 >
     {#if $isSelected}
