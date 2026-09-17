@@ -1,6 +1,6 @@
 import { env } from "$env/dynamic/public";
 
-const apiUrl = (): string => env.PUBLIC_API_URL;
+const apiUrl = (): string => env.PUBLIC_API_URL ?? "";
 
 /** Forwards a browser request for a public /area/* lookup to the API, avoiding CORS. */
 export const proxyAreaEndpoint = async (
