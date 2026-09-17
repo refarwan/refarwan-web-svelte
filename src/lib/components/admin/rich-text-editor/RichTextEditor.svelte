@@ -71,18 +71,21 @@
 
 <style>
     :global(.richtext-content .SL_Theme__paragraph) {
-        margin: 0 0 0.75em;
+        margin: 0.75em 0;
     }
     :global(.richtext-content .SL_Theme__paragraph:last-child) {
         margin-bottom: 0;
     }
+    :global(.richtext-content .SL_Theme__paragraph:first-child) {
+        margin-top: 0;
+    }
     :global(.richtext-content .SL_Theme__ul) {
         list-style-type: disc;
-        padding-left: 1.5em;
+        padding-left: 3em;
     }
     :global(.richtext-content .SL_Theme__ol1) {
         list-style-type: decimal;
-        padding-left: 1.5em;
+        padding-left: 3em;
     }
     :global(.richtext-content .SL_Theme__ol2),
     :global(.richtext-content .SL_Theme__ol3),

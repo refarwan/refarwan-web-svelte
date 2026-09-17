@@ -1,7 +1,6 @@
 <script lang="ts">
     import DropdownSelect from "$lib/components/admin/DropdownSelect.svelte";
-
-    import RichTextEditor from "./RichTextEditor.svelte";
+    import RichTextEditor from "$lib/components/admin/rich-text-editor/RichTextEditor.svelte";
 
     interface Option {
         value: string;
