@@ -10,6 +10,7 @@
 
     interface Props {
         t: Record<string, string>;
+        editorT: Record<string, string>;
         title: string;
         onTitleChange: (value: string) => void;
         categoryId: string;
@@ -21,6 +22,7 @@
 
     let {
         t,
+        editorT,
         title,
         onTitleChange,
         categoryId,
@@ -74,6 +76,6 @@
 
     <div class="space-y-1.5">
         <span class="block text-sm font-medium text-gray-700">{t.contentLabel}</span>
-        <RichTextEditor />
+        <RichTextEditor t={editorT} />
     </div>
 </div>

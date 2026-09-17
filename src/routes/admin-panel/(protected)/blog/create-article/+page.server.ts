@@ -9,6 +9,7 @@ export const load: PageServerLoad = async ({ parent, fetch }) => {
 
     return {
         t: getAdminTranslation(adminLang).blogArticle,
+        editorT: getAdminTranslation(adminLang).blogArticleEditor,
         common: getAdminTranslation(adminLang).common,
         contentLanguages
     };

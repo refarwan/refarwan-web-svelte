@@ -1,15 +1,70 @@
 <script lang="ts">
-    import { RichTextComposer } from "svelte-lexical";
+    import { AutoLinkNode, LinkNode } from "@lexical/link";
+    import { ListItemNode, ListNode } from "@lexical/list";
+    import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+    import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
+
+    import {
+        Composer,
+        ContentEditable,
+        HorizontalRuleNode,
+        LinkPlugin,
+        ListPlugin,
+        PlaceHolder,
+        RichTextPlugin,
+        SharedHistoryPlugin,
+        TabIndentationPlugin,
+        TablePlugin
+    } from "svelte-lexical";
     import { theme } from "svelte-lexical/dist/themes/default";
+
+    import EditorToolbar from "./lexical/EditorToolbar.svelte";
+
+    interface Props {
+        t: Record<string, string>;
+    }
+
+    let { t }: Props = $props();
+
+    const initialConfig = {
+        namespace: "ArticleEditor",
+        theme,
+        nodes: [
+            HeadingNode,
+            QuoteNode,
+            ListNode,
+            ListItemNode,
+            LinkNode,
+            AutoLinkNode,
+            HorizontalRuleNode,
+            TableNode,
+            TableRowNode,
+            TableCellNode
+        ],
+        onError: (error: Error) => {
+            throw error;
+        }
+    };
 </script>
 
-<div class="richtext-editor">
-    <RichTextComposer {theme} />
-</div>
+<div class="overflow-hidden rounded-lg border border-gray-300 bg-white shadow-2xs">
+    <Composer {initialConfig}>
+        <EditorToolbar {t} />
 
-<style>
-    .richtext-editor :global(.editor-shell) {
-        margin: 0;
-        max-width: none;
-    }
-</style>
+        <div class="relative">
+            <ContentEditable className="min-h-75 px-3.5 py-3 text-sm text-gray-900 outline-none" />
+            <PlaceHolder
+                className="pointer-events-none absolute top-3 left-3.5 text-sm text-gray-400 select-none"
+            >
+                {t.contentPlaceholder}
+            </PlaceHolder>
+        </div>
+
+        <RichTextPlugin />
+        <SharedHistoryPlugin />
+        <ListPlugin />
+        <LinkPlugin />
+        <TablePlugin />
+        <TabIndentationPlugin />
+    </Composer>
+</div>

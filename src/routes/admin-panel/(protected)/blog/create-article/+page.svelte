@@ -16,6 +16,7 @@
 
     let { data } = $props();
     const t = $derived(data.t);
+    const editorT = $derived(data.editorT);
     const commonT = $derived(data.common);
 
     $effect(() => {
@@ -107,6 +108,7 @@
     <div class="flex flex-col items-start gap-6 lg:flex-row">
         <ArticleMetadataForm
             {t}
+            {editorT}
             title={titles[activeLangCode] ?? ""}
             onTitleChange={(value) => (titles = { ...titles, [activeLangCode]: value })}
             {categoryId}
