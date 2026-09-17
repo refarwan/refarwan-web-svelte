@@ -1,27 +1,73 @@
-@import 'tailwindcss';
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
 
 @theme inline {
-	--font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
-	--color-theme-50: var(--color-theme-50, #f0f9ff);
-	--color-theme-100: var(--color-theme-100, #e0f2fe);
-	--color-theme-200: var(--color-theme-200, #bae6fd);
-	--color-theme-300: var(--color-theme-300, #7dd3fc);
-	--color-theme-400: var(--color-theme-400, #38bdf8);
-	--color-theme-500: var(--color-theme-500, #0ea5e9);
-	--color-theme-600: var(--color-theme-600, #0284c7);
-	--color-theme-700: var(--color-theme-700, #0369a1);
-	--color-theme-800: var(--color-theme-800, #075985);
-	--color-theme-900: var(--color-theme-900, #0c4a6e);
-	--color-theme-950: var(--color-theme-950, #082f49);
+    --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    --color-theme-50: var(--color-theme-50, #f0f9ff);
+    --color-theme-100: var(--color-theme-100, #e0f2fe);
+    --color-theme-200: var(--color-theme-200, #bae6fd);
+    --color-theme-300: var(--color-theme-300, #7dd3fc);
+    --color-theme-400: var(--color-theme-400, #38bdf8);
+    --color-theme-500: var(--color-theme-500, #0ea5e9);
+    --color-theme-600: var(--color-theme-600, #0284c7);
+    --color-theme-700: var(--color-theme-700, #0369a1);
+    --color-theme-800: var(--color-theme-800, #075985);
+    --color-theme-900: var(--color-theme-900, #0c4a6e);
+    --color-theme-950: var(--color-theme-950, #082f49);
 }
 
 html {
-	scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
-	background: #ffffff;
-	color: #111827;
+    background: #ffffff;
+    color: #111827;
+}
+
+@keyframes popupBackdropFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popupCardIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.93) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes popupIconPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(-8deg);
+    }
+    65% {
+        transform: scale(1.12) rotate(2deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.animate-popup-backdrop {
+    animation: popupBackdropFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-popup-card {
+    animation: popupCardIn 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-popup-icon {
+    animation: popupIconPop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }

@@ -1,7 +1,9 @@
-import { redirect } from '@sveltejs/kit';
+import { getAdminTranslation } from "$lib/i18n/admin";
 
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = () => {
-	redirect(303, '/admin-panel/my-account');
+export const load: PageServerLoad = async ({ parent }) => {
+    const { adminLang } = await parent();
+    const t = getAdminTranslation(adminLang);
+    return { t: t.shell, dashboardT: t.dashboard, isIndonesian: adminLang === "id-ID" };
 };

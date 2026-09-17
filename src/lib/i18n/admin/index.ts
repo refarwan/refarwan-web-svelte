@@ -1,17 +1,17 @@
-import { enUS } from './en';
-import { idID } from './id';
+import { enUS } from "./en";
+import { idID } from "./id";
 
-import type { AdminLang } from '$lib/types/admin-lang';
+import type { AdminLang } from "$lib/types/admin-lang";
 
-import type { AdminTranslation } from './types';
+import type { AdminTranslation } from "./types";
 
-export type { AdminTranslation } from './types';
+export type { AdminTranslation } from "./types";
 
 const ADMIN_TRANSLATIONS: Record<AdminLang, AdminTranslation> = {
-	'en-US': enUS,
-	'id-ID': idID
+    "en-US": enUS,
+    "id-ID": idID
 };
 
 export function getAdminTranslation(lang: AdminLang): AdminTranslation {
-	return ADMIN_TRANSLATIONS[lang] ?? ADMIN_TRANSLATIONS['en-US'];
+    return ADMIN_TRANSLATIONS[lang] ?? ADMIN_TRANSLATIONS["en-US"];
 }

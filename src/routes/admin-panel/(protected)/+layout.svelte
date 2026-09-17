@@ -1,16 +1,27 @@
 <script lang="ts">
-	import AdminHeader from '$lib/components/admin/AdminHeader.svelte';
-	import AdminSidebar from '$lib/components/admin/AdminSidebar.svelte';
+    import { goto } from "$app/navigation";
+    import { resolve } from "$app/paths";
 
-	let { data, children } = $props();
+    import { authStore } from "$lib/stores/auth.svelte";
+
+    import AdminHeader from "./_components/AdminHeader.svelte";
+    import AdminSidebar from "./_components/AdminSidebar.svelte";
+
+    let { data, children } = $props();
+
+    $effect(() => {
+        if (!authStore.accessToken) {
+            void goto(resolve("/admin-panel/login"));
+        }
+    });
 </script>
 
-<div class="flex min-h-screen">
-	<AdminSidebar t={data.shellT} />
-	<div class="flex min-h-screen flex-1 flex-col">
-		<AdminHeader account={data.account} t={data.shellT} />
-		<main class="flex-1 p-4 md:p-6">
-			{@render children()}
-		</main>
-	</div>
-</div>
+{#if authStore.accessToken}
+    <AdminSidebar t={data.shellT} />
+    <div class="flex min-h-screen flex-col xl:pl-65">
+        <AdminHeader t={data.shellT} />
+        <main class="flex-1 p-4 md:p-6">
+            {@render children()}
+        </main>
+    </div>
+{/if}

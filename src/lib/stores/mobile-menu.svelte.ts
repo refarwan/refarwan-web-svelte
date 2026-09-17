@@ -1,5 +1,5 @@
 class MobileMenuState {
-	open = $state(false);
+    open = $state(false);
 }
 
 export const mobileMenu = new MobileMenuState();

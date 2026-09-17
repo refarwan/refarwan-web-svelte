@@ -1,0 +1,10 @@
+services:
+    refarwan-web-svelte-redis:
+        restart: "no"
+
+    refarwan-web-svelte:
+        restart: "no"
+        image: refarwan-web-svelte:local
+        build:
+            context: .
+            dockerfile: Dockerfile
