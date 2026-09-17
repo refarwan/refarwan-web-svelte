@@ -1,5 +1,5 @@
 services:
-    refarwan-web-redis:
+    refarwan-web-svelte-redis:
         restart: "no"
 
     refarwan-web-svelte:
