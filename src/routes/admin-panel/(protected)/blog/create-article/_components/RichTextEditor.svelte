@@ -7,7 +7,6 @@
     import {
         Composer,
         ContentEditable,
-        HorizontalRuleNode,
         LinkPlugin,
         ListPlugin,
         PlaceHolder,
@@ -19,6 +18,7 @@
     import { theme } from "svelte-lexical/dist/themes/default";
 
     import EditorToolbar from "./lexical/EditorToolbar.svelte";
+    import { ResizableHorizontalRuleNode } from "./lexical/nodes/resizable-horizontal-rule-node";
 
     interface Props {
         t: Record<string, string>;
@@ -36,7 +36,7 @@
             ListItemNode,
             LinkNode,
             AutoLinkNode,
-            HorizontalRuleNode,
+            ResizableHorizontalRuleNode,
             TableNode,
             TableRowNode,
             TableCellNode

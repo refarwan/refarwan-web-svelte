@@ -1,10 +1,10 @@
 <script lang="ts">
     import { $insertNodeToNearestRoot as insertNodeToNearestRoot } from "@lexical/utils";
-    import { $applyNodeReplacement as applyNodeReplacement } from "lexical";
     import { ImageIcon, MinusIcon, PresentationIcon, VideoIcon } from "lucide-svelte/icons";
 
-    import { getActiveEditor, HorizontalRuleNode } from "svelte-lexical";
+    import { getActiveEditor } from "svelte-lexical";
 
+    import { $createResizableHorizontalRuleNode as createResizableHorizontalRuleNode } from "./nodes/resizable-horizontal-rule-node";
     import StubMediaButton from "./StubMediaButton.svelte";
     import TableButton from "./TableButton.svelte";
     import ToolbarButton from "./ToolbarButton.svelte";
@@ -19,8 +19,7 @@
 
     const insertHorizontalRule = () => {
         $activeEditor.update(() => {
-            const node = applyNodeReplacement(new HorizontalRuleNode());
-            insertNodeToNearestRoot(node);
+            insertNodeToNearestRoot(createResizableHorizontalRuleNode());
         });
     };
 </script>
