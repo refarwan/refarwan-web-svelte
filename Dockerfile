@@ -12,13 +12,8 @@ FROM oven/bun:1-slim AS runner
 
 WORKDIR /app
 
-ENV NODE_ENV=production
-ENV PORT=3000
-
 # adapter-node bundles all dependencies into build/, so no node_modules needed here.
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/static ./static
-
-EXPOSE 3000
 
 CMD ["bun", "run", "build/index.js"]
