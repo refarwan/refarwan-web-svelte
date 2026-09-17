@@ -1,6 +1,6 @@
-import { proxyAreaEndpoint } from '$lib/server/area-proxy';
+import { proxyAreaEndpoint } from "$lib/server/area-proxy";
 
-import type { RequestHandler } from './$types';
+import type { RequestHandler } from "./$types";
 
 export const GET: RequestHandler = ({ params, url, fetch }) =>
-	proxyAreaEndpoint(fetch, `/area/villages/${params.code}`, url.searchParams.toString());
+    proxyAreaEndpoint(fetch, `/area/villages/${params.code}`, url.searchParams.toString());

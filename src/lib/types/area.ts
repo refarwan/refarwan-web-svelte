@@ -1,4 +1,4 @@
 export interface AreaItem {
-	code: string;
-	name: string;
+    code: string;
+    name: string;
 }

@@ -47,9 +47,9 @@ export default defineConfig(
         // these hrefs.
         files: [
             "src/lib/components/NotFoundContent.svelte",
-            "src/routes/admin-panel/(protected)/watch/create/_components/WatchCreateActions.svelte",
+            "src/routes/admin-panel/(protected)/watch/upload/_components/WatchCreateActions.svelte",
             "src/lib/components/video-player/PlayerTopBar.svelte",
-            "src/routes/admin-panel/(protected)/watch/video/_components/VideoDetailModal.svelte"
+            "src/routes/admin-panel/(protected)/watch/videos/_components/VideoDetailModal.svelte"
         ],
         rules: {
             "svelte/no-navigation-without-resolve": "off"
@@ -59,8 +59,8 @@ export default defineConfig(
         // Pagination/search links append a dynamic query string onto a resolve()'d base
         // path, so resolve() can't type-check the final href/goto() target here.
         files: [
-            "src/routes/admin-panel/(protected)/watch/category/+page.svelte",
-            "src/routes/admin-panel/(protected)/watch/video/+page.svelte",
+            "src/routes/admin-panel/(protected)/watch/categories/+page.svelte",
+            "src/routes/admin-panel/(protected)/watch/videos/+page.svelte",
             "src/lib/components/Pagination.svelte",
             "src/routes/\\[\\[lang=lang\\]\\]/watch/+page.svelte",
             "src/routes/\\[\\[lang=lang\\]\\]/watch/_components/VideoCard.svelte",

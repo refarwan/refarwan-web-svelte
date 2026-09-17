@@ -1,14 +1,14 @@
 export interface MessageResponse {
-	message: string;
+    message: string;
 }
 
 export interface DataResponse<T> {
-	data: T;
+    data: T;
 }
 
 export interface ListResponse<T> extends DataResponse<T> {
-	currentPage: number;
-	totalPage: number;
-	totalData: number;
-	shownData: number;
+    currentPage: number;
+    totalPage: number;
+    totalData: number;
+    shownData: number;
 }

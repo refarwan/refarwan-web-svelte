@@ -1,1 +1,1 @@
-export type AdminLang = 'en-US' | 'id-ID';
+export type AdminLang = "en-US" | "id-ID";

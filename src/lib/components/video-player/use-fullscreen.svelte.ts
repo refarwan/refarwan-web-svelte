@@ -111,7 +111,9 @@ export function useFullscreen(
         return () => {
             docEvents.forEach((event) => document.removeEventListener(event, checkFullscreenState));
             if (video) {
-                videoEvents.forEach((event) => video.removeEventListener(event, checkFullscreenState));
+                videoEvents.forEach((event) =>
+                    video.removeEventListener(event, checkFullscreenState)
+                );
             }
         };
     });
@@ -123,4 +125,3 @@ export function useFullscreen(
         toggleFullscreen
     };
 }
-

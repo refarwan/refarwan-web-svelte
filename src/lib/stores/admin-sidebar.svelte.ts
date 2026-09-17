@@ -1,5 +1,5 @@
 class AdminSidebarState {
-	open = $state(false);
+    open = $state(false);
 }
 
 export const adminSidebar = new AdminSidebarState();
