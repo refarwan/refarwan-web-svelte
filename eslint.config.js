@@ -59,8 +59,6 @@ export default defineConfig(
         // Pagination/search links append a dynamic query string onto a resolve()'d base
         // path, so resolve() can't type-check the final href/goto() target here.
         files: [
-            "src/routes/admin-panel/(protected)/watch/categories/+page.svelte",
-            "src/routes/admin-panel/(protected)/watch/videos/+page.svelte",
             "src/lib/components/Pagination.svelte",
             "src/routes/\\[\\[lang=lang\\]\\]/watch/+page.svelte",
             "src/routes/\\[\\[lang=lang\\]\\]/watch/_components/VideoCard.svelte",

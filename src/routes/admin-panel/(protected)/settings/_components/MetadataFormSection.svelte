@@ -12,6 +12,7 @@
         title = $bindable(),
         description = $bindable(),
         faviconPreview = $bindable(),
+        // eslint-disable-next-line no-useless-assignment
         faviconFile = $bindable()
     }: Props = $props();
 
