@@ -1,7 +1,7 @@
 <script lang="ts">
     import { mergeRegister } from "@lexical/utils";
     import { CLICK_COMMAND, COMMAND_PRIORITY_LOW, $getNodeByKey as getNodeByKey } from "lexical";
-    import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon } from "lucide-svelte/icons";
+    import { TextAlignCenterIcon, TextAlignStartIcon, TextAlignEndIcon } from "lucide-svelte/icons";
 
     import { clearSelection, createNodeSelectionStore } from "svelte-lexical";
 
@@ -136,7 +136,7 @@
                         : "text-gray-500 hover:bg-gray-100"
                 }`}
             >
-                <AlignLeftIcon size={13} strokeWidth={2.5} />
+                <TextAlignStartIcon size={13} strokeWidth={2.5} />
             </button>
             <button
                 type="button"
@@ -151,7 +151,7 @@
                         : "text-gray-500 hover:bg-gray-100"
                 }`}
             >
-                <AlignCenterIcon size={13} strokeWidth={2.5} />
+                <TextAlignCenterIcon size={13} strokeWidth={2.5} />
             </button>
             <button
                 type="button"
@@ -166,7 +166,7 @@
                         : "text-gray-500 hover:bg-gray-100"
                 }`}
             >
-                <AlignRightIcon size={13} strokeWidth={2.5} />
+                <TextAlignEndIcon size={13} strokeWidth={2.5} />
             </button>
         </div>
     {/if}
@@ -179,23 +179,35 @@
     />
 
     {#if $isSelected}
-        {#if align !== "left"}
+        {#if align === "center"}
             <button
                 type="button"
                 aria-label="Resize"
                 onpointerdown={startDrag}
-                style={align === "center" ? `left: calc(50% - ${widthPercent / 2}%)` : "left: 0%"}
+                style={`left: calc(50% - ${widthPercent / 2}%)`}
                 class="absolute top-1/2 h-4 w-2 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize rounded-sm border border-white bg-theme-500 shadow"
             ></button>
-        {/if}
-        {#if align !== "right"}
             <button
                 type="button"
                 aria-label="Resize"
                 onpointerdown={startDrag}
-                style={align === "center"
-                    ? `left: calc(50% + ${widthPercent / 2}%)`
-                    : `left: ${widthPercent}%`}
+                style={`left: calc(50% + ${widthPercent / 2}%)`}
+                class="absolute top-1/2 h-4 w-2 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize rounded-sm border border-white bg-theme-500 shadow"
+            ></button>
+        {:else if align === "left"}
+            <button
+                type="button"
+                aria-label="Resize"
+                onpointerdown={startDrag}
+                style={`left: ${widthPercent}%`}
+                class="absolute top-1/2 h-4 w-2 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize rounded-sm border border-white bg-theme-500 shadow"
+            ></button>
+        {:else}
+            <button
+                type="button"
+                aria-label="Resize"
+                onpointerdown={startDrag}
+                style={`left: ${100 - widthPercent}%`}
                 class="absolute top-1/2 h-4 w-2 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize rounded-sm border border-white bg-theme-500 shadow"
             ></button>
         {/if}
