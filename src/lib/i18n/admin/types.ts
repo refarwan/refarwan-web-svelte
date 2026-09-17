@@ -16,6 +16,7 @@ export interface AdminTranslation {
         landingPage: string;
         blogArticles: string;
         blogCategories: string;
+        blogCreateArticle: string;
         watchVideos: string;
         watchUploadVideo: string;
         watchCategories: string;
@@ -145,6 +146,32 @@ export interface AdminTranslation {
         heading: string;
         subtext: string;
         backToDashboard: string;
+    };
+    blogArticle: {
+        pageHeading: string;
+        titleLabel: string;
+        titlePlaceholder: string;
+        categoryLabel: string;
+        categoryPlaceholder: string;
+        categorySearchPlaceholder: string;
+        categoryNoResults: string;
+        shortDescriptionLabel: string;
+        shortDescriptionPlaceholder: string;
+        contentLabel: string;
+        thumbnailLabel: string;
+        thumbnailDropzoneHint: string;
+        thumbnailSizeHint: string;
+        thumbnailChangeLabel: string;
+        removeFile: string;
+        statusLabel: string;
+        statusPlaceholder: string;
+        tagsLabel: string;
+        tagInputPlaceholderEmpty: string;
+        tagInputPlaceholderFilled: string;
+        submitDraft: string;
+        submitPublish: string;
+        titleRequired: string;
+        notImplementedYet: string;
     };
     blogCategory: {
         searchPlaceholder: string;

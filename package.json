@@ -46,6 +46,7 @@
         "hls.js": "^1.7.3",
         "ioredis": "^6.0.0",
         "lucide-svelte": "^1.0.1",
-        "simple-icons": "^16.31.0"
+        "simple-icons": "^16.31.0",
+        "svelte-lexical": "^0.6.5"
     }
 }
