@@ -53,26 +53,26 @@
     isActive={currentAlign === "left" || currentAlign === ""}
     onclick={() => align("left")}
 >
-    {#snippet icon()}<AlignLeftIcon size={14} strokeWidth={2.5} />{/snippet}
+    <AlignLeftIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 <ToolbarButton
     title={t.alignCenter}
     isActive={currentAlign === "center"}
     onclick={() => align("center")}
 >
-    {#snippet icon()}<AlignCenterIcon size={14} strokeWidth={2.5} />{/snippet}
+    <AlignCenterIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 <ToolbarButton
     title={t.alignRight}
     isActive={currentAlign === "right"}
     onclick={() => align("right")}
 >
-    {#snippet icon()}<AlignRightIcon size={14} strokeWidth={2.5} />{/snippet}
+    <AlignRightIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 <ToolbarButton
     title={t.alignJustify}
     isActive={currentAlign === "justify"}
     onclick={() => align("justify")}
 >
-    {#snippet icon()}<AlignJustifyIcon size={14} strokeWidth={2.5} />{/snippet}
+    <AlignJustifyIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>

@@ -66,7 +66,7 @@
 </script>
 
 <ToolbarButton title={t.link} isActive={$isLink} onclick={openLinkPopup}>
-    {#snippet icon()}<LinkIcon size={14} strokeWidth={2.5} />{/snippet}
+    <LinkIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 
 {#snippet linkPopupSnippet()}

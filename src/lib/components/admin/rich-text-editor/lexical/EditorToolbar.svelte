@@ -4,7 +4,6 @@
     import HistoryButtons from "./HistoryButtons.svelte";
     import HomeGroup from "./HomeGroup.svelte";
     import InsertGroup from "./InsertGroup.svelte";
-    import DebugButtons from "./DebugButtons.svelte";
 
     interface Props {
         t: Record<string, string>;
@@ -45,8 +44,6 @@
         </div>
         <div class="flex h-9 items-center gap-2">
             <HistoryButtons {t} />
-            <div class="h-6 w-px bg-gray-300"></div>
-            <DebugButtons />
         </div>
     </div>
 

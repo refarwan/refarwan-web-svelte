@@ -35,7 +35,7 @@
 </script>
 
 <ToolbarButton title={t.table} onclick={openTablePopup}>
-    {#snippet icon()}<TableIcon size={14} strokeWidth={2.5} />{/snippet}
+    <TableIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 
 {#snippet tablePopupSnippet()}

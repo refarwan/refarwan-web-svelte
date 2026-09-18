@@ -45,24 +45,24 @@
 <TextTypeSelect {t} />
 
 <ToolbarButton title={t.bold} isActive={$isBold} onclick={() => toggleBold($activeEditor)}>
-    {#snippet icon()}<BoldIcon size={14} strokeWidth={2.5} />{/snippet}
+    <BoldIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 <ToolbarButton title={t.italic} isActive={$isItalic} onclick={() => toggleItalic($activeEditor)}>
-    {#snippet icon()}<ItalicIcon size={14} strokeWidth={2.5} />{/snippet}
+    <ItalicIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 <ToolbarButton
     title={t.underline}
     isActive={$isUnderline}
     onclick={() => toggleUnderline($activeEditor)}
 >
-    {#snippet icon()}<UnderlineIcon size={14} strokeWidth={2.5} />{/snippet}
+    <UnderlineIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 <ToolbarButton
     title={t.strikethrough}
     isActive={$isStrikethrough}
     onclick={() => toggleStrikethrough($activeEditor)}
 >
-    {#snippet icon()}<StrikethroughIcon size={14} strokeWidth={2.5} />{/snippet}
+    <StrikethroughIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 <ColorPickerButton {t} />
 
@@ -77,14 +77,14 @@
     isActive={$blockType === "number"}
     onclick={() => formatNumberedList($activeEditor, $blockType)}
 >
-    {#snippet icon()}<ListOrderedIcon size={14} strokeWidth={2.5} />{/snippet}
+    <ListOrderedIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 <ToolbarButton
     title={t.bulletedList}
     isActive={$blockType === "bullet"}
     onclick={() => formatBulletList($activeEditor, $blockType)}
 >
-    {#snippet icon()}<ListIcon size={14} strokeWidth={2.5} />{/snippet}
+    <ListIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 
 <div class="mx-1 h-5 w-px bg-gray-300"></div>
@@ -94,6 +94,6 @@
     isActive={$blockType === "quote"}
     onclick={() => formatQuote($activeEditor, $blockType)}
 >
-    {#snippet icon()}<QuoteIcon size={14} strokeWidth={2.5} />{/snippet}
+    <QuoteIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 <LinkButton {t} />

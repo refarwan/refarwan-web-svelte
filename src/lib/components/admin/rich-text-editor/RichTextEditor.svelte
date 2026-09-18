@@ -13,7 +13,8 @@
         RichTextPlugin,
         SharedHistoryPlugin,
         TabIndentationPlugin,
-        TablePlugin
+        TablePlugin,
+        generateHtmlFromNodes
     } from "svelte-lexical";
     import { theme } from "svelte-lexical/dist/themes/default";
 
@@ -45,10 +46,30 @@
             throw error;
         }
     };
+
+    let composer: Composer;
 </script>
 
+<button
+    onclick={() => {
+        const editor = composer.getEditor();
+        editor.read(() => {
+            const html = generateHtmlFromNodes(editor);
+            console.log(html);
+        });
+    }}>Export HTML</button
+>
+
+<button
+    onclick={() => {
+        console.log(composer.getEditor().toJSON());
+    }}
+>
+    Export JSON
+</button>
+
 <div class="overflow-hidden rounded-lg border border-gray-300 bg-white shadow-2xs">
-    <Composer {initialConfig}>
+    <Composer {initialConfig} bind:this={composer}>
         <EditorToolbar {t} />
 
         <div class="richtext-content relative">

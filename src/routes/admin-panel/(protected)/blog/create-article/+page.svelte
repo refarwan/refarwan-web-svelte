@@ -8,9 +8,10 @@
     import { popup } from "$lib/stores/popup.svelte";
     import { pageTitleStore } from "$lib/stores/page-title.svelte";
 
+    import FormSubmitActions from "$lib/components/admin/FormSubmitActions.svelte";
+
     import ArticleMetadataForm from "./_components/ArticleMetadataForm.svelte";
     import ArticleSideSettings from "./_components/ArticleSideSettings.svelte";
-    import CreateArticleActions from "./_components/CreateArticleActions.svelte";
 
     import type { AdminOptionItem, DataResponse } from "$lib/types";
 
@@ -85,12 +86,11 @@
             ""
     );
 
-    const submit = (nextStatus: string) => {
+    const submit = () => {
         if (!primaryTitle.trim()) {
             popup.error({ message: t.titleRequired });
             return;
         }
-        status = nextStatus;
         popup.alert({ message: t.notImplementedYet });
     };
 </script>
@@ -134,11 +134,11 @@
         />
     </div>
 
-    <CreateArticleActions
+    <FormSubmitActions
         {t}
         cancelLabel={commonT.cancel}
         cancelHref={resolve("/admin-panel/blog/articles")}
-        onSaveDraft={() => submit("draft")}
-        onPublish={() => submit("published")}
+        {status}
+        onSubmit={submit}
     />
 </div>

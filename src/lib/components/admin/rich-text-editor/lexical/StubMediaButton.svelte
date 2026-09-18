@@ -14,4 +14,6 @@
     let { icon, title, message }: Props = $props();
 </script>
 
-<ToolbarButton {icon} {title} onclick={() => popup.alert({ message })} />
+<ToolbarButton {title} onclick={() => popup.alert({ message })}>
+    {@render icon()}
+</ToolbarButton>

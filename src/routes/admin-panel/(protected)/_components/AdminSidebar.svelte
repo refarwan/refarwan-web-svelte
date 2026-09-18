@@ -47,6 +47,11 @@
                     label: t.blogCategories,
                     href: resolve("/admin-panel/blog/categories"),
                     exact: true
+                },
+                {
+                    label: t.blogImageLibrary,
+                    href: resolve("/admin-panel/blog/image-library"),
+                    exact: true
                 }
             ]
         },

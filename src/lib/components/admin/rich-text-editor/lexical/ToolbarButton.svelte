@@ -2,13 +2,13 @@
     import type { Snippet } from "svelte";
 
     interface Props {
-        icon: Snippet;
+        children: Snippet<[]>;
         title: string;
         isActive?: boolean;
         onclick: () => void;
     }
 
-    let { icon, title, isActive = false, onclick }: Props = $props();
+    let { title, isActive = false, onclick, children }: Props = $props();
 </script>
 
 <button
@@ -23,5 +23,5 @@
         isActive ? "bg-theme-100 text-theme-700" : "text-gray-500"
     }`}
 >
-    {@render icon()}
+    {@render children()}
 </button>

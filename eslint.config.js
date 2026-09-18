@@ -47,8 +47,8 @@ export default defineConfig(
         // these hrefs.
         files: [
             "src/lib/components/NotFoundContent.svelte",
+            "src/lib/components/admin/FormSubmitActions.svelte",
             "src/routes/admin-panel/(protected)/watch/upload/_components/WatchCreateActions.svelte",
-            "src/routes/admin-panel/(protected)/blog/create-article/_components/CreateArticleActions.svelte",
             "src/lib/components/video-player/PlayerTopBar.svelte",
             "src/routes/admin-panel/(protected)/watch/videos/_components/VideoDetailModal.svelte"
         ],

@@ -31,3 +31,4 @@ export type {
     VideoUploader
 } from "./video";
 export type { ImageVariant } from "./image";
+export type { ImageLibraryItem } from "./image-library";

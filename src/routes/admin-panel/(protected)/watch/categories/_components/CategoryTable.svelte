@@ -32,7 +32,7 @@
         {:else}
             {#each items as item (item.id)}
                 <div
-                    class="grid grid-cols-[1fr_auto] gap-x-3 gap-y-2 rounded-xl border border-gray-200 bg-white p-4 shadow-2xs transition-all duration-200 hover:bg-gray-50/60 md:grid-cols-[1fr_240px_130px_90px] md:items-center md:gap-4 md:rounded-none md:border-x md:border-t-0 md:border-b md:border-gray-200 md:px-4 md:py-3 md:shadow-none md:last:rounded-b-xl"
+                    class="grid grid-cols-[1fr_auto] gap-x-3 gap-y-2 rounded-xl border border-gray-200 bg-white p-4 transition-all duration-200 hover:bg-gray-50/60 md:grid-cols-[1fr_240px_130px_90px] md:items-center md:gap-4 md:rounded-none md:border-x md:border-t-0 md:border-b md:border-gray-200 md:px-4 md:py-3 md:last:rounded-b-xl"
                 >
                     <div class="col-span-1 min-w-0 md:order-1 md:col-auto">
                         <div class="truncate text-[14px] font-medium text-gray-900">
@@ -61,7 +61,7 @@
                     </div>
 
                     <div
-                        class="col-span-2 flex items-center justify-end gap-2 border-t border-gray-100 pt-2 md:order-4 md:col-auto md:justify-center md:border-t-0 md:pt-0"
+                        class="col-span-2 flex items-center justify-end gap-2 pt-2 md:order-4 md:col-auto md:justify-center md:pt-0"
                     >
                         <button
                             type="button"

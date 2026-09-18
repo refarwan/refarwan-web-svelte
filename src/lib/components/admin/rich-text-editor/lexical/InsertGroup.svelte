@@ -25,7 +25,7 @@
 </script>
 
 <ToolbarButton title={t.horizontalRule} onclick={insertHorizontalRule}>
-    {#snippet icon()}<MinusIcon size={14} strokeWidth={2.5} />{/snippet}
+    <MinusIcon size={14} strokeWidth={2.5} />
 </ToolbarButton>
 <TableButton {t} />
 <StubMediaButton title={t.image} message={t.featureInDevelopment}>
