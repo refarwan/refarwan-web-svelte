@@ -218,6 +218,8 @@ export const idID: AdminTranslation = {
         tableColumns: "Kolom",
         tableInsert: "Masukkan",
         tableCancel: "Batal",
+        tableCustomSize: "Ukuran Kustom",
+        tableBackToGrid: "Kembali",
         image: "Gambar",
         video: "Video",
         slideShow: "Slide Show",

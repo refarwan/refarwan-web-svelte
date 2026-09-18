@@ -213,6 +213,8 @@ export interface AdminTranslation {
         tableColumns: string;
         tableInsert: string;
         tableCancel: string;
+        tableCustomSize: string;
+        tableBackToGrid: string;
         image: string;
         video: string;
         slideShow: string;

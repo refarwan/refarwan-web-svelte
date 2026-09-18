@@ -217,6 +217,8 @@ export const enUS: AdminTranslation = {
         tableColumns: "Columns",
         tableInsert: "Insert",
         tableCancel: "Cancel",
+        tableCustomSize: "Custom Size",
+        tableBackToGrid: "Back",
         image: "Image",
         video: "Video",
         slideShow: "Slide Show",
