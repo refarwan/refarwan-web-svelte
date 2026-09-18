@@ -54,9 +54,10 @@
                 }
 
                 activeDetails = details;
-                // Position with small offset so it doesn't cover the cursor
-                menuX = e.clientX + 4;
-                menuY = e.clientY + 4;
+                // Position with small offset so it doesn't cover the cursor.
+                // pageX/pageY (document-relative) so the menu scrolls with the page instead of staying fixed on screen.
+                menuX = e.pageX + 4;
+                menuY = e.pageY + 4;
                 menuVisible = true;
             };
 

@@ -1,9 +1,10 @@
 <script lang="ts">
     import { XIcon } from "lucide-svelte/icons";
-    import ColorPicker from "svelte-awesome-color-picker";
 
     import { DEFAULT_THEME_SHADES } from "$lib/constants";
     import { generateColorShades } from "$lib/utils/generate-color-shades";
+
+    import ColorBoard from "../../_components/ColorBoard.svelte";
 
     import type { ThemeShades } from "$lib/types";
 
@@ -60,14 +61,7 @@
     </div>
 
     <div class="flex justify-center py-1">
-        <ColorPicker
-            bind:hex={color}
-            isDialog={false}
-            isAlpha={false}
-            isTextInput
-            textInputModes={["hex"]}
-            label=""
-        />
+        <ColorBoard bind:value={color} />
     </div>
 
     <div class="flex flex-col gap-1.5">

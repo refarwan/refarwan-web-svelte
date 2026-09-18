@@ -74,7 +74,7 @@
 <!-- svelte-ignore a11y_interactive_supports_focus -->
 <div
     style={`top: ${menuY}px; left: ${menuX}px;`}
-    class="fixed z-50 min-w-52 rounded-xl border border-gray-200 bg-white p-1.5 shadow-xl select-none"
+    class="absolute z-50 min-w-52 rounded-xl border border-gray-200 bg-white p-1.5 shadow-xl select-none"
     role="menu"
     aria-label="Table Actions"
     onclick={(e) => e.stopPropagation()}
