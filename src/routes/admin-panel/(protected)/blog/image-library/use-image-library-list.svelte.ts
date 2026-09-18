@@ -13,16 +13,14 @@ class ImageLibraryListState {
     constructor() {
         $effect(() => {
             const pageParam = page.url.searchParams.get("page") ?? "1";
-            const search = page.url.searchParams.get("search") ?? "";
-            void this.fetchList(pageParam, search);
+            void this.fetchList(pageParam);
         });
     }
 
-    private async fetchList(pageParam: string, search: string) {
+    private async fetchList(pageParam: string) {
         this.loading = true;
         try {
             const query = new SvelteURLSearchParams({ page: pageParam, limit: "12" });
-            if (search) query.set("search", search);
             const res = await authorizedHttp.get<ListResponse<ImageLibraryItem[]>>(
                 `/image-library?${query.toString()}`
             );
@@ -36,8 +34,7 @@ class ImageLibraryListState {
 
     private async refetch() {
         const pageParam = page.url.searchParams.get("page") ?? "1";
-        const search = page.url.searchParams.get("search") ?? "";
-        await this.fetchList(pageParam, search);
+        await this.fetchList(pageParam);
     }
 
     async fetchDetail(id: string): Promise<ImageLibraryItem | null> {

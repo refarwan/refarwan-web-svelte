@@ -20,6 +20,10 @@
 
     import EditorToolbar from "./lexical/EditorToolbar.svelte";
     import { ResizableHorizontalRuleNode } from "./lexical/nodes/resizable-horizontal-rule-node";
+    import { ResizableImageNode } from "./lexical/nodes/resizable-image-node";
+    import { ResizableSlideShowNode } from "./lexical/nodes/resizable-slideshow-node";
+    import { ResizableVideoNode } from "./lexical/nodes/resizable-video-node";
+    import TableEnhancePlugin from "./lexical/table/TableEnhancePlugin.svelte";
 
     interface Props {
         t: Record<string, string>;
@@ -38,10 +42,14 @@
             LinkNode,
             AutoLinkNode,
             ResizableHorizontalRuleNode,
+            ResizableImageNode,
+            ResizableVideoNode,
+            ResizableSlideShowNode,
             TableNode,
             TableRowNode,
             TableCellNode
         ],
+
         onError: (error: Error) => {
             throw error;
         }
@@ -72,7 +80,7 @@
     <Composer {initialConfig} bind:this={composer}>
         <EditorToolbar {t} />
 
-        <div class="richtext-content relative">
+        <div class="richtext-content svelte-lexical relative">
             <ContentEditable className="min-h-75 px-3.5 py-3 text-sm text-gray-900 outline-none" />
             <PlaceHolder
                 className="pointer-events-none absolute top-3 left-3.5 text-sm text-gray-400 select-none"
@@ -85,15 +93,44 @@
         <SharedHistoryPlugin />
         <ListPlugin />
         <LinkPlugin />
-        <TablePlugin />
+        <TablePlugin hasCellMerge={true} hasCellBackgroundColor={true} />
+        <TableEnhancePlugin {t} />
         <TabIndentationPlugin />
     </Composer>
 </div>
 
 <style>
+    :global(.richtext-content table) {
+        border-collapse: collapse;
+        margin: 1em 0;
+        width: max-content;
+        max-width: 100%;
+    }
+    /* Higher specificity than the rule above so lexical's alignment classes can win */
+    :global(.richtext-content table.SL_Theme__tableAlignmentCenter) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    :global(.richtext-content table.SL_Theme__tableAlignmentRight) {
+        margin-left: auto;
+        margin-right: 0;
+    }
+    :global(.richtext-content th),
+    :global(.richtext-content td) {
+        border: 1px solid #d1d5db;
+        padding: 6px 10px;
+        min-width: 50px;
+        vertical-align: top;
+        position: relative;
+    }
+    :global(.richtext-content th) {
+        background-color: #f8fafc;
+        font-weight: 600;
+    }
     :global(.richtext-content .SL_Theme__paragraph) {
         margin: 0.75em 0;
     }
+
     :global(.richtext-content .SL_Theme__paragraph:last-child) {
         margin-bottom: 0;
     }

@@ -1,12 +1,6 @@
 <script lang="ts">
-    import {
-        Image as ImageIcon,
-        Plus as PlusIcon,
-        Search as SearchIcon
-    } from "lucide-svelte/icons";
-    import { SvelteURLSearchParams } from "svelte/reactivity";
+    import { Image as ImageIcon, Plus as PlusIcon } from "lucide-svelte/icons";
 
-    import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
 
     import Pagination from "$lib/components/Pagination.svelte";
@@ -24,6 +18,7 @@
     let { data } = $props();
     const t = $derived(data.t);
     const commonT = $derived(data.common);
+    const isEn = $derived(data.adminLang === "en-US");
 
     $effect(() => {
         pageTitleStore.set(data.shellT.blogImageLibrary);
@@ -32,25 +27,8 @@
     const libraryList = useImageLibraryList();
     const basePath = resolve("/admin-panel/blog/image-library");
 
-    let searchInput = $state("");
-    let searchDebounce: ReturnType<typeof setTimeout> | undefined;
-
-    const buildHref = (pageNum: number, search: string): string => {
-        const params = new SvelteURLSearchParams();
-        if (search) params.set("search", search);
-        if (pageNum > 1) params.set("page", String(pageNum));
-        const qs = params.toString();
-        return qs ? `${basePath}?${qs}` : basePath;
-    };
-
-    const onSearchInput = () => {
-        clearTimeout(searchDebounce);
-        searchDebounce = setTimeout(() => {
-            // buildHref appends a query string to a resolve()-derived basePath; the linter
-            // can't trace resolve() through the helper function.
-            // eslint-disable-next-line svelte/no-navigation-without-resolve
-            void goto(buildHref(1, searchInput), { keepFocus: true, noScroll: true });
-        }, 350);
+    const buildHref = (pageNum: number): string => {
+        return pageNum > 1 ? `${basePath}?page=${pageNum}` : basePath;
     };
 
     // --- Modal Management ---
@@ -99,24 +77,11 @@
 
 <div class="flex flex-col gap-5">
     <!-- Action Bar -->
-    <div
-        class="flex flex-col-reverse items-stretch justify-between gap-3 sm:flex-row sm:items-center"
-    >
-        <div class="relative w-full sm:max-w-xs xl:max-w-sm">
-            <SearchIcon class="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-gray-400" />
-            <input
-                type="text"
-                bind:value={searchInput}
-                oninput={onSearchInput}
-                placeholder={t.searchPlaceholder}
-                class="w-full rounded-lg border border-gray-300 bg-white py-2.5 pr-4 pl-10 text-sm text-gray-900 placeholder-gray-400 transition-all focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
-            />
-        </div>
-
+    <div class="flex items-center justify-end">
         <button
             type="button"
             onclick={openUploadModal}
-            class="inline-flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg bg-theme-600 px-5 py-2.5 text-sm font-semibold text-white shadow-2xs transition-colors hover:bg-theme-700 sm:w-auto"
+            class="inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg bg-theme-600 px-5 py-2.5 text-sm font-semibold text-white shadow-2xs transition-colors hover:bg-theme-700"
         >
             <PlusIcon class="h-4 w-4" />
             <span>{t.uploadImage}</span>
@@ -162,7 +127,7 @@
                 {t}
                 page={libraryList.list.currentPage}
                 totalPage={libraryList.list.totalPage}
-                buildHref={(pageNum) => buildHref(pageNum, searchInput)}
+                buildHref={(pageNum) => buildHref(pageNum)}
             />
         {/if}
     {/if}
@@ -179,6 +144,16 @@
 
 {#snippet detailModalSnippet()}
     {#if viewingItem}
-        <ImageDetailModal item={viewingItem} onClose={closeDetailModal} {t} />
+        <ImageDetailModal
+            item={viewingItem}
+            {isEn}
+            onClose={closeDetailModal}
+            onDelete={() => {
+                const item = viewingItem;
+                closeDetailModal();
+                if (item) confirmDelete(item);
+            }}
+            {t}
+        />
     {/if}
 {/snippet}

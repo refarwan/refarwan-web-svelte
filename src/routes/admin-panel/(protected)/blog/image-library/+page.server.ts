@@ -6,6 +6,7 @@ export const load: PageServerLoad = async ({ parent }) => {
     const { adminLang } = await parent();
 
     return {
+        adminLang,
         t: getAdminTranslation(adminLang).imageLibrary,
         common: getAdminTranslation(adminLang).common
     };

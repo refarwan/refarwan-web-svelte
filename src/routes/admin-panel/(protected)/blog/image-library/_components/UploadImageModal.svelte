@@ -1,12 +1,10 @@
 <script lang="ts">
-    import {
-        Image as ImageIcon,
-        LoaderCircle,
-        UploadCloud as UploadCloudIcon,
-        X as XIcon
-    } from "lucide-svelte/icons";
+    import { LoaderCircle, X as XIcon } from "lucide-svelte/icons";
 
     import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+
+    import UploadImageDropzone from "./UploadImageDropzone.svelte";
+    import UploadImagePreview from "./UploadImagePreview.svelte";
 
     import type { AdminTranslation } from "$lib/i18n/admin";
 
@@ -27,12 +25,6 @@
     let isDragging = $state(false);
     let uploading = $state(false);
     let errorMessage = $state("");
-
-    const formatFileSize = (bytes: number): string => {
-        if (bytes < 1024) return `${bytes} B`;
-        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-        return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-    };
 
     const handleFile = (file: File) => {
         errorMessage = "";
@@ -127,79 +119,25 @@
             {/if}
 
             {#if !selectedFile}
-                <label
-                    ondrop={onDrop}
-                    ondragover={onDragOver}
-                    ondragleave={onDragLeave}
-                    class={`flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-8 text-center transition-all ${
-                        isDragging
-                            ? "border-theme-500 bg-theme-50/50"
-                            : "border-gray-200 bg-gray-50/60 hover:border-theme-400 hover:bg-theme-50/30"
-                    }`}
-                >
-                    <input
-                        type="file"
-                        accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
-                        onchange={onFileInputChange}
-                        class="hidden"
-                        disabled={uploading}
-                    />
-                    <div
-                        class="flex h-12 w-12 items-center justify-center rounded-full bg-theme-100 text-theme-600"
-                    >
-                        <UploadCloudIcon class="h-6 w-6" />
-                    </div>
-                    <div class="space-y-1">
-                        <p class="text-sm font-medium text-gray-900">
-                            {t.dropOrBrowse}
-                        </p>
-                        <p class="text-xs text-gray-500">
-                            {t.supportedFormats}
-                        </p>
-                    </div>
-                    <span
-                        class="rounded-lg border border-gray-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50"
-                    >
-                        {t.browseFiles}
-                    </span>
-                </label>
+                <UploadImageDropzone
+                    {isDragging}
+                    {uploading}
+                    dropOrBrowseText={t.dropOrBrowse}
+                    supportedFormatsText={t.supportedFormats}
+                    browseFilesText={t.browseFiles}
+                    {onDrop}
+                    {onDragOver}
+                    {onDragLeave}
+                    {onFileInputChange}
+                />
             {:else}
-                <div class="space-y-3">
-                    <div
-                        class="relative flex max-h-64 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-gray-900/5 p-2"
-                    >
-                        {#if previewUrl}
-                            <img
-                                src={previewUrl}
-                                alt="Upload Preview"
-                                class="max-h-60 max-w-full rounded-lg object-contain"
-                            />
-                        {/if}
-                        <button
-                            type="button"
-                            onclick={clearSelection}
-                            disabled={uploading}
-                            class="absolute top-3 right-3 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-gray-900/70 text-white transition-colors hover:bg-gray-900 disabled:opacity-50"
-                            title={t.closeModal}
-                        >
-                            <XIcon class="h-4 w-4" />
-                        </button>
-                    </div>
-
-                    <div
-                        class="flex items-center justify-between rounded-lg border border-gray-100 bg-gray-50 px-3.5 py-2 text-xs text-gray-600"
-                    >
-                        <div class="flex items-center gap-2 truncate">
-                            <ImageIcon class="h-4 w-4 shrink-0 text-gray-400" />
-                            <span class="truncate font-medium text-gray-800"
-                                >{selectedFile.name}</span
-                            >
-                        </div>
-                        <span class="shrink-0 text-gray-500"
-                            >{formatFileSize(selectedFile.size)}</span
-                        >
-                    </div>
-                </div>
+                <UploadImagePreview
+                    {selectedFile}
+                    {previewUrl}
+                    {uploading}
+                    closeModalTitle={t.closeModal}
+                    onClear={clearSelection}
+                />
             {/if}
         </div>
 
