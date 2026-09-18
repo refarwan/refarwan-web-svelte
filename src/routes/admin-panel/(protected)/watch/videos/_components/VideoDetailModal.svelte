@@ -1,112 +1,139 @@
 <script lang="ts">
-    import { EyeIcon, XIcon } from "lucide-svelte/icons";
     import { page } from "$app/state";
-    import { resolve } from "$app/paths";
 
     import VideoPlayer from "$lib/components/video-player/VideoPlayer.svelte";
     import { resolutionsFromFields } from "$lib/components/video-player/resolution";
 
-    import VideoEmbedSection from "./VideoEmbedSection.svelte";
-    import VideoResolutionChips from "./VideoResolutionChips.svelte";
+    import WatchDetailEmbedSection from "./WatchDetailEmbedSection.svelte";
+    import WatchDetailFooter from "./WatchDetailFooter.svelte";
+    import WatchDetailHeader from "./WatchDetailHeader.svelte";
+    import WatchDetailInfoBar from "./WatchDetailInfoBar.svelte";
+    import WatchDetailLangTabs from "./WatchDetailLangTabs.svelte";
+    import WatchDetailResolutions from "./WatchDetailResolutions.svelte";
+    import { buildTabLanguages, resolveActiveContent } from "./watch-detail-content";
 
-    import type { VideoDetail } from "$lib/types";
+    import type { ContentLanguage, VideoDetail } from "$lib/types";
 
     interface Props {
-        t: Record<string, string>;
         video: VideoDetail;
-        logoUrl: string;
+        lang?: string;
+        contentLanguages?: ContentLanguage[];
         onClose: () => void;
+        onRefresh?: () => Promise<void> | void;
     }
 
-    let { t, video, logoUrl, onClose }: Props = $props();
+    let { video, lang = "en", contentLanguages = [], onClose, onRefresh }: Props = $props();
 
+    const isEn = $derived(lang === "en" || lang === "en-US");
     const playSources = $derived(resolutionsFromFields(video.p360, video.p720, video.p1080));
 
     const watchUrl = $derived(`${page.url.origin}/watch/play?v=${video.id}`);
     const embedUrl = $derived(`${page.url.origin}/watch/embed?v=${video.id}`);
-    const editHref = resolve("/admin-panel/(protected)/watch/videos/edit/[id]", { id: video.id });
+    const iframeCode = $derived(
+        `<iframe src="${embedUrl}" width="560" height="315" frameborder="0" allowfullscreen></iframe>`
+    );
+
+    const tabLanguages = $derived(buildTabLanguages(contentLanguages, video));
+
+    let selectedLangCode = $state<string | null>(null);
+
+    const activeLangCode = $derived(
+        selectedLangCode && tabLanguages.some((l) => l.code === selectedLangCode?.toLowerCase())
+            ? selectedLangCode.toLowerCase()
+            : tabLanguages[0]?.code?.toLowerCase() || "en"
+    );
+
+    const activeContent = $derived(resolveActiveContent(video, activeLangCode));
 
     const formattedDate = $derived(
-        new Date(video.createdAt).toLocaleDateString(undefined, {
+        new Date(video.createdAt).toLocaleDateString(isEn ? "en-US" : "id-ID", {
             year: "numeric",
             month: "short",
             day: "numeric"
         })
     );
-
-    const statusBadgeClass = $derived(
-        video.status === "published"
-            ? "bg-emerald-50 text-emerald-700"
-            : video.status === "archived"
-              ? "bg-gray-100 text-gray-600"
-              : "bg-amber-50 text-amber-700"
-    );
 </script>
 
 <div
-    class="w-[92vw] max-w-2xl overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl"
+    class="flex h-auto max-h-[90vh] w-[94vw] max-w-89.5 flex-col overflow-hidden rounded-xl bg-white shadow-xl sm:max-w-125 md:h-175 md:max-w-150"
+    role="dialog"
+    aria-modal="true"
 >
-    <div class="flex items-center justify-between border-b border-gray-100 px-6 py-4">
-        <h3 class="text-lg font-semibold text-gray-900">{t.detailModalTitle}</h3>
-        <button
-            type="button"
-            onclick={onClose}
-            class="cursor-pointer rounded-lg p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
-            title={t.closeLabel}
-        >
-            <XIcon class="h-5 w-5" />
-        </button>
-    </div>
+    <WatchDetailHeader {isEn} {onClose} />
 
-    <div class="max-h-[75vh] space-y-4 overflow-y-auto p-6">
-        <VideoPlayer
-            sources={playSources}
-            {logoUrl}
-            title={video.title ?? ""}
-            thumbnailUrl={video.thumbnail.medium}
-            {watchUrl}
+    <!-- Body (Scrollable) -->
+    <div
+        class="flex min-h-0 w-full flex-1 flex-col items-start gap-5 overflow-y-auto px-6 py-5 select-text"
+    >
+        <WatchDetailLangTabs
+            {tabLanguages}
+            {activeLangCode}
+            onSelect={(code) => (selectedLangCode = code)}
         />
 
-        <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500">
-            <span
-                class={`inline-flex items-center rounded-full px-2.5 py-0.5 font-medium ${statusBadgeClass}`}
-            >
-                {video.status}
-            </span>
-            <span>{video.category ?? t.noCategory}</span>
-            <span class="flex items-center gap-1">
-                <EyeIcon class="h-3.5 w-3.5" />
-                {video.viewsCount}
-                {t.viewsSuffix}
-            </span>
-            <span>{t.uploadedOnLabel} {formattedDate}</span>
+        <!-- Svelte Video Player -->
+        <div
+            class="relative aspect-video w-full shrink-0 overflow-hidden rounded-lg bg-black shadow-sm"
+        >
+            <VideoPlayer sources={playSources} thumbnailUrl={video.thumbnail.medium} {watchUrl} />
         </div>
 
-        <div>
-            <h4 class="text-sm font-semibold text-gray-900">{video.title ?? "—"}</h4>
-            <p class="mt-1 text-sm whitespace-pre-line text-gray-600">
-                {video.description || t.noDescriptionPlaceholder}
+        <WatchDetailInfoBar
+            status={video.status}
+            category={video.category}
+            duration={video.duration}
+            viewsCount={video.viewsCount}
+            {lang}
+            {isEn}
+        />
+
+        <!-- Title -->
+        <div class="w-full shrink-0 space-y-1">
+            <p class="text-[16px] leading-snug font-semibold text-gray-900">
+                {activeContent.title || (isEn ? "Untitled" : "Tanpa Judul")}
+            </p>
+            {#if activeContent.isFallback}
+                <p class="text-[11px] text-amber-600">
+                    * {isEn
+                        ? `No ${activeLangCode.toUpperCase()} translation. Showing default content.`
+                        : `Belum ada terjemahan bahasa ${activeLangCode.toUpperCase()}. Menampilkan konten default.`}
+                </p>
+            {/if}
+        </div>
+
+        <!-- Upload Date -->
+        <div class="flex w-full shrink-0 flex-col items-start">
+            <div class="flex flex-col items-start gap-1">
+                <p class="text-[12px] font-medium text-gray-500">
+                    {isEn ? "Upload Date" : "Tanggal Upload"}
+                </p>
+                <span class="text-[13px] font-medium text-gray-700">
+                    {formattedDate}
+                </span>
+            </div>
+        </div>
+
+        <WatchDetailResolutions
+            p360={video.p360}
+            p720={video.p720}
+            p1080={video.p1080}
+            {isEn}
+            {onRefresh}
+        />
+
+        <!-- Description -->
+        <div class="flex w-full shrink-0 flex-col items-start gap-1.5">
+            <p class="text-[12px] font-medium text-gray-500">
+                {isEn ? "Description" : "Deskripsi"}
+            </p>
+            <p class="w-full text-[13px] whitespace-pre-wrap text-gray-700">
+                {activeContent.description ||
+                    (isEn ? "No description provided." : "Tidak ada deskripsi.")}
             </p>
         </div>
 
-        <VideoResolutionChips {t} p360={video.p360} p720={video.p720} p1080={video.p1080} />
-
-        <VideoEmbedSection {t} {embedUrl} />
+        <WatchDetailEmbedSection {embedUrl} {iframeCode} {isEn} />
     </div>
 
-    <div class="flex items-center justify-end gap-2 border-t border-gray-100 px-6 py-4">
-        <button
-            type="button"
-            onclick={onClose}
-            class="cursor-pointer rounded-md border border-gray-200 px-4 py-2 text-xs font-medium text-gray-600 hover:bg-gray-50"
-        >
-            {t.closeLabel}
-        </button>
-        <a
-            href={editHref}
-            class="cursor-pointer rounded-md bg-theme-600 px-4 py-2 text-xs font-medium text-white shadow-xs hover:bg-theme-700"
-        >
-            {t.editVideoLabel}
-        </a>
-    </div>
+    <WatchDetailFooter {isEn} videoId={video.id} {onClose} />
 </div>

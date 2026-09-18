@@ -1,18 +1,16 @@
 import { getAdminTranslation } from "$lib/i18n/admin";
-import { getApiData } from "$lib/server/get-api-data";
+import { getActiveContentLangs } from "$lib/server/settings";
 
 import type { PageServerLoad } from "./$types";
 
-import type { DataResponse, ImageSource } from "$lib/types";
-
-export const load: PageServerLoad = async ({ parent }) => {
+export const load: PageServerLoad = async ({ parent, fetch }) => {
     const { adminLang } = await parent();
-
-    const logoRes = await getApiData<DataResponse<ImageSource>>("setting/logo", "settings");
+    const contentLanguages = await getActiveContentLangs(fetch);
 
     return {
+        adminLang,
         t: getAdminTranslation(adminLang).watchVideo,
         common: getAdminTranslation(adminLang).common,
-        logoUrl: logoRes?.data.small ?? ""
+        contentLanguages
     };
 };
