@@ -1,14 +1,14 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
 
-    import type { AdminTranslation } from "$lib/i18n/admin";
     import type { ImageLibraryItem } from "$lib/types/image-library";
+    import type { ImageLibrary } from "../../../../../i18n/image-library/types";
 
     interface Props {
         item: ImageLibraryItem;
         onView: (item: ImageLibraryItem) => void;
         onDelete: (item: ImageLibraryItem) => void;
-        t: AdminTranslation["imageLibrary"];
+        t: ImageLibrary;
     }
 
     let { item, onView, onDelete, t }: Props = $props();
@@ -17,7 +17,7 @@
 </script>
 
 <div
-    class="group relative aspect-16/10 w-full overflow-hidden rounded-xl border border-gray-200/80 bg-gray-100 transition-all duration-200 hover:border-gray-300 sm:aspect-16/9"
+    class="group relative aspect-16/10 w-full overflow-hidden rounded-xl border border-gray-200/80 bg-gray-100 transition-all duration-200 hover:border-gray-300 sm:aspect-video"
 >
     {#if imageUrl}
         <img

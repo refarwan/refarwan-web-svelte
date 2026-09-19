@@ -16,7 +16,7 @@
     let { data } = $props();
     const t = $derived(data.t);
     const commonT = $derived(data.common);
-    const isEn = $derived(data.adminLang === "en-US");
+    const isEn = $derived(data.currentLang === "en-US");
 
     $effect(() => {
         pageTitleStore.set(data.shellT.blogImageLibrary);

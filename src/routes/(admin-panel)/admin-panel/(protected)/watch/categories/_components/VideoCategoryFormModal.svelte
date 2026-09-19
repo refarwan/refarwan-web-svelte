@@ -7,9 +7,9 @@
     import CategoryNameField from "./CategoryNameField.svelte";
     import SlugField from "./SlugField.svelte";
 
-    import type { AdminTranslation } from "$lib/i18n/admin";
     import type { ContentLanguage } from "$lib/types/content-language";
     import type { VideoCategoryDetail } from "$lib/types/video-category";
+    import type { WatchCategory } from "../../../../../i18n/watch-category/types";
     import type { CategoryPayload } from "../use-category-list.svelte";
 
     interface Props {
@@ -20,7 +20,7 @@
         onCheckSlug: (slug: string, currentSlug?: string) => Promise<string>;
         onCreate: (payload: CategoryPayload) => Promise<void>;
         onUpdate: (id: string, payload: CategoryPayload) => Promise<void>;
-        t: AdminTranslation["watchCategory"];
+        t: WatchCategory;
         cancelLabel: string;
     }
 

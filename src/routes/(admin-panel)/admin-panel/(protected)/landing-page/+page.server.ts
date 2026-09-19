@@ -1,8 +1,8 @@
-import { getAdminTranslation } from "$lib/i18n/admin";
+import { SHELL_TRANSLATIONS } from "../../../i18n/shell";
 
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ parent }) => {
-    const { adminLang } = await parent();
-    return { t: getAdminTranslation(adminLang).shell };
+    const { currentLang } = await parent();
+    return { t: SHELL_TRANSLATIONS[currentLang] };
 };

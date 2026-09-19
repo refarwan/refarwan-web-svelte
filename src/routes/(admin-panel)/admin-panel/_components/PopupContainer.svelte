@@ -33,7 +33,7 @@
                     <div class="flex items-center gap-3">
                         <Icon
                             icon="lucide:circle-help"
-                            class="animate-popup-icon h-8 w-8 shrink-0 text-sky-600"
+                            class="animate-popup-icon h-8 w-8 shrink-0 text-theme-600"
                         />
                         <h3 class="text-lg font-bold text-gray-900">
                             {item.title ?? "Confirm Action"}

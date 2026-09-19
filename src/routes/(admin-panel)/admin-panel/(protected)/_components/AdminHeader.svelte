@@ -9,10 +9,10 @@
     import { authStore } from "$lib/stores/auth.svelte";
     import { pageTitleStore } from "$lib/stores/page-title.svelte";
 
-    import type { AdminTranslation } from "$lib/i18n/admin";
+    import type { Shell } from "../../../i18n/shell/types";
 
     interface Props {
-        t: AdminTranslation["shell"];
+        t: Shell;
     }
 
     let { t }: Props = $props();

@@ -4,8 +4,8 @@
     import ImageDetailHeader from "./ImageDetailHeader.svelte";
 
     import type { ResolvedPathname } from "$app/types";
-    import type { AdminTranslation } from "$lib/i18n/admin";
     import type { ImageLibraryItem } from "$lib/types/image-library";
+    import type { ImageLibrary } from "../../../../../i18n/image-library/types";
 
     type Variant = "large" | "medium" | "small";
 
@@ -14,7 +14,7 @@
         isEn?: boolean;
         onClose: () => void;
         onDelete?: () => void;
-        t: AdminTranslation["imageLibrary"];
+        t: ImageLibrary;
     }
 
     let { item, isEn = true, onClose, onDelete, t }: Props = $props();

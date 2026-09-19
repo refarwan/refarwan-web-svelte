@@ -4,10 +4,10 @@
     import { page } from "$app/state";
     import { adminSidebar } from "$lib/stores/admin-sidebar.svelte";
 
-    import type { AdminTranslation } from "$lib/i18n/admin";
+    import type { Shell } from "../../../i18n/shell/types";
 
     interface Props {
-        t: AdminTranslation["shell"];
+        t: Shell;
     }
 
     let { t }: Props = $props();

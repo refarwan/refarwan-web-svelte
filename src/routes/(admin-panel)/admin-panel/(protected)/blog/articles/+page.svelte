@@ -112,7 +112,7 @@
         isLoading={articleList.loading}
         deletingId={actions.deletingId}
         archivingId={actions.archivingId}
-        isEn={data.adminLang === "en-US"}
+        isEn={data.currentLang === "en-US"}
         onView={openDetail}
         onArchive={actions.confirmArchive}
         onUnarchive={actions.confirmUnarchive}
@@ -135,7 +135,7 @@
             {t}
             article={detailArticle}
             onClose={closeDetail}
-            isEn={data.adminLang === "en-US"}
+            isEn={data.currentLang === "en-US"}
         />
     {/if}
 {/snippet}

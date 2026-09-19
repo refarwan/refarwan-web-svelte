@@ -1,16 +1,16 @@
-import { getAdminTranslation } from "$lib/i18n/admin";
 import { getActiveContentLangs } from "$lib/server/settings";
+import { COMMON_TRANSLATIONS } from "../../../../i18n/common";
+import { WATCH_VIDEO_TRANSLATIONS } from "../../../../i18n/watch-video";
 
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ parent, fetch }) => {
-    const { adminLang } = await parent();
+    const { currentLang } = await parent();
     const contentLanguages = await getActiveContentLangs(fetch);
 
     return {
-        adminLang,
-        t: getAdminTranslation(adminLang).watchVideo,
-        common: getAdminTranslation(adminLang).common,
+        t: WATCH_VIDEO_TRANSLATIONS[currentLang],
+        common: COMMON_TRANSLATIONS[currentLang],
         contentLanguages
     };
 };

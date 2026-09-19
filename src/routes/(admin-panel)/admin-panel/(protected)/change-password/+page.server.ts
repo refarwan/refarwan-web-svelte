@@ -1,8 +1,8 @@
-import { getAdminTranslation } from "$lib/i18n/admin";
+import { CHANGE_PASSWORD_TRANSLATIONS } from "../../../i18n/change-password";
 
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ parent }) => {
-    const { adminLang } = await parent();
-    return { t: getAdminTranslation(adminLang).changePassword };
+    const { currentLang } = await parent();
+    return { t: CHANGE_PASSWORD_TRANSLATIONS[currentLang] };
 };

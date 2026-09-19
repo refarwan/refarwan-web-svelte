@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import { http } from "$lib/api/http";
     import { authStore } from "$lib/stores/auth.svelte";
-    import PopupContainer from "./_components/PopupContainer.svelte";
+    import PopupContainer from "./admin-panel/_components/PopupContainer.svelte";
 
     import type { DataResponse } from "$lib/types/api-response";
     import type { AuthCheckResult } from "$lib/types/auth";

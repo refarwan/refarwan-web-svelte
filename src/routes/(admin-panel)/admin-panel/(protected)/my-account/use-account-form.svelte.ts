@@ -3,11 +3,11 @@ import { accountStore } from "$lib/stores/account.svelte";
 import { popup } from "$lib/stores/popup.svelte";
 import { axiosErrorMessage } from "$lib/utils/axios-error-message";
 
-import type { AdminTranslation } from "$lib/i18n/admin";
 import type { AccountItem } from "$lib/types/account";
 import type { AreaItem } from "$lib/types/area";
+import type { Account } from "../../../i18n/account/types";
 
-type AccountT = AdminTranslation["account"];
+type AccountT = Account;
 
 const fetchAreas = async (path: string): Promise<AreaItem[]> => {
     const res = await fetch(path);

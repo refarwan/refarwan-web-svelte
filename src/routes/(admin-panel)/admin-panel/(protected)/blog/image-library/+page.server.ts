@@ -1,13 +1,13 @@
-import { getAdminTranslation } from "$lib/i18n/admin";
+import { COMMON_TRANSLATIONS } from "../../../../i18n/common";
+import { IMAGE_LIBRARY_TRANSLATIONS } from "../../../../i18n/image-library";
 
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ parent }) => {
-    const { adminLang } = await parent();
+    const { currentLang } = await parent();
 
     return {
-        adminLang,
-        t: getAdminTranslation(adminLang).imageLibrary,
-        common: getAdminTranslation(adminLang).common
+        t: IMAGE_LIBRARY_TRANSLATIONS[currentLang],
+        common: COMMON_TRANSLATIONS[currentLang]
     };
 };

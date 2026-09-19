@@ -1,15 +1,18 @@
 <script lang="ts">
     import { resolve } from "$app/paths";
     import { page } from "$app/state";
-    import { getAdminTranslation } from "$lib/i18n/admin";
     import { pageTitleStore } from "$lib/stores/page-title.svelte";
+    import { NOT_FOUND_TRANSLATIONS } from "../../i18n/not-found";
+    import { SHELL_TRANSLATIONS } from "../../i18n/shell";
     import AdminNotFoundContent from "./_components/AdminNotFoundContent.svelte";
 
-    const adminTranslation = $derived(getAdminTranslation(page.data.adminLang));
-    const notFoundT = $derived(adminTranslation.notFound);
+    import type { AdminLocale } from "../../i18n/types";
+
+    const currentLang = $derived(page.data.currentLang as AdminLocale);
+    const notFoundT = $derived(NOT_FOUND_TRANSLATIONS[currentLang]);
 
     $effect(() => {
-        pageTitleStore.set(adminTranslation.shell.notFound);
+        pageTitleStore.set(SHELL_TRANSLATIONS[currentLang].notFound);
     });
 </script>
 

@@ -1,14 +1,15 @@
-import { getAdminTranslation } from "$lib/i18n/admin";
 import { setAdminLang } from "$lib/server/admin-lang";
+import { COMMON_TRANSLATIONS } from "../../../i18n/common";
+import { SETTINGS_TRANSLATIONS } from "../../../i18n/settings";
 
 import type { Actions, PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ parent }) => {
-    const { adminLang } = await parent();
+    const { currentLang } = await parent();
 
     return {
-        t: getAdminTranslation(adminLang).settings,
-        common: getAdminTranslation(adminLang).common
+        t: SETTINGS_TRANSLATIONS[currentLang],
+        common: COMMON_TRANSLATIONS[currentLang]
     };
 };
 

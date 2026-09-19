@@ -110,7 +110,7 @@
         isLoading={videoList.loading}
         deletingId={actions.deletingId}
         archivingId={actions.archivingId}
-        isEn={data.adminLang === "en-US"}
+        isEn={data.currentLang === "en-US"}
         onView={openDetail}
         onArchive={actions.confirmArchive}
         onUnarchive={actions.confirmUnarchive}
@@ -131,7 +131,7 @@
     {#if detailVideo}
         <VideoDetailModal
             video={detailVideo}
-            lang={data.adminLang}
+            lang={data.currentLang}
             contentLanguages={data.contentLanguages}
             onClose={closeDetail}
             onRefresh={async () => {

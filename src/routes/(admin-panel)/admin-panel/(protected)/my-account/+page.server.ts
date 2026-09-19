@@ -1,12 +1,12 @@
-import { getAdminTranslation } from "$lib/i18n/admin";
 import { getApiData } from "$lib/server/api-data";
+import { ACCOUNT_TRANSLATIONS } from "../../../i18n/account";
 
 import type { DataResponse } from "$lib/types/api-response";
 import type { AreaItem } from "$lib/types/area";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ parent, fetch }) => {
-    const { adminLang } = await parent();
+    const { currentLang } = await parent();
 
     const [provinces, allRegencies] = await Promise.all([
         getApiData<DataResponse<AreaItem[]>>("area/provinces", "area", fetch),
@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ parent, fetch }) => {
     ]);
 
     return {
-        t: getAdminTranslation(adminLang).account,
+        t: ACCOUNT_TRANSLATIONS[currentLang],
         provinces: provinces?.data ?? [],
         allRegencies: allRegencies?.data ?? []
     };

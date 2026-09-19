@@ -7,13 +7,14 @@ import { axiosErrorMessage } from "$lib/utils/axios-error-message";
 import { generateColorShades } from "$lib/utils/generate-color-shades";
 import { useUnsavedChangesGuard } from "$lib/utils/unsaved-changes-guard.svelte";
 
-import type { AdminTranslation } from "$lib/i18n/admin";
 import type { DataResponse } from "$lib/types/api-response";
 import type { AdminSettingsData } from "$lib/types/setting";
 import type { ThemeShades } from "$lib/types/theme-shades";
+import type { Common } from "../../../i18n/common/types";
+import type { Settings } from "../../../i18n/settings/types";
 
-type SettingsT = AdminTranslation["settings"];
-type CommonT = AdminTranslation["common"];
+type SettingsT = Settings;
+type CommonT = Common;
 
 interface Snapshot {
     title: string;

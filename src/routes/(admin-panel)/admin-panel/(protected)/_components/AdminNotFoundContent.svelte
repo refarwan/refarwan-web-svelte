@@ -2,10 +2,10 @@
     import Icon from "@iconify/svelte";
     import { resolve } from "$app/paths";
 
-    import type { AdminTranslation } from "$lib/i18n/admin";
+    import type { NotFound } from "../../../i18n/not-found/types";
 
     interface Props {
-        t: AdminTranslation["notFound"];
+        t: NotFound;
     }
 
     let { t }: Props = $props();

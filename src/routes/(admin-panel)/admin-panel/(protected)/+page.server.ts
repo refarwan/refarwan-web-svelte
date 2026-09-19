@@ -1,9 +1,13 @@
-import { getAdminTranslation } from "$lib/i18n/admin";
+import { DASHBOARD_TRANSLATIONS } from "../../i18n/dashboard";
+import { SHELL_TRANSLATIONS } from "../../i18n/shell";
 
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ parent }) => {
-    const { adminLang } = await parent();
-    const t = getAdminTranslation(adminLang);
-    return { t: t.shell, dashboardT: t.dashboard, isIndonesian: adminLang === "id-ID" };
+    const { currentLang } = await parent();
+    return {
+        t: SHELL_TRANSLATIONS[currentLang],
+        dashboardT: DASHBOARD_TRANSLATIONS[currentLang],
+        isIndonesian: currentLang === "id-ID"
+    };
 };

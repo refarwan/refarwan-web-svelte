@@ -4,12 +4,12 @@
     import UploadImageDropzone from "./UploadImageDropzone.svelte";
     import UploadImagePreview from "./UploadImagePreview.svelte";
 
-    import type { AdminTranslation } from "$lib/i18n/admin";
+    import type { ImageLibrary } from "../../../../../i18n/image-library/types";
 
     interface Props {
         onClose: () => void;
         onUpload: (file: File) => Promise<void>;
-        t: AdminTranslation["imageLibrary"];
+        t: ImageLibrary;
         cancelLabel: string;
     }
 

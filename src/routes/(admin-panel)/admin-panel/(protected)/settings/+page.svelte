@@ -90,7 +90,7 @@
         </form>
     {/if}
 
-    <AdminLanguageSection {t} initialLang={data.adminLang} />
+    <AdminLanguageSection {t} initialLang={data.currentLang} />
 </div>
 
 {#snippet colorPickerSnippet()}
