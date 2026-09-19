@@ -14,7 +14,7 @@
 <style>
     :global(.article-body) {
         font-size: 1.0625rem;
-        line-height: 1.8;
+        line-height: 1.75;
         color: #374151;
         word-break: break-word;
     }
@@ -28,35 +28,35 @@
     }
 
     :global(.article-body p) {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
     }
 
     :global(.article-body h1) {
-        font-size: 2rem;
+        font-size: 1.875rem;
         font-weight: 700;
         color: #111827;
-        margin-top: 2.5rem;
-        margin-bottom: 1rem;
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
         line-height: 1.3;
         letter-spacing: -0.02em;
     }
 
     :global(.article-body h2) {
-        font-size: 1.625rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: #111827;
-        margin-top: 2.25rem;
-        margin-bottom: 0.875rem;
+        margin-top: 1.75rem;
+        margin-bottom: 0.625rem;
         line-height: 1.35;
         letter-spacing: -0.015em;
     }
 
     :global(.article-body h3) {
-        font-size: 1.325rem;
+        font-size: 1.25rem;
         font-weight: 600;
         color: #1f2937;
-        margin-top: 1.875rem;
-        margin-bottom: 0.75rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
         line-height: 1.4;
     }
 
@@ -146,12 +146,23 @@
     }
 
     :global(.article-body table) {
-        width: 100%;
         border-collapse: collapse;
         margin: 2rem 0;
+        width: max-content;
+        max-width: 100%;
         font-size: 0.9375rem;
         overflow-x: auto;
         display: block;
+    }
+
+    :global(.article-body table.SL_Theme__tableAlignmentCenter) {
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    :global(.article-body table.SL_Theme__tableAlignmentRight) {
+        margin-left: auto !important;
+        margin-right: 0 !important;
     }
 
     :global(.article-body th) {
@@ -167,9 +178,10 @@
         padding: 0.75rem 1rem;
         border: 1px solid #e2e8f0;
         color: #475569;
+        background-color: #ffffff;
     }
 
-    :global(.article-body tr:nth-child(even)) {
+    :global(.article-body table.SL_Theme__tableRowStriping tr:nth-child(even)) {
         background-color: #f8fafc;
     }
 

@@ -1,0 +1,88 @@
+@reference "../../../../../layout.css";
+
+.richtext-content .SL_Theme__ltr,
+.richtext-content [class*='SL_Theme__'][dir='ltr'] {
+    @apply text-left;
+}
+
+.richtext-content .SL_Theme__rtl,
+.richtext-content [class*='SL_Theme__'][dir='rtl'] {
+    @apply text-right;
+}
+
+.richtext-content .SL_Theme__h1 {
+    @apply text-3xl font-bold leading-tight mt-4 mb-2 text-gray-900;
+}
+
+.richtext-content .SL_Theme__h2 {
+    @apply text-2xl font-semibold leading-snug mt-3.5 mb-2 text-gray-800;
+}
+
+.richtext-content .SL_Theme__h3 {
+    @apply text-xl font-semibold leading-normal mt-3 mb-1.5 text-gray-700;
+}
+
+.richtext-content .SL_Theme__h4 {
+    @apply text-lg font-semibold mt-2.5 mb-1 text-gray-700;
+}
+
+.richtext-content .SL_Theme__h5 {
+    @apply text-base font-semibold mt-2 mb-1 text-gray-700;
+}
+
+.richtext-content .SL_Theme__h6 {
+    @apply text-sm font-semibold mt-2 mb-1 text-gray-700;
+}
+
+.richtext-content .SL_Theme__quote {
+    @apply my-5 py-3.5 px-4 border-l-4 border-theme-600 bg-theme-50/70 rounded-r-lg text-slate-700 italic;
+}
+
+.richtext-content .SL_Theme__textBold {
+    @apply font-bold;
+}
+
+.richtext-content .SL_Theme__textItalic {
+    @apply italic;
+}
+
+.richtext-content .SL_Theme__textUnderline {
+    @apply underline;
+}
+
+.richtext-content .SL_Theme__textStrikethrough {
+    @apply line-through;
+}
+
+.richtext-content .SL_Theme__textUnderlineStrikethrough {
+    @apply underline line-through;
+}
+
+.richtext-content .SL_Theme__textSubscript {
+    @apply text-xs align-sub;
+}
+
+.richtext-content .SL_Theme__textSuperscript {
+    @apply text-xs align-super;
+}
+
+.richtext-content .SL_Theme__textCode {
+    @apply bg-gray-100 text-red-500 font-mono text-xs px-1.5 py-0.5 rounded;
+}
+
+.richtext-content .SL_Theme__textHighlight {
+    @apply bg-theme-100 text-theme-900 px-1 py-0.5 rounded-xs;
+}
+
+.richtext-content .SL_Theme__link {
+    @apply text-theme-600 underline cursor-pointer hover:text-theme-700 transition-colors;
+}
+
+.richtext-content .SL_Theme__code {
+    @apply bg-gray-900 text-gray-50 font-mono block px-4 py-3 text-sm my-3 rounded-md overflow-x-auto;
+    tab-size: 2;
+}
+
+.richtext-content .SL_Theme__hr {
+    @apply border-none border-t-2 border-gray-200 my-6;
+}

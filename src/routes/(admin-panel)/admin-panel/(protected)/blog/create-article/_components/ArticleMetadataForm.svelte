@@ -38,7 +38,7 @@
     }: Props = $props();
 </script>
 
-<div class="w-full flex-1 space-y-5">
+<div class="w-full min-w-0 flex-1 space-y-5">
     <div class="space-y-1.5">
         <label class="block text-sm font-medium text-gray-700" for="article-title"
             >{t.titleLabel}</label

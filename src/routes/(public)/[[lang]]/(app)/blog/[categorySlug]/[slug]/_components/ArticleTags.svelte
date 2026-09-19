@@ -17,7 +17,7 @@
 </script>
 
 {#if categoryName}
-    <div class="mt-12 border-t border-gray-200 pt-6">
+    <div class="mt-4">
         <div class="flex flex-wrap items-center gap-2">
             <a
                 href={categoryHref}

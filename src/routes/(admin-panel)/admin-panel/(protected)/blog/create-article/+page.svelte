@@ -178,7 +178,7 @@
         {/if}
     </div>
 
-    <div class="flex flex-col items-start gap-6 lg:flex-row">
+    <div class="flex w-full min-w-0 flex-col items-start gap-6 lg:flex-row">
         <ArticleMetadataForm
             {t}
             {editorT}

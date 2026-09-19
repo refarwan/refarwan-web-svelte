@@ -67,33 +67,35 @@
 </svelte:head>
 
 <AppMainSection>
-    <ArticleBreadcrumbs
-        {homeHref}
-        homeLabel={t.homeBreadcrumb}
-        {categoryHref}
-        categoryName={data.article.category ?? "Blog"}
-        articleTitle={data.article.title ?? ""}
-    />
+    <div class="mx-auto flex w-full max-w-4xl flex-col gap-5 md:gap-7">
+        <ArticleBreadcrumbs
+            {homeHref}
+            homeLabel={t.homeBreadcrumb}
+            {categoryHref}
+            categoryName={data.article.category ?? "Blog"}
+            articleTitle={data.article.title ?? ""}
+        />
 
-    <ArticleHeader
-        title={data.article.title ?? "Untitled"}
-        createdAt={data.article.createdAt}
-        {readingTime}
-        minReadSuffix={t.minReadSuffix}
-        readsCount={data.article.readsCount}
-        readsLabel={t.reads}
-        lang={currentLang}
-    />
+        <ArticleHeader
+            title={data.article.title ?? "Untitled"}
+            createdAt={data.article.createdAt}
+            {readingTime}
+            minReadSuffix={t.minReadSuffix}
+            readsCount={data.article.readsCount}
+            readsLabel={t.reads}
+            lang={currentLang}
+        />
 
-    <ArticleHeroCover thumbnail={data.article.thumbnail} title={data.article.title ?? ""} />
+        <ArticleHeroCover thumbnail={data.article.thumbnail} title={data.article.title ?? ""} />
 
-    <ArticleBody contentHTML={data.article.contentHTML} />
+        <ArticleBody contentHTML={data.article.contentHTML} />
 
-    <ArticleTags
-        categoryName={data.article.category}
-        categorySlug={data.article.categorySlug}
-        {basePath}
-    />
+        <ArticleTags
+            categoryName={data.article.category}
+            categorySlug={data.article.categorySlug}
+            {basePath}
+        />
+    </div>
 
     <RelatedArticlesSection
         heading={t.relatedArticlesHeading}
