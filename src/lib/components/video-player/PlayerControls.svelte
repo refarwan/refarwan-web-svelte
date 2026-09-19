@@ -1,16 +1,7 @@
 <script lang="ts">
-    import {
-        MaximizeIcon,
-        MinimizeIcon,
-        PauseIcon,
-        PlayIcon,
-        Volume1Icon,
-        Volume2Icon,
-        VolumeXIcon
-    } from "lucide-svelte/icons";
-
-    import PlayerSettingsMenu from "./PlayerSettingsMenu.svelte";
+    import Icon from "@iconify/svelte";
     import { formatTime } from "./format-time";
+    import PlayerSettingsMenu from "./PlayerSettingsMenu.svelte";
 
     import type { ResolutionOption } from "./resolution";
 
@@ -55,8 +46,12 @@
     const progressPercent = $derived(
         duration > 0 ? Math.min(100, (currentTime / duration) * 100) : 0
     );
-    const VolumeIcon = $derived(
-        isMuted || volume === 0 ? VolumeXIcon : volume < 0.5 ? Volume1Icon : Volume2Icon
+    const volumeIcon = $derived(
+        isMuted || volume === 0
+            ? "lucide:volume-x"
+            : volume < 0.5
+              ? "lucide:volume-1"
+              : "lucide:volume-2"
     );
 
     let trackEl: HTMLDivElement | undefined = $state();
@@ -116,9 +111,9 @@
             aria-label={isPlaying ? "Pause" : "Play"}
         >
             {#if isPlaying}
-                <PauseIcon class="h-4.5 w-4.5" fill="currentColor" />
+                <Icon icon="lucide:pause" class="h-4.5 w-4.5" />
             {:else}
-                <PlayIcon class="h-4.5 w-4.5" fill="currentColor" />
+                <Icon icon="lucide:play" class="h-4.5 w-4.5" />
             {/if}
         </button>
 
@@ -129,7 +124,7 @@
                 class="grid h-8 w-8 place-content-center rounded-full text-white transition-colors hover:bg-white/15"
                 aria-label={isMuted ? "Unmute" : "Mute"}
             >
-                <VolumeIcon class="h-4.5 w-4.5" />
+                <Icon icon={volumeIcon} class="h-4.5 w-4.5" />
             </button>
             <input
                 type="range"
@@ -164,9 +159,9 @@
             aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
         >
             {#if isFullscreen}
-                <MinimizeIcon class="h-4.5 w-4.5" />
+                <Icon icon="lucide:minimize" class="h-4.5 w-4.5" />
             {:else}
-                <MaximizeIcon class="h-4.5 w-4.5" />
+                <Icon icon="lucide:maximize" class="h-4.5 w-4.5" />
             {/if}
         </button>
     </div>

@@ -1,7 +1,8 @@
-import { en } from "./en";
-import { id } from "./id";
-import { ja } from "./ja";
+import { enUS } from "./en-US";
+import { idID } from "./id-ID";
+import { jaJP } from "./ja-JP";
 
+import type { ContentLocale } from "../types";
 import type { HomeTranslation } from "./types";
 
 export type {
@@ -15,14 +16,8 @@ export type {
     SkillsTranslation
 } from "./types";
 
-export const HOME_TRANSLATIONS: Record<string, HomeTranslation> = {
-    en,
-    id,
-    ja
+export const HOME_TRANSLATIONS: Record<ContentLocale, HomeTranslation> = {
+    "en-US": enUS,
+    "id-ID": idID,
+    "ja-JP": jaJP
 };
-
-export function getHomeTranslation(lang?: string): HomeTranslation {
-    if (!lang) return HOME_TRANSLATIONS.en;
-    const code = lang.toLowerCase();
-    return HOME_TRANSLATIONS[code] || HOME_TRANSLATIONS.en;
-}

@@ -1,0 +1,76 @@
+diff --git a/dist/themes/default/shell/ActionBar.css b/dist/themes/default/shell/ActionBar.css
+index 2cb9257676013a393a3878e8975b2b2e10835e90..909cddf2f1b217a676c69bc350ba4ce29139eb33 100644
+--- a/dist/themes/default/shell/ActionBar.css
++++ b/dist/themes/default/shell/ActionBar.css
+@@ -95,17 +95,6 @@
+     cursor: not-allowed;
+   }
+ 
+-  @keyframes mic-pulsate-color {
+-    0% {
+-      background-color: #ffdcdc;
+-    }
+-    50% {
+-      background-color: #ff8585;
+-    }
+-    100% {
+-      background-color: #ffdcdc;
+-    }
+-  }
+ 
+   .connecting {
+     font-size: 15px;
+@@ -121,3 +110,15 @@
+     pointer-events: none;
+   }
+ }
++
++@keyframes mic-pulsate-color {
++  0% {
++    background-color: #ffdcdc;
++  }
++  50% {
++    background-color: #ff8585;
++  }
++  100% {
++    background-color: #ffdcdc;
++  }
++}
+diff --git a/dist/themes/light-dark/shell/ActionBar.css b/dist/themes/light-dark/shell/ActionBar.css
+index 438aa364cc92a418d28ba0bbcaa8270b3c343b50..19eafccc2d52853e5cb9040736b7667a76ebd4ea 100644
+--- a/dist/themes/light-dark/shell/ActionBar.css
++++ b/dist/themes/light-dark/shell/ActionBar.css
+@@ -96,17 +96,6 @@
+     cursor: not-allowed;
+   }
+ 
+-  @keyframes mic-pulsate-color {
+-    0% {
+-      background-color: #ffdcdc;
+-    }
+-    50% {
+-      background-color: #ff8585;
+-    }
+-    100% {
+-      background-color: #ffdcdc;
+-    }
+-  }
+ 
+   .connecting {
+     font-size: 15px;
+@@ -122,3 +111,15 @@
+     pointer-events: none;
+   }
+ }
++
++@keyframes mic-pulsate-color {
++  0% {
++    background-color: #ffdcdc;
++  }
++  50% {
++    background-color: #ff8585;
++  }
++  100% {
++    background-color: #ffdcdc;
++  }
++}
