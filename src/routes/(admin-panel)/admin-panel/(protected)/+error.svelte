@@ -1,9 +1,9 @@
 <script lang="ts">
     import { resolve } from "$app/paths";
     import { page } from "$app/state";
-    import { pageTitleStore } from "$lib/stores/page-title.svelte";
     import { NOT_FOUND_TRANSLATIONS } from "../../i18n/not-found";
     import { SHELL_TRANSLATIONS } from "../../i18n/shell";
+    import { pageTitleStore } from "../../stores/page-title.svelte";
     import AdminNotFoundContent from "./_components/AdminNotFoundContent.svelte";
 
     import type { AdminLocale } from "../../i18n/types";

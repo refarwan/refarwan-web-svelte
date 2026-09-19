@@ -1,7 +1,7 @@
 import { env } from "$env/dynamic/public";
 import axios from "axios";
-import { popup } from "$lib/stores/popup.svelte";
-import { getAdminLangCookie } from "$lib/utils/admin-lang-cookie";
+import { popup } from "../stores/popup.svelte";
+import { getAdminLangCookie } from "../utils/admin-lang-cookie";
 
 import type { AxiosError } from "axios";
 

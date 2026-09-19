@@ -3,10 +3,10 @@
     import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
     import { untrack } from "svelte";
-    import { http } from "$lib/api/http";
-    import { authStore } from "$lib/stores/auth.svelte";
-    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+    import { http } from "../../api/http";
     import { LOGIN_TRANSLATIONS } from "../../i18n/login";
+    import { authStore } from "../../stores/auth.svelte";
+    import { axiosErrorMessage } from "../../utils/axios-error-message";
 
     import type { DataResponse } from "$lib/types/api-response";
 

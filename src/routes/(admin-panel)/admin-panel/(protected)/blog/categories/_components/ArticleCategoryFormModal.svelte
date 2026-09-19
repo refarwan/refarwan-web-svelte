@@ -1,9 +1,9 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     import { untrack } from "svelte";
-    import LanguageTabs from "$lib/components/admin/LanguageTabs.svelte";
-    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
-    import { slugify } from "$lib/utils/slugify";
+    import LanguageTabs from "../../../_components/LanguageTabs.svelte";
+    import { axiosErrorMessage } from "../../../../../utils/axios-error-message";
+    import { slugify } from "../../../../../utils/slugify";
     import CategoryNameField from "./CategoryNameField.svelte";
     import SlugField from "./SlugField.svelte";
 

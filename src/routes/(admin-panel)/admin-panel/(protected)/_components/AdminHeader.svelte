@@ -3,11 +3,11 @@
     import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
     import { onMount } from "svelte";
-    import { authorizedHttp } from "$lib/api/authorized-http";
-    import { accountStore } from "$lib/stores/account.svelte";
-    import { adminSidebar } from "$lib/stores/admin-sidebar.svelte";
-    import { authStore } from "$lib/stores/auth.svelte";
-    import { pageTitleStore } from "$lib/stores/page-title.svelte";
+    import { authorizedHttp } from "../../../api/authorized-http";
+    import { accountStore } from "../../../stores/account.svelte";
+    import { adminSidebar } from "../../../stores/admin-sidebar.svelte";
+    import { authStore } from "../../../stores/auth.svelte";
+    import { pageTitleStore } from "../../../stores/page-title.svelte";
 
     import type { Shell } from "../../../i18n/shell/types";
 

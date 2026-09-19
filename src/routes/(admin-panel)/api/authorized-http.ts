@@ -1,9 +1,9 @@
 import { env } from "$env/dynamic/public";
 import axios from "axios";
-import { authStore } from "$lib/stores/auth.svelte";
-import { popup } from "$lib/stores/popup.svelte";
-import { getAdminLangCookie } from "$lib/utils/admin-lang-cookie";
-import { decodeJwt } from "$lib/utils/decode-jwt";
+import { authStore } from "../stores/auth.svelte";
+import { popup } from "../stores/popup.svelte";
+import { getAdminLangCookie } from "../utils/admin-lang-cookie";
+import { decodeJwt } from "../utils/decode-jwt";
 import { http } from "./http";
 
 import type { AxiosError } from "axios";

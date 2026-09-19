@@ -1,4 +1,4 @@
-import type { DecodedAccessToken } from "$lib/types/auth";
+import type { DecodedAccessToken } from "../types/auth";
 
 export function decodeJwt(token: string): DecodedAccessToken | null {
     try {

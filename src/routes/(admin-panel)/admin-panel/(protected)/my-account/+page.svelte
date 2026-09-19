@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { pageTitleStore } from "$lib/stores/page-title.svelte";
+    import { pageTitleStore } from "../../../stores/page-title.svelte";
     import AccountInfoSection from "./_components/AccountInfoSection.svelte";
     import AccountSkeleton from "./_components/AccountSkeleton.svelte";
     import AddressSection from "./_components/AddressSection.svelte";

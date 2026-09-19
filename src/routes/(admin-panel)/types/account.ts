@@ -1,5 +1,5 @@
+import type { ImageSource } from "$lib/types/setting";
 import type { AreaItem } from "./area";
-import type { ImageSource } from "./setting";
 
 export type Gender = "male" | "female";
 

@@ -1,9 +1,9 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     import { untrack } from "svelte";
-    import { DEFAULT_THEME_SHADES } from "$lib/constants/theme-shades";
-    import { generateColorShades } from "$lib/utils/generate-color-shades";
     import ColorBoard from "../../_components/ColorBoard.svelte";
+    import { DEFAULT_THEME_SHADES } from "../../../../constants/theme-shades";
+    import { generateColorShades } from "../../../../utils/generate-color-shades";
 
     import type { ThemeShades } from "$lib/types/theme-shades";
 

@@ -1,6 +1,6 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
-    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+    import { axiosErrorMessage } from "../../../../../utils/axios-error-message";
     import UploadImageDropzone from "./UploadImageDropzone.svelte";
     import UploadImagePreview from "./UploadImagePreview.svelte";
 

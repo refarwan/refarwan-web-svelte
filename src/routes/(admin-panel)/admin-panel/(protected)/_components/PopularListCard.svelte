@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { PopularItem } from "$lib/data/admin-dashboard";
+    import type { PopularItem } from "../../../data/admin-dashboard";
 
     interface Props {
         title: string;

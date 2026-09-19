@@ -4,8 +4,8 @@
     import ImageDetailHeader from "./ImageDetailHeader.svelte";
 
     import type { ResolvedPathname } from "$app/types";
-    import type { ImageLibraryItem } from "$lib/types/image-library";
     import type { ImageLibrary } from "../../../../../i18n/image-library/types";
+    import type { ImageLibraryItem } from "../../../../../types/image-library";
 
     type Variant = "large" | "medium" | "small";
 

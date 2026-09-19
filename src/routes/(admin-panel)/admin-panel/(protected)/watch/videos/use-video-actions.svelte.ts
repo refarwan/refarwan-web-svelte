@@ -1,5 +1,5 @@
-import { popup } from "$lib/stores/popup.svelte";
-import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+import { popup } from "../../../../stores/popup.svelte";
+import { axiosErrorMessage } from "../../../../utils/axios-error-message";
 
 import type { VideoItem } from "$lib/types/video";
 import type { useVideoList } from "./use-video-list.svelte";

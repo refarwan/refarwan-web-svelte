@@ -1,11 +1,11 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { http } from "$lib/api/http";
-    import { authStore } from "$lib/stores/auth.svelte";
     import PopupContainer from "./admin-panel/_components/PopupContainer.svelte";
+    import { http } from "./api/http";
+    import { authStore } from "./stores/auth.svelte";
 
     import type { DataResponse } from "$lib/types/api-response";
-    import type { AuthCheckResult } from "$lib/types/auth";
+    import type { AuthCheckResult } from "./types/auth";
 
     let { children } = $props();
 

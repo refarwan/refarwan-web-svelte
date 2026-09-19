@@ -1,11 +1,11 @@
-import { authorizedHttp } from "$lib/api/authorized-http";
-import { accountStore } from "$lib/stores/account.svelte";
-import { popup } from "$lib/stores/popup.svelte";
-import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+import { authorizedHttp } from "../../../api/authorized-http";
+import { accountStore } from "../../../stores/account.svelte";
+import { popup } from "../../../stores/popup.svelte";
+import { axiosErrorMessage } from "../../../utils/axios-error-message";
 
-import type { AccountItem } from "$lib/types/account";
-import type { AreaItem } from "$lib/types/area";
 import type { Account } from "../../../i18n/account/types";
+import type { AccountItem } from "../../../types/account";
+import type { AreaItem } from "../../../types/area";
 
 type AccountT = Account;
 

@@ -1,7 +1,7 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
 
-    import type { ImageLibraryItem } from "$lib/types/image-library";
+    import type { ImageLibraryItem } from "../../../../../types/image-library";
 
     interface Props {
         items: ImageLibraryItem[];

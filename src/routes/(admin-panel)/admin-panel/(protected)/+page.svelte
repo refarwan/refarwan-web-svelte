@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { ANALYTICS_DATA, POPULAR_SECTIONS } from "$lib/data/admin-dashboard";
-    import { pageTitleStore } from "$lib/stores/page-title.svelte";
+    import { ANALYTICS_DATA, POPULAR_SECTIONS } from "../../data/admin-dashboard";
+    import { pageTitleStore } from "../../stores/page-title.svelte";
     import AnalyticsChart from "./_components/AnalyticsChart.svelte";
     import PopularListCard from "./_components/PopularListCard.svelte";
     import StatCard from "./_components/StatCard.svelte";

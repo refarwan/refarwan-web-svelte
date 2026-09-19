@@ -1,6 +1,6 @@
 import { env } from "$env/dynamic/public";
-import { ensureAccessToken } from "$lib/api/authorized-http";
-import { getAdminLangCookie } from "$lib/utils/admin-lang-cookie";
+import { ensureAccessToken } from "../api/authorized-http";
+import { getAdminLangCookie } from "./admin-lang-cookie";
 
 export interface UploadCallbacks {
     onProgress: (percent: number, loaded: number, total: number) => void;

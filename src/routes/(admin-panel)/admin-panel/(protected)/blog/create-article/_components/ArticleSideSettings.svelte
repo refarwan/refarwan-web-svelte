@@ -1,7 +1,7 @@
 <script lang="ts">
-    import DropdownSelect from "$lib/components/admin/DropdownSelect.svelte";
-    import TagsInput from "$lib/components/admin/TagsInput.svelte";
-    import ThumbnailUploadMode from "$lib/components/admin/ThumbnailUploadMode.svelte";
+    import DropdownSelect from "../../../_components/DropdownSelect.svelte";
+    import TagsInput from "../../../_components/TagsInput.svelte";
+    import ThumbnailUploadMode from "../../../_components/ThumbnailUploadMode.svelte";
 
     interface Props {
         t: Record<string, string>;

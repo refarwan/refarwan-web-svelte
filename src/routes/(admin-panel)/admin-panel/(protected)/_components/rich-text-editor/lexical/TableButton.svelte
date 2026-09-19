@@ -2,7 +2,7 @@
     import Icon from "@iconify/svelte";
     import { INSERT_TABLE_COMMAND } from "@lexical/table";
     import { getActiveEditor } from "svelte-lexical";
-    import { popup } from "$lib/stores/popup.svelte";
+    import { popup } from "../../../../../stores/popup.svelte";
     import ToolbarButton from "./ToolbarButton.svelte";
 
     interface Props {

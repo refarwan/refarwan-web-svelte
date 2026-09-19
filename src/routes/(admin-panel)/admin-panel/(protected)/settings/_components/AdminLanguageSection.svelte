@@ -1,7 +1,7 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     import { tick, untrack } from "svelte";
-    import DropdownSelect from "$lib/components/admin/DropdownSelect.svelte";
+    import DropdownSelect from "../../_components/DropdownSelect.svelte";
 
     interface Props {
         t: Record<string, string>;

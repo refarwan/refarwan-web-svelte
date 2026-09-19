@@ -1,6 +1,6 @@
-import { setAdminLang } from "$lib/server/admin-lang";
 import { COMMON_TRANSLATIONS } from "../../../i18n/common";
 import { SETTINGS_TRANSLATIONS } from "../../../i18n/settings";
+import { setAdminLang } from "../../../server/admin-lang";
 
 import type { Actions, PageServerLoad } from "./$types";
 

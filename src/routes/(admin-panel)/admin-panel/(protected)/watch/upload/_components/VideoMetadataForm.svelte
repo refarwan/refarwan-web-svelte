@@ -1,5 +1,5 @@
 <script lang="ts">
-    import DropdownSelect from "$lib/components/admin/DropdownSelect.svelte";
+    import DropdownSelect from "../../../_components/DropdownSelect.svelte";
     import VideoDropzone from "./VideoDropzone.svelte";
 
     interface Option {

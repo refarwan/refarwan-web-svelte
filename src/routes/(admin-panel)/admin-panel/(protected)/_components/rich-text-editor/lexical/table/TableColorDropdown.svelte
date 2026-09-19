@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ColorPickerCard from "../../../../../../routes/(admin-panel)/admin-panel/(protected)/_components/ColorPickerCard.svelte";
+    import ColorPickerCard from "../../../ColorPickerCard.svelte";
 
     interface Props {
         t: Record<string, string>;

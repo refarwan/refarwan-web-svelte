@@ -3,10 +3,10 @@
     import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
     import { SvelteURLSearchParams } from "svelte/reactivity";
-    import Pagination from "$lib/components/Pagination.svelte";
-    import { pageTitleStore } from "$lib/stores/page-title.svelte";
-    import { popup } from "$lib/stores/popup.svelte";
-    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+    import Pagination from "../../_components/Pagination.svelte";
+    import { pageTitleStore } from "../../../../stores/page-title.svelte";
+    import { popup } from "../../../../stores/popup.svelte";
+    import { axiosErrorMessage } from "../../../../utils/axios-error-message";
     import CategoryTable from "./_components/CategoryTable.svelte";
     import VideoCategoryFormModal from "./_components/VideoCategoryFormModal.svelte";
     import { useCategoryList } from "./use-category-list.svelte";

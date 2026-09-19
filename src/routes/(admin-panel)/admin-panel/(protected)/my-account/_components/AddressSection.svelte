@@ -1,8 +1,8 @@
 <script lang="ts">
     import { untrack } from "svelte";
-    import DropdownSelect from "$lib/components/admin/DropdownSelect.svelte";
+    import DropdownSelect from "../../_components/DropdownSelect.svelte";
 
-    import type { AreaItem } from "$lib/types/area";
+    import type { AreaItem } from "../../../../types/area";
 
     interface Props {
         t: Record<string, string>;

@@ -4,8 +4,8 @@
     import { $getSelection as getSelection } from "lexical";
     import { getContext } from "svelte";
     import { getActiveEditor } from "svelte-lexical";
-    import { popup } from "$lib/stores/popup.svelte";
-    import ColorPickerCard from "../../../../../routes/(admin-panel)/admin-panel/(protected)/_components/ColorPickerCard.svelte";
+    import { popup } from "../../../../../stores/popup.svelte";
+    import ColorPickerCard from "../../ColorPickerCard.svelte";
 
     import type { Writable } from "svelte/store";
 

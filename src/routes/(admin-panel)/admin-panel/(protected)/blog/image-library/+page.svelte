@@ -1,17 +1,17 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     import { resolve } from "$app/paths";
-    import Pagination from "$lib/components/Pagination.svelte";
-    import { pageTitleStore } from "$lib/stores/page-title.svelte";
-    import { popup } from "$lib/stores/popup.svelte";
-    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+    import Pagination from "../../_components/Pagination.svelte";
+    import { pageTitleStore } from "../../../../stores/page-title.svelte";
+    import { popup } from "../../../../stores/popup.svelte";
+    import { axiosErrorMessage } from "../../../../utils/axios-error-message";
     import ImageCard from "./_components/ImageCard.svelte";
     import ImageDetailModal from "./_components/ImageDetailModal.svelte";
     import UploadImageModal from "./_components/UploadImageModal.svelte";
     import { useImageLibraryList } from "./use-image-library-list.svelte";
 
     import type { ResolvedPathname } from "$app/types";
-    import type { ImageLibraryItem } from "$lib/types/image-library";
+    import type { ImageLibraryItem } from "../../../../types/image-library";
 
     let { data } = $props();
     const t = $derived(data.t);

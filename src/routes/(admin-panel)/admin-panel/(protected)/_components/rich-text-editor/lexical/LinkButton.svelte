@@ -5,7 +5,7 @@
     import { $getSelection as getSelection, $isRangeSelection as isRangeSelection } from "lexical";
     import { getContext } from "svelte";
     import { getActiveEditor, sanitizeUrl } from "svelte-lexical";
-    import { popup } from "$lib/stores/popup.svelte";
+    import { popup } from "../../../../../stores/popup.svelte";
     import ToolbarButton from "./ToolbarButton.svelte";
 
     import type { Writable } from "svelte/store";

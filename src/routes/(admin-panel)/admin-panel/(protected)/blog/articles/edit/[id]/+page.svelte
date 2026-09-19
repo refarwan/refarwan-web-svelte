@@ -1,10 +1,10 @@
 <script lang="ts">
     import { resolve } from "$app/paths";
     import { untrack } from "svelte";
-    import FormSubmitActions from "$lib/components/admin/FormSubmitActions.svelte";
-    import LanguageTabs from "$lib/components/admin/LanguageTabs.svelte";
-    import { pageTitleStore } from "$lib/stores/page-title.svelte";
-    import { popup } from "$lib/stores/popup.svelte";
+    import FormSubmitActions from "../../../../_components/FormSubmitActions.svelte";
+    import LanguageTabs from "../../../../_components/LanguageTabs.svelte";
+    import { pageTitleStore } from "../../../../../../stores/page-title.svelte";
+    import { popup } from "../../../../../../stores/popup.svelte";
     import ArticleMetadataForm from "../../../create-article/_components/ArticleMetadataForm.svelte";
     import ArticleSideSettings from "../../../create-article/_components/ArticleSideSettings.svelte";
     import { useArticleEdit } from "./use-article-edit.svelte";

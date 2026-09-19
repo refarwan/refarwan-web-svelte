@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ThumbnailUploadMode from "$lib/components/admin/ThumbnailUploadMode.svelte";
+    import ThumbnailUploadMode from "../../../_components/ThumbnailUploadMode.svelte";
     import ThumbnailVideoMode from "./ThumbnailVideoMode.svelte";
 
     interface Props {

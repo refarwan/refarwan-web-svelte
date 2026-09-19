@@ -1,9 +1,9 @@
 import { goto } from "$app/navigation";
 import { resolve } from "$app/paths";
 import { page } from "$app/state";
-import { authorizedHttp } from "$lib/api/authorized-http";
-import { popup } from "$lib/stores/popup.svelte";
-import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+import { authorizedHttp } from "../../../../../../api/authorized-http";
+import { popup } from "../../../../../../stores/popup.svelte";
+import { axiosErrorMessage } from "../../../../../../utils/axios-error-message";
 
 import type { DataResponse } from "$lib/types/api-response";
 import type { VideoDetail } from "$lib/types/video";

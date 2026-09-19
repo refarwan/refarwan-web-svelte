@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
-    import { authStore } from "$lib/stores/auth.svelte";
+    import { authStore } from "../../stores/auth.svelte";
     import AdminHeader from "./_components/AdminHeader.svelte";
     import AdminSidebar from "./_components/AdminSidebar.svelte";
 

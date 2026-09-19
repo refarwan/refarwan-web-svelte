@@ -1,6 +1,6 @@
 <script lang="ts">
-    import DropdownSelect from "$lib/components/admin/DropdownSelect.svelte";
-    import TagsInput from "$lib/components/admin/TagsInput.svelte";
+    import DropdownSelect from "../../../_components/DropdownSelect.svelte";
+    import TagsInput from "../../../_components/TagsInput.svelte";
     import ThumbnailSelector from "./ThumbnailSelector.svelte";
 
     interface Props {

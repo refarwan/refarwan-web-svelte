@@ -1,5 +1,5 @@
-import { popup } from "$lib/stores/popup.svelte";
-import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+import { popup } from "../../../../stores/popup.svelte";
+import { axiosErrorMessage } from "../../../../utils/axios-error-message";
 
 import type { ArticleItem } from "$lib/types/article";
 import type { useArticleList } from "./use-article-list.svelte";

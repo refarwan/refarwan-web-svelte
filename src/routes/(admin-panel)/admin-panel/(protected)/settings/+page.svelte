@@ -1,7 +1,7 @@
 <script lang="ts">
     import { CONTENT_LANGUAGES } from "$lib/constants/content-language";
-    import { pageTitleStore } from "$lib/stores/page-title.svelte";
-    import { popup } from "$lib/stores/popup.svelte";
+    import { pageTitleStore } from "../../../stores/page-title.svelte";
+    import { popup } from "../../../stores/popup.svelte";
     import AddLanguageModal from "./_components/AddLanguageModal.svelte";
     import AdminLanguageSection from "./_components/AdminLanguageSection.svelte";
     import ColorPickerModal from "./_components/ColorPickerModal.svelte";

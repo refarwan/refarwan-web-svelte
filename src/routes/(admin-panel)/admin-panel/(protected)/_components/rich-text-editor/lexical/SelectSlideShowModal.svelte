@@ -1,8 +1,8 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     import { onMount } from "svelte";
-    import { authorizedHttp } from "$lib/api/authorized-http";
-    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+    import { authorizedHttp } from "../../../../../api/authorized-http";
+    import { axiosErrorMessage } from "../../../../../utils/axios-error-message";
     import SelectImageUploadTab from "./SelectImageUploadTab.svelte";
     import SelectSlideShowHeader from "./SelectSlideShowHeader.svelte";
     import SlideShowGrid from "./SlideShowGrid.svelte";
@@ -10,7 +10,7 @@
     import SlideShowSelectedTray from "./SlideShowSelectedTray.svelte";
 
     import type { ListResponse } from "$lib/types/api-response";
-    import type { ImageLibraryItem } from "$lib/types/image-library";
+    import type { ImageLibraryItem } from "../../../../../types/image-library";
     import type { SlideShowImage } from "./nodes/resizable-slideshow-node";
 
     interface Props {

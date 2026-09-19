@@ -1,6 +1,6 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
-    import { popup } from "$lib/stores/popup.svelte";
+    import { popup } from "../../stores/popup.svelte";
 </script>
 
 {#each popup.items as item, index (item.id)}

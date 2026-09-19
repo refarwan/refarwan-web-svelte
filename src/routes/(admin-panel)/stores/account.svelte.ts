@@ -1,7 +1,7 @@
-import { authorizedHttp } from "$lib/api/authorized-http";
+import { authorizedHttp } from "../api/authorized-http";
 
-import type { AccountItem } from "$lib/types/account";
 import type { DataResponse } from "$lib/types/api-response";
+import type { AccountItem } from "../types/account";
 
 class AccountStore {
     account = $state<AccountItem | null>(null);

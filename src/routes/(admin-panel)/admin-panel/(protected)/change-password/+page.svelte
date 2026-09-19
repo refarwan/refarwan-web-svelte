@@ -1,9 +1,9 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
-    import { authorizedHttp } from "$lib/api/authorized-http";
-    import { pageTitleStore } from "$lib/stores/page-title.svelte";
-    import { popup } from "$lib/stores/popup.svelte";
-    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+    import { authorizedHttp } from "../../../api/authorized-http";
+    import { pageTitleStore } from "../../../stores/page-title.svelte";
+    import { popup } from "../../../stores/popup.svelte";
+    import { axiosErrorMessage } from "../../../utils/axios-error-message";
 
     let { data } = $props();
     const t = $derived(data.t);

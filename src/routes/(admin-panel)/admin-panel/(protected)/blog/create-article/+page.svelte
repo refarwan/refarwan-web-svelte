@@ -2,12 +2,12 @@
     import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
     import { onMount, untrack } from "svelte";
-    import { authorizedHttp } from "$lib/api/authorized-http";
-    import FormSubmitActions from "$lib/components/admin/FormSubmitActions.svelte";
-    import LanguageTabs from "$lib/components/admin/LanguageTabs.svelte";
-    import { pageTitleStore } from "$lib/stores/page-title.svelte";
-    import { popup } from "$lib/stores/popup.svelte";
-    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+    import FormSubmitActions from "../../_components/FormSubmitActions.svelte";
+    import LanguageTabs from "../../_components/LanguageTabs.svelte";
+    import { authorizedHttp } from "../../../../api/authorized-http";
+    import { pageTitleStore } from "../../../../stores/page-title.svelte";
+    import { popup } from "../../../../stores/popup.svelte";
+    import { axiosErrorMessage } from "../../../../utils/axios-error-message";
     import ArticleMetadataForm from "./_components/ArticleMetadataForm.svelte";
     import ArticleSideSettings from "./_components/ArticleSideSettings.svelte";
 

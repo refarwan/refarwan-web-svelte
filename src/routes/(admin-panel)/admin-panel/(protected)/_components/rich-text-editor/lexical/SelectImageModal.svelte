@@ -1,14 +1,14 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     import { onMount } from "svelte";
-    import { authorizedHttp } from "$lib/api/authorized-http";
-    import { axiosErrorMessage } from "$lib/utils/axios-error-message";
+    import { authorizedHttp } from "../../../../../api/authorized-http";
+    import { axiosErrorMessage } from "../../../../../utils/axios-error-message";
     import SelectImageGrid from "./SelectImageGrid.svelte";
     import SelectImageModalFooter from "./SelectImageModalFooter.svelte";
     import SelectImageUploadTab from "./SelectImageUploadTab.svelte";
 
     import type { ListResponse } from "$lib/types/api-response";
-    import type { ImageLibraryItem } from "$lib/types/image-library";
+    import type { ImageLibraryItem } from "../../../../../types/image-library";
 
     interface Props {
         t: Record<string, string>;

@@ -1,4 +1,4 @@
-import { proxyAreaEndpoint } from "$lib/server/area-proxy";
+import { proxyAreaEndpoint } from "../../../../../../server/area-proxy";
 
 import type { RequestHandler } from "./$types";
 

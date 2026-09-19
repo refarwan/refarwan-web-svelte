@@ -2,7 +2,7 @@
     import Icon from "@iconify/svelte";
     import { resolve } from "$app/paths";
     import { page } from "$app/state";
-    import { adminSidebar } from "$lib/stores/admin-sidebar.svelte";
+    import { adminSidebar } from "../../../stores/admin-sidebar.svelte";
 
     import type { Shell } from "../../../i18n/shell/types";
 

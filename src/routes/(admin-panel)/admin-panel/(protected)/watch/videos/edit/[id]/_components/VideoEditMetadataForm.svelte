@@ -1,7 +1,7 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     import { resolve } from "$app/paths";
-    import DropdownSelect from "$lib/components/admin/DropdownSelect.svelte";
+    import DropdownSelect from "../../../../../_components/DropdownSelect.svelte";
 
     import type { ResolvedPathname } from "$app/types";
     import type { VideoDetail } from "$lib/types/video";

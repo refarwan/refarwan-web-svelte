@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ChartDayData } from "$lib/data/admin-dashboard";
+    import type { ChartDayData } from "../../../data/admin-dashboard";
 
     interface Props {
         title: string;

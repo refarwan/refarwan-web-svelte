@@ -3,9 +3,9 @@
     import { resolve } from "$app/paths";
     import { page } from "$app/state";
     import { SvelteURLSearchParams } from "svelte/reactivity";
-    import Pagination from "$lib/components/Pagination.svelte";
-    import { pageTitleStore } from "$lib/stores/page-title.svelte";
-    import { popup } from "$lib/stores/popup.svelte";
+    import Pagination from "../../_components/Pagination.svelte";
+    import { pageTitleStore } from "../../../../stores/page-title.svelte";
+    import { popup } from "../../../../stores/popup.svelte";
     import StatusFilterTabs from "./_components/StatusFilterTabs.svelte";
     import VideoDetailModal from "./_components/VideoDetailModal.svelte";
     import VideoTable from "./_components/VideoTable.svelte";

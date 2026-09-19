@@ -1,4 +1,4 @@
-import type { ImageSource } from "./setting";
+import type { ImageSource } from "$lib/types/setting";
 
 export interface ImageLibraryItem {
     id: string;

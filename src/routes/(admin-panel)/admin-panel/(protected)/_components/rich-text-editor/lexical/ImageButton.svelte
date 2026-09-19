@@ -2,12 +2,12 @@
     import Icon from "@iconify/svelte";
     import { $insertNodeToNearestRoot as insertNodeToNearestRoot } from "@lexical/utils";
     import { getActiveEditor } from "svelte-lexical";
-    import { popup } from "$lib/stores/popup.svelte";
+    import { popup } from "../../../../../stores/popup.svelte";
     import { $createResizableImageNode as createResizableImageNode } from "./nodes/resizable-image-node";
     import SelectImageModal from "./SelectImageModal.svelte";
     import ToolbarButton from "./ToolbarButton.svelte";
 
-    import type { ImageLibraryItem } from "$lib/types/image-library";
+    import type { ImageLibraryItem } from "../../../../../types/image-library";
 
     interface Props {
         t: Record<string, string>;

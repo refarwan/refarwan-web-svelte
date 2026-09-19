@@ -1,11 +1,11 @@
-import { authorizedHttp } from "$lib/api/authorized-http";
-import { clearFrontendCache } from "$lib/api/clear-frontend-cache";
 import { CONTENT_LANGUAGES } from "$lib/constants/content-language";
-import { DEFAULT_THEME_SHADES } from "$lib/constants/theme-shades";
-import { popup } from "$lib/stores/popup.svelte";
-import { axiosErrorMessage } from "$lib/utils/axios-error-message";
-import { generateColorShades } from "$lib/utils/generate-color-shades";
-import { useUnsavedChangesGuard } from "$lib/utils/unsaved-changes-guard.svelte";
+import { authorizedHttp } from "../../../api/authorized-http";
+import { clearFrontendCache } from "../../../api/clear-frontend-cache";
+import { DEFAULT_THEME_SHADES } from "../../../constants/theme-shades";
+import { popup } from "../../../stores/popup.svelte";
+import { axiosErrorMessage } from "../../../utils/axios-error-message";
+import { generateColorShades } from "../../../utils/generate-color-shades";
+import { useUnsavedChangesGuard } from "../../../utils/unsaved-changes-guard.svelte";
 
 import type { DataResponse } from "$lib/types/api-response";
 import type { AdminSettingsData } from "$lib/types/setting";

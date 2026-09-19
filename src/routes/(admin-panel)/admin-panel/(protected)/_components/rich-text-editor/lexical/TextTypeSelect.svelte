@@ -1,7 +1,7 @@
 <script lang="ts">
     import { getContext } from "svelte";
     import { formatHeading, formatParagraph, getActiveEditor } from "svelte-lexical";
-    import DropdownSelect from "$lib/components/admin/DropdownSelect.svelte";
+    import DropdownSelect from "../../DropdownSelect.svelte";
 
     import type { Writable } from "svelte/store";
 

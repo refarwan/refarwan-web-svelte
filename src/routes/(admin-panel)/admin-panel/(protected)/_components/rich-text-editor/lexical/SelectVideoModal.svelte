@@ -2,7 +2,7 @@
     import Icon from "@iconify/svelte";
     import { onMount } from "svelte";
     import { SvelteURLSearchParams } from "svelte/reactivity";
-    import { authorizedHttp } from "$lib/api/authorized-http";
+    import { authorizedHttp } from "../../../../../api/authorized-http";
     import SelectVideoEmbedTab from "./SelectVideoEmbedTab.svelte";
     import SelectVideoGrid from "./SelectVideoGrid.svelte";
     import SelectVideoHeader from "./SelectVideoHeader.svelte";

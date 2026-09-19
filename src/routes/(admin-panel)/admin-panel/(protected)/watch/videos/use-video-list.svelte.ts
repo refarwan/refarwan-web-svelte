@@ -1,6 +1,6 @@
 import { page } from "$app/state";
 import { SvelteURLSearchParams } from "svelte/reactivity";
-import { authorizedHttp } from "$lib/api/authorized-http";
+import { authorizedHttp } from "../../../../api/authorized-http";
 
 import type { DataResponse, ListResponse } from "$lib/types/api-response";
 import type { VideoDetail, VideoItem } from "$lib/types/video";
