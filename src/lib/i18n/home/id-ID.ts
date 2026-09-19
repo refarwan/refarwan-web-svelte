@@ -5,17 +5,32 @@ export const idID: HomeTranslation = {
     metaDescription:
         "Fullstack Developer yang berfokus pada arsitektur JavaScript & TypeScript modern. Membangun aplikasi web end-to-end dengan keahlian adaptif di backend seperti PHP.",
     hero: {
-        role: "Fullstack JavaScript Developer",
+        role: "Full-Stack TypeScript & Performance Engineer",
         description:
-            "Membangun website dan aplikasi web dari sisi frontend hingga backend dengan dedikasi tinggi. Berdomisili di Yogyakarta dengan antusiasme untuk menghadirkan solusi digital berkualitas.",
+            "Saya berfokus pada arsitektur modern TypeScript untuk frontend dan backend—menggunakan SvelteKit, Next.js, Bun, Hono, dan PostgreSQL untuk menghadirkan performa tinggi, latensi rendah, serta kode yang bersih dan mudah dirawat. Berbasis di Indonesia, siap berkolaborasi secara global.",
         viewProjects: "Lihat Proyek"
     },
     about: {
         title: "Tentang Saya",
-        bio1: "Saya lulusan SMK N 1 Bantul jurusan Rekayasa Perangkat Lunak. Setelah lulus, saya melanjutkan belajar pemrograman web secara otodidak. Saya memiliki ketertarikan mendalam dalam menciptakan antarmuka modern serta sistem backend yang andal.",
-        bio2: "Selalu mengikuti perkembangan ekosistem JavaScript terbaru dan senang memecahkan masalah kompleks melalui kode yang bersih dan terstruktur.",
+        bio1: "Saya adalah seorang software engineer dengan fokus utama pada pengembangan web modern berbasis TypeScript. Mengawali latar belakang di bidang Rekayasa Perangkat Lunak, saya terus mendalami arsitektur sistem secara mandiri dan berpengalaman merancang antarmuka yang responsif serta sistem backend berkinerja tinggi.",
+        bio2: "Selalu adaptif terhadap ekosistem web modern (termasuk SvelteKit, Bun, dan Hono) dengan komitmen menghadirkan arsitektur data yang efisien, kode yang terstruktur rapi, serta solusi teknis yang minim technical debt.",
         experienceTitle: "Pengalaman Kerja",
         experiences: [
+            {
+                role: "Senior Backend Engineer",
+                company: "Somactech",
+                period: "September 2025 - Sekarang"
+            },
+            {
+                role: "Independent Full-Stack Contractor",
+                company: "Freelance",
+                period: "April 2023 - Sekarang"
+            },
+            {
+                role: "Head of Product & Engineering",
+                company: "Bitbite",
+                period: "Mei 2023 - Desember 2023"
+            },
             {
                 role: "Web Programmer",
                 company: "PT Fresh Galang Mandiri",
