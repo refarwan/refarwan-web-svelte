@@ -1,6 +1,6 @@
 import { json } from "@sveltejs/kit";
 import { clearApiCache } from "$lib/server/api-data";
-import { redis } from "$lib/server/redis";
+import { getRedis } from "$lib/server/redis";
 
 import type { RequestHandler } from "./$types";
 
@@ -19,6 +19,11 @@ export const POST: RequestHandler = async ({ request }) => {
         if (!tag || !ALLOWED_TAGS.includes(tag)) {
             console.warn(`[CacheClear API] Tag "${tag}" is not in ALLOWED_TAGS:`, ALLOWED_TAGS);
             return json({ error: "Invalid or unauthorized cache tag" }, { status: 400 });
+        }
+
+        const redis = await getRedis();
+        if (!redis) {
+            return json({ error: "Cache service unavailable" }, { status: 503 });
         }
 
         const clientIp = request.headers.get("x-forwarded-for") || "unknown-ip";

@@ -1,5 +1,5 @@
 import { env } from "$env/dynamic/public";
-import { redis } from "./redis";
+import { getRedis } from "./redis";
 
 export const getApiData = async <T>(
     endpoint: string,
@@ -11,8 +11,9 @@ export const getApiData = async <T>(
 
     try {
         const apiUrl = env.PUBLIC_API_URL || "http://localhost:3000";
+        const redis = cacheKey ? await getRedis() : null;
 
-        if (cacheKey) {
+        if (redis && cacheKey) {
             const cached = await redis.get(cacheKey);
             if (cached) return JSON.parse(cached) as T | undefined;
         }
@@ -20,14 +21,14 @@ export const getApiData = async <T>(
         const res = await fetchFn(`${apiUrl}/${endpoint}`, { method: "GET", headers });
 
         if (!res.ok) {
-            if (res.status === 404 && cacheKey)
+            if (res.status === 404 && cacheKey && redis)
                 await redis.set(cacheKey, JSON.stringify(null), { EX: 3600 });
             return undefined;
         }
 
         const data = (await res.json()) as T;
 
-        if (cacheKey) await redis.set(cacheKey, JSON.stringify(data));
+        if (redis && cacheKey) await redis.set(cacheKey, JSON.stringify(data));
 
         return data;
     } catch (error) {
@@ -37,6 +38,9 @@ export const getApiData = async <T>(
 };
 
 export const clearApiCache = async (tag: string) => {
+    const redis = await getRedis();
+    if (!redis) return;
+
     try {
         for await (const key of redis.scanIterator({ MATCH: `${tag}:*` })) {
             await redis.del(key);

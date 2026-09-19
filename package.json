@@ -18,6 +18,7 @@
         "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
         "@iconify/svelte": "^5.2.2",
         "@sveltejs/adapter-auto": "^7.0.1",
+        "@sveltejs/adapter-node": "^5.5.7",
         "@sveltejs/kit": "^2.63.0",
         "@sveltejs/vite-plugin-svelte": "^7.1.2",
         "@tailwindcss/vite": "^4.3.0",
@@ -44,5 +45,8 @@
         "hls.js": "^1.7.3",
         "redis": "^6.2.1",
         "svelte-lexical": "^0.6.5"
+    },
+    "patchedDependencies": {
+        "svelte-lexical@0.6.5": "patches/svelte-lexical@0.6.5.patch"
     }
 }
