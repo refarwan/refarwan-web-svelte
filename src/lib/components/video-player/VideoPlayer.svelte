@@ -1,8 +1,6 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import { createEventDispatcher } from "svelte";
-
-    import { LoaderCircleIcon, PlayIcon } from "lucide-svelte/icons";
-
     import PlayerControls from "./PlayerControls.svelte";
     import PlayerProcessingBanner from "./PlayerProcessingBanner.svelte";
     import PlayerTopBar from "./PlayerTopBar.svelte";
@@ -10,13 +8,14 @@
     import { useHlsSource } from "./use-hls-source.svelte";
     import { usePlayerControls } from "./use-player-controls.svelte";
 
+    import type { ResolvedPathname } from "$app/types";
     import type { ResolutionOption } from "./resolution";
 
     interface Props {
         sources: ResolutionOption[];
         logoUrl?: string;
         title?: string;
-        watchUrl?: string;
+        watchUrl?: ResolvedPathname;
         playOnWatchLabel?: string;
         thumbnailUrl: string;
         class?: string;
@@ -32,9 +31,6 @@
         class: className = ""
     }: Props = $props();
 
-    // Shown in place of the video until playback first starts, so the poster
-    // (rather than a blank black box) is what the visitor sees while hls.js
-    // preloads the stream in the background.
     let hasStartedPlaying = $state(false);
     let thumbnailLoaded = $state(false);
 
@@ -141,7 +137,10 @@
                 class="absolute inset-0 z-10 flex cursor-pointer items-center justify-center bg-black"
             >
                 {#if !thumbnailLoaded}
-                    <LoaderCircleIcon class="h-10 w-10 animate-spin text-white/70" />
+                    <Icon
+                        icon="lucide:loader-circle"
+                        class="h-10 w-10 animate-spin text-white/70"
+                    />
                 {/if}
                 <img
                     src={thumbnailUrl}
@@ -155,14 +154,17 @@
                 <div
                     class="absolute grid h-14 w-14 place-content-center rounded-full bg-theme-600 text-white shadow-xl transition-transform hover:scale-110"
                 >
-                    <PlayIcon class="h-6 w-6 translate-x-0.5" fill="currentColor" />
+                    <Icon icon="lucide:play" class="h-6 w-6 translate-x-0.5" />
                 </div>
             </button>
         {/if}
 
         {#if controls.isBuffering}
             <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
-                <LoaderCircleIcon class="h-12 w-12 animate-spin text-white/90 drop-shadow-md" />
+                <Icon
+                    icon="lucide:loader-circle"
+                    class="h-12 w-12 animate-spin text-white/90 drop-shadow-md"
+                />
             </div>
         {/if}
 

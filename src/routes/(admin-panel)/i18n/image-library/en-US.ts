@@ -1,0 +1,37 @@
+import type { ImageLibrary } from "./types";
+
+export const enUS: ImageLibrary = {
+    title: "Image Library",
+    uploadImage: "Upload Image",
+    searchPlaceholder: "Search images...",
+    deleteConfirmTitle: "Delete Image",
+    deleteConfirmMessage:
+        "Are you sure you want to delete this image? This action cannot be undone.",
+    deleteConfirmButton: "Delete",
+    deleted: "Image deleted successfully",
+    deleteFailed: "Failed to delete image",
+    uploaded: "Image uploaded successfully",
+    uploadFailed: "Failed to upload image",
+    uploadModalTitle: "Upload Image",
+    dropOrBrowse: "Drag & drop your image here or browse",
+    browseFiles: "Browse Files",
+    supportedFormats: "Supports JPG, PNG, WebP, GIF, AVIF up to 10MB",
+    fileTooLarge: "Image size exceeds 10MB limit",
+    invalidFileType: "Invalid file type. Only JPG, PNG, WebP, GIF, and AVIF are allowed",
+    detailModalTitle: "Image Detail",
+    copyUrl: "Copy URL",
+    copied: "Copied to clipboard!",
+    empty: "No images found",
+    emptySubtitle: "Start uploading images to build your library",
+    loadFailed: "Failed to load images",
+    loadDetailFailed: "Failed to load image details",
+    view: "View Image",
+    delete: "Delete Image",
+    uploading: "Uploading image...",
+    dimensions: "Dimensions",
+    fileSize: "File Size",
+    uploadedAt: "Uploaded At",
+    closeModal: "Close",
+    prev: "Previous",
+    next: "Next"
+};

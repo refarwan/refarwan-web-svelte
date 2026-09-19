@@ -1,5 +1,4 @@
 import Hls from "hls.js";
-
 import { pickAutoSource, readyResolutions } from "./resolution";
 
 import type { ResolutionOption } from "./resolution";

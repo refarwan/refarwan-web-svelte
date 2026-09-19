@@ -1,26 +1,19 @@
-import { error } from "@sveltejs/kit";
-
 import { getActiveContentLangs } from "$lib/server/settings";
 
 import type { Handle } from "@sveltejs/kit";
 
 export const handle: Handle = async ({ event, resolve }) => {
     const contentLanguages = await getActiveContentLangs(event.fetch);
-    const localeParam = event.params.lang;
+    const langParam = event.params.lang;
 
-    const active = localeParam
-        ? contentLanguages.find((lang) => lang.locale === localeParam)
-        : contentLanguages.find((lang) => lang.code === "en");
+    let activeLang = "en-US";
 
-    if (!active) {
-        error(404, "Not found");
+    if (langParam) {
+        const lang = contentLanguages.find((l) => l.locale === langParam);
+        if (lang) activeLang = lang.locale;
     }
 
-    event.locals.lang = active.code;
-    event.locals.locale = active.locale;
-    event.locals.contentLanguages = contentLanguages;
-
     return resolve(event, {
-        transformPageChunk: ({ html }) => html.replace("%lang%", active.locale)
+        transformPageChunk: ({ html }) => html.replace("%lang%", activeLang)
     });
 };

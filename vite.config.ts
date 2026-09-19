@@ -1,6 +1,6 @@
-import tailwindcss from "@tailwindcss/vite";
 import adapter from "@sveltejs/adapter-node";
 import { sveltekit } from "@sveltejs/kit/vite";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
@@ -13,8 +13,8 @@ export default defineConfig({
                     filename.split(/[/\\]/).includes("node_modules") ? undefined : true
             },
 
-            // Node adapter: this app is deployed as a standalone Node server in Docker,
-            // not to a platform adapter-auto could detect (Vercel, Netlify, ...).
+            // adapter-node menghasilkan standalone Node.js server di build/index.js
+            // Cocok untuk deploy di VPS/Docker.
             adapter: adapter()
         })
     ]

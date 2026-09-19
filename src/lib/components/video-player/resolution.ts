@@ -7,8 +7,6 @@ export interface ResolutionOption {
 
 const QUALITY_LADDER = [1080, 720, 360];
 
-/** Builds the resolution ladder from a video's raw p360/p720/p1080 fields,
- * where each value is either a real URL, the "processing" sentinel, or null. */
 export function resolutionsFromFields(
     p360: string | null,
     p720: string | null,
@@ -25,8 +23,6 @@ export function resolutionsFromFields(
     });
 }
 
-/** Builds the resolution ladder from an already-filtered list of ready
- * sources (e.g. the public embed endpoint, which only returns ready ones). */
 export function resolutionsFromSources(
     sources: { quality: number; label: string; url: string }[]
 ): ResolutionOption[] {

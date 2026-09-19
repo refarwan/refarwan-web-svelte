@@ -1,22 +1,22 @@
-import { CONTENT_LANGUAGES } from "$lib/constants";
+import { CONTENT_LANGUAGES } from "$lib/constants/content-language";
+import { getApiData } from "./api-data";
 
-import { getApiData } from "./get-api-data";
-
-import type { ContentLanguage, DataResponse } from "$lib/types";
+import type { DataResponse } from "$lib/types/api-response";
+import type { ContentLanguage } from "$lib/types/content-language";
 
 export const getActiveContentLangs = async (
     fetchFn: typeof fetch = fetch
 ): Promise<ContentLanguage[]> => {
     const res = await getApiData<DataResponse<string[]>>(
-        "setting/other-content-languages",
+        "setting/public/other-content-languages",
         "settings",
         fetchFn
     );
 
     const otherLocales = new Set(res?.data ?? []);
-    const english = CONTENT_LANGUAGES.find((lang) => lang.code === "en")!;
+    const english = CONTENT_LANGUAGES.find((lang) => lang.locale === "en-US")!;
     const others = CONTENT_LANGUAGES.filter(
-        (lang) => lang.code !== "en" && otherLocales.has(lang.locale)
+        (lang) => lang.locale !== "en-US" && otherLocales.has(lang.locale)
     );
 
     return [english, ...others];

@@ -1,10 +1,12 @@
 <script lang="ts">
-    import { ExternalLinkIcon } from "lucide-svelte";
+    import Icon from "@iconify/svelte";
+
+    import type { ResolvedPathname } from "$app/types";
 
     interface Props {
         logoUrl?: string;
         title?: string;
-        watchUrl?: string;
+        watchUrl?: ResolvedPathname;
         playOnWatchLabel?: string;
     }
 
@@ -26,11 +28,11 @@
         <a
             href={watchUrl}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="external noopener noreferrer"
             class="flex shrink-0 items-center gap-1 rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/25"
         >
             <span>{playOnWatchLabel}</span>
-            <ExternalLinkIcon size={16} />
+            <Icon icon="lucide:external-link" class="h-4 w-4" />
         </a>
     {/if}
 </div>
