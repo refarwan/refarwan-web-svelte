@@ -19,7 +19,9 @@
         TablePlugin
     } from "svelte-lexical";
     import { theme } from "./theme";
+
     import "./editor.css";
+
     import EditorToolbar from "./lexical/EditorToolbar.svelte";
     import { ResizableHorizontalRuleNode } from "./lexical/nodes/resizable-horizontal-rule-node";
     import { ResizableImageNode } from "./lexical/nodes/resizable-image-node";
@@ -126,12 +128,16 @@
     }
 </script>
 
-<div class="w-full min-w-0 max-w-full overflow-hidden rounded-lg border border-gray-300 bg-white">
+<div class="w-full max-w-full min-w-0 overflow-hidden rounded-lg border border-gray-300 bg-white">
     <Composer {initialConfig} bind:this={composer}>
         <EditorToolbar {t} />
 
-        <div class="richtext-content svelte-lexical relative w-full min-w-0 max-w-full overflow-x-auto">
-            <ContentEditable className="min-h-75 w-full min-w-0 px-3.5 py-3 text-sm text-gray-900 outline-none" />
+        <div
+            class="richtext-content svelte-lexical relative w-full max-w-full min-w-0 overflow-x-auto"
+        >
+            <ContentEditable
+                className="min-h-75 w-full min-w-0 px-3.5 py-3 text-sm text-gray-900 outline-none"
+            />
             <PlaceHolder
                 className="pointer-events-none absolute top-3 left-3.5 text-sm text-gray-400 select-none"
             >

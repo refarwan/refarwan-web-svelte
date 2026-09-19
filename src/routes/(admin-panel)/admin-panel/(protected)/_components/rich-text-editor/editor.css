@@ -1,41 +1,41 @@
 @reference "../../../../../layout.css";
 
 .richtext-content .SL_Theme__ltr,
-.richtext-content [class*='SL_Theme__'][dir='ltr'] {
+.richtext-content [class*="SL_Theme__"][dir="ltr"] {
     @apply text-left;
 }
 
 .richtext-content .SL_Theme__rtl,
-.richtext-content [class*='SL_Theme__'][dir='rtl'] {
+.richtext-content [class*="SL_Theme__"][dir="rtl"] {
     @apply text-right;
 }
 
 .richtext-content .SL_Theme__h1 {
-    @apply text-3xl font-bold leading-tight mt-4 mb-2 text-gray-900;
+    @apply mt-4 mb-2 text-3xl leading-tight font-bold text-gray-900;
 }
 
 .richtext-content .SL_Theme__h2 {
-    @apply text-2xl font-semibold leading-snug mt-3.5 mb-2 text-gray-800;
+    @apply mt-3.5 mb-2 text-2xl leading-snug font-semibold text-gray-800;
 }
 
 .richtext-content .SL_Theme__h3 {
-    @apply text-xl font-semibold leading-normal mt-3 mb-1.5 text-gray-700;
+    @apply mt-3 mb-1.5 text-xl leading-normal font-semibold text-gray-700;
 }
 
 .richtext-content .SL_Theme__h4 {
-    @apply text-lg font-semibold mt-2.5 mb-1 text-gray-700;
+    @apply mt-2.5 mb-1 text-lg font-semibold text-gray-700;
 }
 
 .richtext-content .SL_Theme__h5 {
-    @apply text-base font-semibold mt-2 mb-1 text-gray-700;
+    @apply mt-2 mb-1 text-base font-semibold text-gray-700;
 }
 
 .richtext-content .SL_Theme__h6 {
-    @apply text-sm font-semibold mt-2 mb-1 text-gray-700;
+    @apply mt-2 mb-1 text-sm font-semibold text-gray-700;
 }
 
 .richtext-content .SL_Theme__quote {
-    @apply my-5 py-3.5 px-4 border-l-4 border-theme-600 bg-theme-50/70 rounded-r-lg text-slate-700 italic;
+    @apply my-5 rounded-r-lg border-l-4 border-theme-600 bg-theme-50/70 px-4 py-3.5 text-slate-700 italic;
 }
 
 .richtext-content .SL_Theme__textBold {
@@ -55,34 +55,34 @@
 }
 
 .richtext-content .SL_Theme__textUnderlineStrikethrough {
-    @apply underline line-through;
+    @apply line-through underline;
 }
 
 .richtext-content .SL_Theme__textSubscript {
-    @apply text-xs align-sub;
+    @apply align-sub text-xs;
 }
 
 .richtext-content .SL_Theme__textSuperscript {
-    @apply text-xs align-super;
+    @apply align-super text-xs;
 }
 
 .richtext-content .SL_Theme__textCode {
-    @apply bg-gray-100 text-red-500 font-mono text-xs px-1.5 py-0.5 rounded;
+    @apply rounded bg-gray-100 px-1.5 py-0.5 font-mono text-xs text-red-500;
 }
 
 .richtext-content .SL_Theme__textHighlight {
-    @apply bg-theme-100 text-theme-900 px-1 py-0.5 rounded-xs;
+    @apply rounded-xs bg-theme-100 px-1 py-0.5 text-theme-900;
 }
 
 .richtext-content .SL_Theme__link {
-    @apply text-theme-600 underline cursor-pointer hover:text-theme-700 transition-colors;
+    @apply cursor-pointer text-theme-600 underline transition-colors hover:text-theme-700;
 }
 
 .richtext-content .SL_Theme__code {
-    @apply bg-gray-900 text-gray-50 font-mono block px-4 py-3 text-sm my-3 rounded-md overflow-x-auto;
+    @apply my-3 block overflow-x-auto rounded-md bg-gray-900 px-4 py-3 font-mono text-sm text-gray-50;
     tab-size: 2;
 }
 
 .richtext-content .SL_Theme__hr {
-    @apply border-none border-t-2 border-gray-200 my-6;
+    @apply my-6 border-t-2 border-none border-gray-200;
 }

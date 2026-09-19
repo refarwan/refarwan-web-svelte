@@ -1,6 +1,8 @@
 // src/lib/server/redis.ts
 import { env } from "$env/dynamic/private";
-import { createClient, type RedisClientType } from "redis";
+import { createClient } from "redis";
+
+import type { RedisClientType } from "redis";
 
 const globalForRedis = globalThis as unknown as {
     redis?: RedisClientType;
