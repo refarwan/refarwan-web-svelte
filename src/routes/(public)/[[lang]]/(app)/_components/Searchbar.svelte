@@ -77,7 +77,7 @@
 
 <div
     data-is-open={searchOverlay.open}
-    class="group invisible fixed inset-0 z-50 bg-gray-600/50 backdrop-blur-xs transition-all data-[is-open=true]:visible md:pointer-events-none md:visible md:top-0 md:left-[50%] md:flex md:h-20 md:w-full md:max-w-md md:-translate-x-1/2 md:items-center md:bg-transparent md:px-4 md:backdrop-blur-none lg:max-w-lg"
+    class="group invisible fixed inset-0 z-50 transition-all data-[is-open=true]:visible md:pointer-events-none md:visible md:top-0 md:left-[50%] md:flex md:h-20 md:w-full md:max-w-md md:-translate-x-1/2 md:items-center md:px-4 lg:max-w-lg"
     onclick={(e) => {
         if (e.target === e.currentTarget) {
             searchOverlay.open = false;
