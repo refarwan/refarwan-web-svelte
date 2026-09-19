@@ -1,5 +1,4 @@
 import type { Cookies } from "@sveltejs/kit";
-
 import type { AdminLang } from "$lib/types/admin-lang";
 
 const ADMIN_LANG_COOKIE = "admin_lang";

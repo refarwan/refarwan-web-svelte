@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ColorPickerCard from "../../../../../../routes/admin-panel/(protected)/_components/ColorPickerCard.svelte";
+    import ColorPickerCard from "../../../../../../routes/(admin-panel)/admin-panel/(protected)/_components/ColorPickerCard.svelte";
 
     interface Props {
         t: Record<string, string>;
@@ -32,22 +32,14 @@
             <button
                 type="button"
                 onclick={() => (target = "cell")}
-                class={`flex-1 rounded-md py-1 text-center transition-colors ${
-                    target === "cell"
-                        ? "bg-white font-semibold text-gray-800 shadow-2xs"
-                        : "text-gray-500 hover:text-gray-700"
-                }`}
+                class={`flex-1 rounded-md py-1 text-center transition-colors ${target === "cell" ? "bg-white font-semibold text-gray-800 " : "text-gray-500 hover:text-gray-700"}`}
             >
                 {t.tableApplyCell || "Sel Ini"}
             </button>
             <button
                 type="button"
                 onclick={() => (target = "column")}
-                class={`flex-1 rounded-md py-1 text-center transition-colors ${
-                    target === "column"
-                        ? "bg-white font-semibold text-gray-800 shadow-2xs"
-                        : "text-gray-500 hover:text-gray-700"
-                }`}
+                class={`flex-1 rounded-md py-1 text-center transition-colors ${target === "column" ? "bg-white font-semibold text-gray-800 " : "text-gray-500 hover:text-gray-700"}`}
             >
                 {t.tableApplyColumn || "Satu Kolom"}
             </button>

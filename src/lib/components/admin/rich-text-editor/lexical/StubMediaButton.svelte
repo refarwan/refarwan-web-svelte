@@ -1,6 +1,5 @@
 <script lang="ts">
     import { popup } from "$lib/stores/popup.svelte";
-
     import ToolbarButton from "./ToolbarButton.svelte";
 
     import type { Snippet } from "svelte";

@@ -1,4 +1,4 @@
-import type { ThemeShades } from "$lib/types";
+import type { ThemeShades } from "$lib/types/theme-shades";
 
 export const DEFAULT_THEME_SHADES: ThemeShades = {
     "50": "#f0f9ff",

@@ -2,7 +2,6 @@ import { enUS } from "./en";
 import { idID } from "./id";
 
 import type { AdminLang } from "$lib/types/admin-lang";
-
 import type { AdminTranslation } from "./types";
 
 export type { AdminTranslation } from "./types";

@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { ArrowUpIcon, XIcon } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
+
     interface Props {
         t: Record<string, string>;
         previewUrl: string;
@@ -55,7 +56,7 @@
                     class="cursor-pointer rounded-lg bg-red-600/80 p-1 text-white transition-colors hover:bg-red-600"
                     title={t.removeFile}
                 >
-                    <XIcon class="h-4 w-4" />
+                    <Icon icon="lucide:x" class="h-4 w-4" />
                 </button>
             </div>
         </div>
@@ -71,16 +72,12 @@
             role="button"
             tabindex="0"
             onkeydown={(event) => event.key === "Enter" && thumbnailInput?.click()}
-            class={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-dashed p-6 text-center transition-all ${
-                isDragging
-                    ? "border-theme-500 bg-theme-50/40 ring-2 ring-theme-500/20"
-                    : "border-gray-300 bg-gray-50/60 hover:border-theme-400 hover:bg-gray-50"
-            }`}
+            class={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-dashed p-6 text-center transition-all ${isDragging ? "border-theme-500 bg-theme-50/40 ring-2 ring-theme-500/20" : "border-gray-300 bg-gray-50/60 hover:border-theme-400 hover:bg-gray-50"}`}
         >
             <div
                 class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 text-gray-500"
             >
-                <ArrowUpIcon class="stroke-2.5 h-4 w-4" />
+                <Icon icon="lucide:arrow-up" class="stroke-2.5 h-4 w-4" />
             </div>
             <div>
                 <p class="text-xs font-medium text-gray-700">{t.thumbnailDropzoneHint}</p>

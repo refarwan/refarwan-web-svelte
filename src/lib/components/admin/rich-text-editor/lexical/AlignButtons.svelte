@@ -1,21 +1,14 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import { $findMatchingParent as findMatchingParent, mergeRegister } from "@lexical/utils";
     import {
+        FORMAT_ELEMENT_COMMAND,
         $getSelection as getSelection,
         $isElementNode as isElementNode,
-        $isRangeSelection as isRangeSelection,
-        FORMAT_ELEMENT_COMMAND
+        $isRangeSelection as isRangeSelection
     } from "lexical";
-    import {
-        AlignCenterIcon,
-        AlignJustifyIcon,
-        AlignLeftIcon,
-        AlignRightIcon
-    } from "lucide-svelte/icons";
     import { onMount } from "svelte";
-
     import { getActiveEditor } from "svelte-lexical";
-
     import ToolbarButton from "./ToolbarButton.svelte";
 
     interface Props {
@@ -53,26 +46,26 @@
     isActive={currentAlign === "left" || currentAlign === ""}
     onclick={() => align("left")}
 >
-    <AlignLeftIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:align-left" width={14} height={14} />
 </ToolbarButton>
 <ToolbarButton
     title={t.alignCenter}
     isActive={currentAlign === "center"}
     onclick={() => align("center")}
 >
-    <AlignCenterIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:align-center" width={14} height={14} />
 </ToolbarButton>
 <ToolbarButton
     title={t.alignRight}
     isActive={currentAlign === "right"}
     onclick={() => align("right")}
 >
-    <AlignRightIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:align-right" width={14} height={14} />
 </ToolbarButton>
 <ToolbarButton
     title={t.alignJustify}
     isActive={currentAlign === "justify"}
     onclick={() => align("justify")}
 >
-    <AlignJustifyIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:align-justify" width={14} height={14} />
 </ToolbarButton>

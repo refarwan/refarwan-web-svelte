@@ -1,10 +1,9 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import { mergeRegister } from "@lexical/utils";
     import { CLICK_COMMAND, COMMAND_PRIORITY_LOW, $getNodeByKey as getNodeByKey } from "lexical";
-    import { TextAlignCenterIcon, TextAlignStartIcon, TextAlignEndIcon } from "lucide-svelte/icons";
-
+    import { untrack } from "svelte";
     import { clearSelection, createNodeSelectionStore } from "svelte-lexical";
-
     import {
         $isResizableHorizontalRuleNode as isResizableHorizontalRuleNode,
         MIN_HR_WIDTH_PERCENT
@@ -20,7 +19,7 @@
 
     let { nodeKey, editor }: Props = $props();
 
-    const isSelected = createNodeSelectionStore(editor, nodeKey);
+    const isSelected = untrack(() => createNodeSelectionStore(editor, nodeKey));
 
     const readState = (): { widthPercent: number; align: HRAlign } => {
         let widthPercent = 100;
@@ -121,7 +120,7 @@
 >
     {#if $isSelected}
         <div
-            class="absolute -top-8 left-1/2 z-10 flex -translate-x-1/2 items-center gap-0.5 rounded-md border border-gray-200 bg-white p-0.5 shadow-md"
+            class="absolute -top-8 left-1/2 z-10 flex -translate-x-1/2 items-center gap-0.5 rounded-md border border-gray-200 bg-white p-0.5"
         >
             <button
                 type="button"
@@ -130,13 +129,9 @@
                     event.stopPropagation();
                     setAlign("left");
                 }}
-                class={`flex h-6 w-6 cursor-pointer items-center justify-center rounded ${
-                    align === "left"
-                        ? "bg-theme-100 text-theme-700"
-                        : "text-gray-500 hover:bg-gray-100"
-                }`}
+                class={`flex h-6 w-6 cursor-pointer items-center justify-center rounded ${align === "left" ? "bg-theme-100 text-theme-700" : "text-gray-500 hover:bg-gray-100"}`}
             >
-                <TextAlignStartIcon size={13} strokeWidth={2.5} />
+                <Icon icon="lucide:align-left" width={13} height={13} />
             </button>
             <button
                 type="button"
@@ -145,13 +140,9 @@
                     event.stopPropagation();
                     setAlign("center");
                 }}
-                class={`flex h-6 w-6 cursor-pointer items-center justify-center rounded ${
-                    align === "center"
-                        ? "bg-theme-100 text-theme-700"
-                        : "text-gray-500 hover:bg-gray-100"
-                }`}
+                class={`flex h-6 w-6 cursor-pointer items-center justify-center rounded ${align === "center" ? "bg-theme-100 text-theme-700" : "text-gray-500 hover:bg-gray-100"}`}
             >
-                <TextAlignCenterIcon size={13} strokeWidth={2.5} />
+                <Icon icon="lucide:align-center" width={13} height={13} />
             </button>
             <button
                 type="button"
@@ -160,22 +151,16 @@
                     event.stopPropagation();
                     setAlign("right");
                 }}
-                class={`flex h-6 w-6 cursor-pointer items-center justify-center rounded ${
-                    align === "right"
-                        ? "bg-theme-100 text-theme-700"
-                        : "text-gray-500 hover:bg-gray-100"
-                }`}
+                class={`flex h-6 w-6 cursor-pointer items-center justify-center rounded ${align === "right" ? "bg-theme-100 text-theme-700" : "text-gray-500 hover:bg-gray-100"}`}
             >
-                <TextAlignEndIcon size={13} strokeWidth={2.5} />
+                <Icon icon="lucide:align-right" width={13} height={13} />
             </button>
         </div>
     {/if}
 
     <hr
         style={`width: ${widthPercent}%`}
-        class={`m-0 border-0 border-t-2 transition-colors ${
-            $isSelected ? "border-theme-500" : "border-gray-300"
-        }`}
+        class={`m-0 border-0 border-t-2 transition-colors ${$isSelected ? "border-theme-500" : "border-gray-300"}`}
     />
 
     {#if $isSelected}
@@ -185,14 +170,14 @@
                 aria-label="Resize"
                 onpointerdown={startDrag}
                 style={`left: calc(50% - ${widthPercent / 2}%)`}
-                class="absolute top-1/2 h-4 w-2 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize rounded-sm border border-white bg-theme-500 shadow"
+                class="absolute top-1/2 h-4 w-2 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize rounded-sm border border-white bg-theme-500"
             ></button>
             <button
                 type="button"
                 aria-label="Resize"
                 onpointerdown={startDrag}
                 style={`left: calc(50% + ${widthPercent / 2}%)`}
-                class="absolute top-1/2 h-4 w-2 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize rounded-sm border border-white bg-theme-500 shadow"
+                class="absolute top-1/2 h-4 w-2 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize rounded-sm border border-white bg-theme-500"
             ></button>
         {:else if align === "left"}
             <button
@@ -200,7 +185,7 @@
                 aria-label="Resize"
                 onpointerdown={startDrag}
                 style={`left: ${widthPercent}%`}
-                class="absolute top-1/2 h-4 w-2 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize rounded-sm border border-white bg-theme-500 shadow"
+                class="absolute top-1/2 h-4 w-2 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize rounded-sm border border-white bg-theme-500"
             ></button>
         {:else}
             <button
@@ -208,7 +193,7 @@
                 aria-label="Resize"
                 onpointerdown={startDrag}
                 style={`left: ${100 - widthPercent}%`}
-                class="absolute top-1/2 h-4 w-2 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize rounded-sm border border-white bg-theme-500 shadow"
+                class="absolute top-1/2 h-4 w-2 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize rounded-sm border border-white bg-theme-500"
             ></button>
         {/if}
     {/if}

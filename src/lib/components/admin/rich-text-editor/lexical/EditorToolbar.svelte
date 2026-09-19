@@ -1,6 +1,5 @@
 <script lang="ts">
     import { Toolbar } from "svelte-lexical";
-
     import HistoryButtons from "./HistoryButtons.svelte";
     import HomeGroup from "./HomeGroup.svelte";
     import InsertGroup from "./InsertGroup.svelte";

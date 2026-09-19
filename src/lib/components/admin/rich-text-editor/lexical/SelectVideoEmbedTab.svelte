@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Code2Icon } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
 
     interface Props {
         embedValue: string;
@@ -42,7 +42,7 @@
     {#if cleanSrc}
         <div class="space-y-1.5">
             <p class="text-[11px] font-medium text-gray-600">Preview:</p>
-            <div class="aspect-video w-full overflow-hidden rounded-lg bg-black shadow-xs">
+            <div class="aspect-video w-full overflow-hidden rounded-lg bg-black">
                 <iframe
                     src={cleanSrc}
                     title="Video Preview"
@@ -56,7 +56,7 @@
         <div
             class="flex h-36 flex-col items-center justify-center rounded-lg border border-dashed border-gray-200 bg-gray-50/50 text-gray-400"
         >
-            <Code2Icon class="size-6 text-gray-300" />
+            <Icon icon="lucide:code-2" class="size-6 text-gray-300" />
             <p class="mt-1 text-xs">{t.embedUrlPlaceholder}</p>
         </div>
     {/if}

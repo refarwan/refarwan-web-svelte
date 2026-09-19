@@ -9,8 +9,8 @@ import {
     $isTableCellNode as isTableCellNode,
     $isTableSelection as isTableSelection,
     $mergeCells as mergeCells,
-    $unmergeCell as unmergeCell,
-    TableCellHeaderStates
+    TableCellHeaderStates,
+    $unmergeCell as unmergeCell
 } from "@lexical/table";
 import { $getSelection as getSelection, $isRangeSelection as isRangeSelection } from "lexical";
 

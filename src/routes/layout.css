@@ -17,11 +17,19 @@
 
 html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
-body {
-    background: #ffffff;
-    color: #111827;
+/* Prevent auto-zoom on iOS Safari when focusing form inputs */
+@media screen and (max-width: 768px) {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not(
+            [type="button"]
+        ):not([type="submit"]):not([type="reset"]),
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
 }
 
 @keyframes popupBackdropFadeIn {

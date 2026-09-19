@@ -1,6 +1,5 @@
 import { $applyNodeReplacement, DecoratorNode } from "lexical";
 import { mount } from "svelte";
-
 import ResizableSlideShowComponent from "./ResizableSlideShowComponent.svelte";
 
 import type {

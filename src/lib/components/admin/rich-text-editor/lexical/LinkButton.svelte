@@ -1,16 +1,14 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import { $isLinkNode as isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
     import { $findMatchingParent as findMatchingParent } from "@lexical/utils";
     import { $getSelection as getSelection, $isRangeSelection as isRangeSelection } from "lexical";
-    import { LinkIcon } from "lucide-svelte/icons";
     import { getContext } from "svelte";
-    import type { Writable } from "svelte/store";
-
     import { getActiveEditor, sanitizeUrl } from "svelte-lexical";
-
     import { popup } from "$lib/stores/popup.svelte";
-
     import ToolbarButton from "./ToolbarButton.svelte";
+
+    import type { Writable } from "svelte/store";
 
     interface Props {
         t: Record<string, string>;
@@ -66,11 +64,11 @@
 </script>
 
 <ToolbarButton title={t.link} isActive={$isLink} onclick={openLinkPopup}>
-    <LinkIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:link" width={14} height={14} />
 </ToolbarButton>
 
 {#snippet linkPopupSnippet()}
-    <div class="w-80 rounded-xl border border-gray-200 bg-white p-5 shadow-xl">
+    <div class="w-80 rounded-xl border border-gray-200 bg-white p-5">
         <h3 class="mb-4 text-sm font-semibold text-gray-700">{t.linkModalTitle}</h3>
         <input
             type="text"

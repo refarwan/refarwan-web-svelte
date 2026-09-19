@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { Check as CheckIcon, Image as ImageIcon, Loader2 } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
 
-    import type { ImageLibraryItem } from "$lib/types";
+    import type { ImageLibraryItem } from "$lib/types/image-library";
 
     interface Props {
         items: ImageLibraryItem[];
@@ -17,13 +17,13 @@
 
 {#if loading}
     <div class="flex h-64 items-center justify-center">
-        <Loader2 class="size-8 animate-spin text-theme-600" />
+        <Icon icon="lucide:loader-2" class="size-8 animate-spin text-theme-600" />
     </div>
 {:else if items.length === 0}
     <div
         class="flex h-64 flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50/50 p-6 text-center"
     >
-        <ImageIcon class="mb-2 size-8 text-gray-400" />
+        <Icon icon="lucide:image" class="mb-2 size-8 text-gray-400" />
         <p class="text-sm font-medium text-gray-600">{emptyText}</p>
     </div>
 {:else}
@@ -37,11 +37,7 @@
                 type="button"
                 onclick={() => onSelect(item)}
                 ondblclick={() => onDoubleClick(item)}
-                class={`group relative aspect-square cursor-pointer overflow-hidden rounded-lg border bg-black transition-all ${
-                    isSelected
-                        ? "border-theme-600 ring-2 ring-theme-500"
-                        : "border-gray-200 hover:border-gray-400"
-                }`}
+                class={`group relative aspect-square cursor-pointer overflow-hidden rounded-lg border bg-black transition-all ${isSelected ? "border-theme-600 ring-2 ring-theme-500" : "border-gray-200 hover:border-gray-400"}`}
                 title={item.id}
             >
                 <img
@@ -52,9 +48,9 @@
                 />
                 {#if isSelected}
                     <div
-                        class="absolute top-1.5 right-1.5 flex size-5 items-center justify-center rounded-full bg-theme-600 text-white shadow-sm"
+                        class="absolute top-1.5 right-1.5 flex size-5 items-center justify-center rounded-full bg-theme-600 text-white"
                     >
-                        <CheckIcon class="size-3" strokeWidth={3} />
+                        <Icon icon="lucide:check" class="size-3" />
                     </div>
                 {/if}
             </button>

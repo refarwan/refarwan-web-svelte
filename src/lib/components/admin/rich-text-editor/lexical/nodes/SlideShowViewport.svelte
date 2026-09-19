@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ChevronLeft, ChevronRight, ImagesIcon } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
 
     import type { SlideShowImage } from "./resizable-slideshow-node";
 
@@ -25,7 +25,7 @@
     />
 {:else}
     <div class="flex h-full w-full items-center justify-center text-gray-500">
-        <ImagesIcon class="size-10" />
+        <Icon icon="lucide:images" class="size-10" />
     </div>
 {/if}
 
@@ -36,7 +36,7 @@
         aria-label="Previous Slide"
         class="absolute top-1/2 left-2 flex size-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-xs transition hover:bg-black/80"
     >
-        <ChevronLeft size={16} />
+        <Icon icon="lucide:chevron-left" width={16} height={16} />
     </button>
     <button
         type="button"
@@ -44,7 +44,7 @@
         aria-label="Next Slide"
         class="absolute top-1/2 right-2 flex size-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-xs transition hover:bg-black/80"
     >
-        <ChevronRight size={16} />
+        <Icon icon="lucide:chevron-right" width={16} height={16} />
     </button>
 
     <div
@@ -64,9 +64,7 @@
                     e.stopPropagation();
                     onSelectIndex(i);
                 }}
-                class={`h-1.5 rounded-full transition-all ${
-                    i === currentIndex ? "w-4 bg-theme-500" : "w-1.5 bg-white/60"
-                }`}
+                class={`h-1.5 rounded-full transition-all ${i === currentIndex ? "w-4 bg-theme-500" : "w-1.5 bg-white/60"}`}
             ></button>
         {/each}
     </div>

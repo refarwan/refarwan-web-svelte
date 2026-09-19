@@ -15,7 +15,7 @@ To recreate this project with the same configuration:
 
 ```sh
 # recreate this project
-bun x sv@0.17.0 create --template minimal --types ts --add prettier eslint tailwindcss="plugins:typography,forms" --install bun refarwan-web-svelte
+bun x sv@0.17.0 create --template minimal --types ts --add prettier eslint tailwindcss="plugins:none" --install bun refarwan-web-svelte-new
 ```
 
 ## Developing
@@ -40,5 +40,3 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-# refarwan-web-svelte

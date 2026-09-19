@@ -1,9 +1,8 @@
 <script lang="ts">
     import { mergeRegister } from "@lexical/utils";
     import { CLICK_COMMAND, COMMAND_PRIORITY_LOW, $getNodeByKey as getNodeByKey } from "lexical";
-
+    import { untrack } from "svelte";
     import { clearSelection, createNodeSelectionStore } from "svelte-lexical";
-
     import ImageAlignmentBar from "./ImageAlignmentBar.svelte";
     import MediaResizeHandles from "./MediaResizeHandles.svelte";
     import {
@@ -21,7 +20,7 @@
 
     let { nodeKey, editor }: Props = $props();
 
-    const isSelected = createNodeSelectionStore(editor, nodeKey);
+    const isSelected = untrack(() => createNodeSelectionStore(editor, nodeKey));
 
     const readState = (): {
         src: string;
@@ -153,11 +152,7 @@
         <img
             {src}
             alt={altText}
-            class={`block h-auto w-full rounded-md object-contain transition-shadow ${
-                $isSelected
-                    ? "ring-2 ring-theme-500 ring-offset-1"
-                    : "hover:ring-1 hover:ring-gray-300"
-            }`}
+            class={`transition- block h-auto w-full rounded-md object-contain ${$isSelected ? "ring-2 ring-theme-500 ring-offset-1" : "hover:ring-1 hover:ring-gray-300"}`}
             draggable="false"
         />
 

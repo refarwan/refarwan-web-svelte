@@ -1,8 +1,7 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import { CAN_REDO_COMMAND, CAN_UNDO_COMMAND, COMMAND_PRIORITY_CRITICAL } from "lexical";
-    import { Redo2Icon, Undo2Icon } from "lucide-svelte/icons";
     import { onMount } from "svelte";
-
     import { getEditor, redo, undo } from "svelte-lexical";
 
     interface Props {
@@ -46,7 +45,7 @@
     onclick={() => undo(editor)}
     class="grid h-6 w-6 cursor-pointer place-content-center rounded-md text-gray-500 disabled:cursor-not-allowed disabled:text-gray-400 disabled:opacity-50"
 >
-    <Undo2Icon size={16} />
+    <Icon icon="lucide:undo-2" width={16} height={16} />
 </button>
 <button
     type="button"
@@ -55,5 +54,5 @@
     onclick={() => redo(editor)}
     class="grid h-6 w-6 cursor-pointer place-content-center rounded-md text-gray-500 disabled:cursor-not-allowed disabled:text-gray-400 disabled:opacity-50"
 >
-    <Redo2Icon size={16} />
+    <Icon icon="lucide:redo-2" width={16} height={16} />
 </button>

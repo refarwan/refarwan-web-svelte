@@ -1,15 +1,13 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import { $patchStyleText as patchStyleText } from "@lexical/selection";
     import { $getSelection as getSelection } from "lexical";
-    import { CaseUpperIcon } from "lucide-svelte/icons";
     import { getContext } from "svelte";
-    import type { Writable } from "svelte/store";
-
     import { getActiveEditor } from "svelte-lexical";
-
     import { popup } from "$lib/stores/popup.svelte";
+    import ColorPickerCard from "../../../../../routes/(admin-panel)/admin-panel/(protected)/_components/ColorPickerCard.svelte";
 
-    import ColorPickerCard from "../../../../../routes/admin-panel/(protected)/_components/ColorPickerCard.svelte";
+    import type { Writable } from "svelte/store";
 
     interface Props {
         t: Record<string, string>;
@@ -47,7 +45,7 @@
     title={t.textColor}
     aria-label={t.textColor}
 >
-    <CaseUpperIcon size={16} strokeWidth={2.5} />
+    <Icon icon="lucide:case-upper" width={16} height={16} />
     <div class="h-1 w-5 rounded-md" style={`background-color: ${$fontColor}`}></div>
 </button>
 

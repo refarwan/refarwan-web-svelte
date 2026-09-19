@@ -1,16 +1,13 @@
 <script lang="ts">
-    import { ImageIcon } from "lucide-svelte/icons";
-
+    import Icon from "@iconify/svelte";
     import { $insertNodeToNearestRoot as insertNodeToNearestRoot } from "@lexical/utils";
     import { getActiveEditor } from "svelte-lexical";
-
     import { popup } from "$lib/stores/popup.svelte";
-
     import { $createResizableImageNode as createResizableImageNode } from "./nodes/resizable-image-node";
     import SelectImageModal from "./SelectImageModal.svelte";
     import ToolbarButton from "./ToolbarButton.svelte";
 
-    import type { ImageLibraryItem } from "$lib/types";
+    import type { ImageLibraryItem } from "$lib/types/image-library";
 
     interface Props {
         t: Record<string, string>;
@@ -47,7 +44,7 @@
 </script>
 
 <ToolbarButton title={t.image} onclick={openPopup}>
-    <ImageIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:image" width={14} height={14} />
 </ToolbarButton>
 
 {#snippet imagePopupSnippet()}

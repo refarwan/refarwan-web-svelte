@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { ChevronLeft, ChevronRight } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
     import { onMount } from "svelte";
-
     import { authorizedHttp } from "$lib/api/authorized-http";
     import { axiosErrorMessage } from "$lib/utils/axios-error-message";
-
-    import type { ImageLibraryItem, ListResponse } from "$lib/types";
-    import type { SlideShowImage } from "./nodes/resizable-slideshow-node";
     import SelectImageUploadTab from "./SelectImageUploadTab.svelte";
     import SelectSlideShowHeader from "./SelectSlideShowHeader.svelte";
     import SlideShowGrid from "./SlideShowGrid.svelte";
     import SlideShowModalFooter from "./SlideShowModalFooter.svelte";
     import SlideShowSelectedTray from "./SlideShowSelectedTray.svelte";
+
+    import type { ListResponse } from "$lib/types/api-response";
+    import type { ImageLibraryItem } from "$lib/types/image-library";
+    import type { SlideShowImage } from "./nodes/resizable-slideshow-node";
 
     interface Props {
         t: Record<string, string>;
@@ -104,7 +104,7 @@
 </script>
 
 <div
-    class="flex h-auto max-h-[92vh] w-[94vw] max-w-180 flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl"
+    class="flex h-auto max-h-[92vh] w-[94vw] max-w-180 flex-col overflow-hidden rounded-xl border border-gray-100 bg-white"
     role="dialog"
     aria-modal="true"
 >
@@ -133,7 +133,7 @@
                         onclick={() => fetchImages(page - 1)}
                         class="flex items-center gap-1 rounded-md border border-gray-200 px-2.5 py-1 hover:bg-gray-50 disabled:opacity-40"
                     >
-                        <ChevronLeft class="size-3.5" />
+                        <Icon icon="lucide:chevron-left" class="size-3.5" />
                         <span>Prev</span>
                     </button>
                     <span>{page} / {totalPage}</span>
@@ -144,7 +144,7 @@
                         class="flex items-center gap-1 rounded-md border border-gray-200 px-2.5 py-1 hover:bg-gray-50 disabled:opacity-40"
                     >
                         <span>Next</span>
-                        <ChevronRight class="size-3.5" />
+                        <Icon icon="lucide:chevron-right" class="size-3.5" />
                     </button>
                 </div>
             {/if}

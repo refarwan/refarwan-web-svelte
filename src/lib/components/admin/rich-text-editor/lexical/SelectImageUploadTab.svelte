@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Loader2, UploadCloud } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
 
     interface Props {
         uploading: boolean;
@@ -27,13 +27,13 @@
             disabled={uploading}
         />
         {#if uploading}
-            <Loader2 class="size-10 animate-spin text-theme-600" />
+            <Icon icon="lucide:loader-2" class="size-10 animate-spin text-theme-600" />
             <p class="text-sm font-medium text-gray-600">Mengupload gambar...</p>
         {:else}
             <div
                 class="flex size-12 items-center justify-center rounded-full bg-theme-100 text-theme-600"
             >
-                <UploadCloud class="size-6" />
+                <Icon icon="lucide:upload-cloud" class="size-6" />
             </div>
             <p class="text-sm font-medium text-gray-800">Klik untuk upload gambar baru</p>
             <p class="text-xs text-gray-400">JPG, PNG, WebP, GIF, AVIF up to 10MB</p>

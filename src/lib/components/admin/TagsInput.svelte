@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { XIcon } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
 
     interface Props {
         t: Record<string, string>;
@@ -17,7 +17,7 @@
 <div class="space-y-1.5">
     <label class="block text-sm font-medium text-gray-700" for={id}>{t.tagsLabel}</label>
     <div
-        class="flex min-h-11 flex-wrap items-center gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-2xs focus-within:border-theme-500 focus-within:ring-1 focus-within:ring-theme-500"
+        class="flex min-h-11 flex-wrap items-center gap-2 rounded-lg border border-gray-200 bg-white p-2 focus-within:border-theme-500 focus-within:ring-1 focus-within:ring-theme-500"
     >
         {#each tags as tag (tag)}
             <span
@@ -29,7 +29,7 @@
                     onclick={() => onRemoveTag(tag)}
                     class="cursor-pointer rounded-full text-theme-400 transition-colors hover:text-theme-700"
                 >
-                    <XIcon class="h-3 w-3" />
+                    <Icon icon="lucide:x" class="h-3 w-3" />
                 </button>
             </span>
         {/each}

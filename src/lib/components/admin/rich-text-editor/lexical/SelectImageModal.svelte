@@ -1,15 +1,14 @@
 <script lang="ts">
-    import { ChevronLeft, ChevronRight, X as XIcon } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
     import { onMount } from "svelte";
-
     import { authorizedHttp } from "$lib/api/authorized-http";
     import { axiosErrorMessage } from "$lib/utils/axios-error-message";
-
     import SelectImageGrid from "./SelectImageGrid.svelte";
     import SelectImageModalFooter from "./SelectImageModalFooter.svelte";
     import SelectImageUploadTab from "./SelectImageUploadTab.svelte";
 
-    import type { ImageLibraryItem, ListResponse } from "$lib/types";
+    import type { ListResponse } from "$lib/types/api-response";
+    import type { ImageLibraryItem } from "$lib/types/image-library";
 
     interface Props {
         t: Record<string, string>;
@@ -80,7 +79,7 @@
 </script>
 
 <div
-    class="flex h-auto max-h-[90vh] w-[94vw] max-w-160 flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl md:w-160"
+    class="flex h-auto max-h-[90vh] w-[94vw] max-w-160 flex-col overflow-hidden rounded-xl border border-gray-100 bg-white md:w-160"
     role="dialog"
     aria-modal="true"
 >
@@ -95,7 +94,7 @@
             class="cursor-pointer rounded-lg p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
             title="Tutup"
         >
-            <XIcon class="size-5" />
+            <Icon icon="lucide:x" class="size-5" />
         </button>
     </div>
 
@@ -104,22 +103,14 @@
         <button
             type="button"
             onclick={() => (activeTab = "library")}
-            class={`relative cursor-pointer px-4 py-2 text-xs font-semibold transition-colors ${
-                activeTab === "library"
-                    ? "border-b-2 border-theme-600 text-theme-600"
-                    : "text-gray-500 hover:text-gray-700"
-            }`}
+            class={`relative cursor-pointer px-4 py-2 text-xs font-semibold transition-colors ${activeTab === "library" ? "border-b-2 border-theme-600 text-theme-600" : "text-gray-500 hover:text-gray-700"}`}
         >
             {t.tabLibrary || "Perpustakaan Gambar"}
         </button>
         <button
             type="button"
             onclick={() => (activeTab = "upload")}
-            class={`relative cursor-pointer px-4 py-2 text-xs font-semibold transition-colors ${
-                activeTab === "upload"
-                    ? "border-b-2 border-theme-600 text-theme-600"
-                    : "text-gray-500 hover:text-gray-700"
-            }`}
+            class={`relative cursor-pointer px-4 py-2 text-xs font-semibold transition-colors ${activeTab === "upload" ? "border-b-2 border-theme-600 text-theme-600" : "text-gray-500 hover:text-gray-700"}`}
         >
             {t.tabUpload || "Upload Baru"}
         </button>
@@ -151,7 +142,7 @@
                         onclick={() => fetchImages(page - 1)}
                         class="flex items-center gap-1 rounded-md border border-gray-200 px-2.5 py-1 hover:bg-gray-50 disabled:opacity-40"
                     >
-                        <ChevronLeft class="size-3.5" />
+                        <Icon icon="lucide:chevron-left" class="size-3.5" />
                         <span>Prev</span>
                     </button>
                     <span>{page} / {totalPage}</span>
@@ -162,7 +153,7 @@
                         class="flex items-center gap-1 rounded-md border border-gray-200 px-2.5 py-1 hover:bg-gray-50 disabled:opacity-40"
                     >
                         <span>Next</span>
-                        <ChevronRight class="size-3.5" />
+                        <Icon icon="lucide:chevron-right" class="size-3.5" />
                     </button>
                 </div>
             {/if}

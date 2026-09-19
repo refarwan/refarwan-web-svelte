@@ -29,7 +29,23 @@ const TIME_AGO_UNITS: Record<
         month: "mo ago",
         year: "y ago"
     },
+    "en-us": {
+        justNow: "just now",
+        minute: "m ago",
+        hour: "h ago",
+        day: "d ago",
+        month: "mo ago",
+        year: "y ago"
+    },
     id: {
+        justNow: "baru saja",
+        minute: "mnt lalu",
+        hour: "jam lalu",
+        day: "hr lalu",
+        month: "bln lalu",
+        year: "thn lalu"
+    },
+    "id-id": {
         justNow: "baru saja",
         minute: "mnt lalu",
         hour: "jam lalu",
@@ -44,11 +60,21 @@ const TIME_AGO_UNITS: Record<
         day: "日前",
         month: "ヶ月前",
         year: "年前"
+    },
+    "ja-jp": {
+        justNow: "たった今",
+        minute: "分前",
+        hour: "時間前",
+        day: "日前",
+        month: "ヶ月前",
+        year: "年前"
     }
 };
 
-export function formatTimeAgo(dateString: string, lang: string = "en"): string {
-    const unit = TIME_AGO_UNITS[lang.toLowerCase()] ?? TIME_AGO_UNITS.en;
+export function formatTimeAgo(dateString: string, lang: string = "en-US"): string {
+    const key = lang.toLowerCase();
+    const unit =
+        TIME_AGO_UNITS[key] ?? TIME_AGO_UNITS[key.split("-")[0]] ?? TIME_AGO_UNITS["en-us"];
     const diffSeconds = Math.max(0, (Date.now() - new Date(dateString).getTime()) / 1000);
 
     if (diffSeconds < 60) return unit.justNow;

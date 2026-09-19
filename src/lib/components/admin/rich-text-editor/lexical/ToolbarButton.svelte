@@ -19,9 +19,7 @@
         event.preventDefault();
         onclick();
     }}
-    class={`flex h-7.5 w-7.5 cursor-pointer items-center justify-center rounded-sm transition-colors hover:bg-gray-200 ${
-        isActive ? "bg-theme-100 text-theme-700" : "text-gray-500"
-    }`}
+    class={`flex h-7.5 w-7.5 cursor-pointer items-center justify-center rounded-sm transition-colors hover:bg-gray-200 ${isActive ? "bg-theme-100 text-theme-700" : "text-gray-500"}`}
 >
     {@render children()}
 </button>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { SearchIcon } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
     import DropdownOptionItem from "./DropdownOptionItem.svelte";
     import DropdownTrigger from "./DropdownTrigger.svelte";
 
@@ -150,12 +150,13 @@
                 role="listbox"
                 tabindex="-1"
                 onkeydown={handleKeyDown}
-                class="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg focus:outline-none"
+                class="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-200 bg-white py-1 focus:outline-none"
             >
                 {#if searchable}
                     <div class="sticky top-0 z-10 border-b border-gray-100 bg-white p-2">
                         <div class="relative flex items-center">
-                            <SearchIcon
+                            <Icon
+                                icon="lucide:search"
                                 class="pointer-events-none absolute left-2.5 h-3.5 w-3.5 text-gray-400"
                             />
                             <input

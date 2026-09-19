@@ -24,7 +24,7 @@
     );
 </script>
 
-<div class="flex w-44 flex-col rounded-xl border border-gray-200 bg-white p-1 text-xs shadow-xl">
+<div class="flex w-44 flex-col rounded-xl border border-gray-200 bg-white p-1 text-xs">
     <button
         type="button"
         onclick={onInsertBefore}

@@ -1,15 +1,5 @@
 <script lang="ts">
-    import {
-        AlignHorizontalJustifyCenter,
-        Columns3,
-        Combine,
-        PaintBucket,
-        Rows3,
-        Rows4,
-        Split,
-        Trash2
-    } from "lucide-svelte/icons";
-
+    import Icon from "@iconify/svelte";
     import {
         deleteCol,
         deleteCurrentTable,
@@ -27,8 +17,8 @@
     import TableColorDropdown from "./TableColorDropdown.svelte";
     import TableGridMenu from "./TableGridMenu.svelte";
 
-    import type { ActiveTableDetails, TableAlignment } from "./table-commands";
     import type { LexicalEditor } from "lexical";
+    import type { ActiveTableDetails, TableAlignment } from "./table-commands";
 
     interface Props {
         editor: LexicalEditor;
@@ -74,7 +64,7 @@
 <!-- svelte-ignore a11y_interactive_supports_focus -->
 <div
     style={`top: ${menuY}px; left: ${menuX}px;`}
-    class="absolute z-50 min-w-52 rounded-xl border border-gray-200 bg-white p-1.5 shadow-xl select-none"
+    class="absolute z-50 min-w-52 rounded-xl border border-gray-200 bg-white p-1.5 select-none"
     role="menu"
     aria-label="Table Actions"
     onclick={(e) => e.stopPropagation()}
@@ -92,7 +82,12 @@
             }}
             class={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm transition hover:bg-gray-100 ${isColorOpen ? "bg-gray-100" : ""}`}
         >
-            <PaintBucket size={14} class="shrink-0 text-gray-500" />
+            <Icon
+                icon="lucide:paint-bucket"
+                width={14}
+                height={14}
+                class="shrink-0 text-gray-500"
+            />
             <span class="flex-1 text-left text-gray-700"
                 >{t.tableCellColor || "Warna Background"}</span
             >
@@ -120,7 +115,7 @@
         }}
         class={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm transition hover:bg-gray-100 ${details.isHeader ? "text-theme-700" : "text-gray-700"}`}
     >
-        <Rows4 size={14} class="shrink-0 text-gray-500" />
+        <Icon icon="lucide:rows-4" width={14} height={14} class="shrink-0 text-gray-500" />
         <span class="flex-1 text-left">
             {details.isHeader
                 ? t.tableCellHeaderToTd || "Ubah ke TD (Data)"
@@ -139,7 +134,7 @@
             }}
             class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm text-gray-700 transition hover:bg-gray-100"
         >
-            <Combine size={14} class="shrink-0 text-blue-500" />
+            <Icon icon="lucide:combine" width={14} height={14} class="shrink-0 text-blue-500" />
             <span class="flex-1 text-left">{t.tableMergeCells || "Gabungkan Sel"}</span>
         </button>
     {/if}
@@ -153,7 +148,7 @@
             }}
             class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm text-gray-700 transition hover:bg-gray-100"
         >
-            <Split size={14} class="shrink-0 text-purple-500" />
+            <Icon icon="lucide:split" width={14} height={14} class="shrink-0 text-purple-500" />
             <span class="flex-1 text-left">{t.tableUnmergeCell || "Pisahkan Sel"}</span>
         </button>
     {/if}
@@ -173,7 +168,7 @@
             }}
             class={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm text-gray-700 transition hover:bg-gray-100 ${isColMenuOpen ? "bg-gray-100" : ""}`}
         >
-            <Columns3 size={14} class="shrink-0 text-gray-500" />
+            <Icon icon="lucide:columns-3" width={14} height={14} class="shrink-0 text-gray-500" />
             <span class="flex-1 text-left">{t.tableColumn || "Kolom"}</span>
             <span class="text-xs text-gray-400">›</span>
         </button>
@@ -212,7 +207,7 @@
             }}
             class={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm text-gray-700 transition hover:bg-gray-100 ${isRowMenuOpen ? "bg-gray-100" : ""}`}
         >
-            <Rows3 size={14} class="shrink-0 text-gray-500" />
+            <Icon icon="lucide:rows-3" width={14} height={14} class="shrink-0 text-gray-500" />
             <span class="flex-1 text-left">{t.tableRow || "Baris"}</span>
             <span class="text-xs text-gray-400">›</span>
         </button>
@@ -253,7 +248,12 @@
             }}
             class={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm text-gray-700 transition hover:bg-gray-100 ${isAlignMenuOpen ? "bg-gray-100" : ""}`}
         >
-            <AlignHorizontalJustifyCenter size={14} class="shrink-0 text-gray-500" />
+            <Icon
+                icon="lucide:align-horizontal-justify-center"
+                width={14}
+                height={14}
+                class="shrink-0 text-gray-500"
+            />
             <span class="flex-1 text-left">{t.tableAlignment || "Posisi Tabel"}</span>
             <span class="text-xs text-gray-400">›</span>
         </button>
@@ -276,7 +276,7 @@
         }}
         class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm text-red-600 transition hover:bg-red-50"
     >
-        <Trash2 size={14} class="shrink-0" />
+        <Icon icon="lucide:trash-2" width={14} height={14} class="shrink-0" />
         <span class="flex-1 text-left">{t.tableDeleteTable || "Hapus Tabel"}</span>
     </button>
 </div>

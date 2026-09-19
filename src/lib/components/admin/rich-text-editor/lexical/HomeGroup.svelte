@@ -1,16 +1,6 @@
 <script lang="ts">
-    import {
-        BoldIcon,
-        ItalicIcon,
-        ListIcon,
-        ListOrderedIcon,
-        QuoteIcon,
-        StrikethroughIcon,
-        UnderlineIcon
-    } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
     import { getContext } from "svelte";
-    import type { Writable } from "svelte/store";
-
     import {
         formatBulletList,
         formatNumberedList,
@@ -21,12 +11,13 @@
         toggleStrikethrough,
         toggleUnderline
     } from "svelte-lexical";
-
     import AlignButtons from "./AlignButtons.svelte";
     import ColorPickerButton from "./ColorPickerButton.svelte";
     import LinkButton from "./LinkButton.svelte";
     import TextTypeSelect from "./TextTypeSelect.svelte";
     import ToolbarButton from "./ToolbarButton.svelte";
+
+    import type { Writable } from "svelte/store";
 
     interface Props {
         t: Record<string, string>;
@@ -45,24 +36,24 @@
 <TextTypeSelect {t} />
 
 <ToolbarButton title={t.bold} isActive={$isBold} onclick={() => toggleBold($activeEditor)}>
-    <BoldIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:bold" width={14} height={14} />
 </ToolbarButton>
 <ToolbarButton title={t.italic} isActive={$isItalic} onclick={() => toggleItalic($activeEditor)}>
-    <ItalicIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:italic" width={14} height={14} />
 </ToolbarButton>
 <ToolbarButton
     title={t.underline}
     isActive={$isUnderline}
     onclick={() => toggleUnderline($activeEditor)}
 >
-    <UnderlineIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:underline" width={14} height={14} />
 </ToolbarButton>
 <ToolbarButton
     title={t.strikethrough}
     isActive={$isStrikethrough}
     onclick={() => toggleStrikethrough($activeEditor)}
 >
-    <StrikethroughIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:strikethrough" width={14} height={14} />
 </ToolbarButton>
 <ColorPickerButton {t} />
 
@@ -77,14 +68,14 @@
     isActive={$blockType === "number"}
     onclick={() => formatNumberedList($activeEditor, $blockType)}
 >
-    <ListOrderedIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:list-ordered" width={14} height={14} />
 </ToolbarButton>
 <ToolbarButton
     title={t.bulletedList}
     isActive={$blockType === "bullet"}
     onclick={() => formatBulletList($activeEditor, $blockType)}
 >
-    <ListIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:list" width={14} height={14} />
 </ToolbarButton>
 
 <div class="mx-1 h-5 w-px bg-gray-300"></div>
@@ -94,6 +85,6 @@
     isActive={$blockType === "quote"}
     onclick={() => formatQuote($activeEditor, $blockType)}
 >
-    <QuoteIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:quote" width={14} height={14} />
 </ToolbarButton>
 <LinkButton {t} />

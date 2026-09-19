@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { FilmIcon, Loader2 } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
 
-    import type { VideoItem } from "$lib/types";
+    import type { VideoItem } from "$lib/types/video";
 
     interface Props {
         items: VideoItem[];
@@ -17,12 +17,12 @@
 
 {#if loading}
     <div class="flex h-64 flex-col items-center justify-center gap-2 text-gray-400">
-        <Loader2 class="size-6 animate-spin text-theme-600" />
+        <Icon icon="lucide:loader-2" class="size-6 animate-spin text-theme-600" />
         <p class="text-xs">{t.loadingVideos || "Memuat video..."}</p>
     </div>
 {:else if items.length === 0}
     <div class="flex h-64 flex-col items-center justify-center gap-2 text-gray-400">
-        <FilmIcon class="size-10 text-gray-300" strokeWidth={1.5} />
+        <Icon icon="lucide:film" class="size-10 text-gray-300" />
         <p class="text-sm font-medium text-gray-600">{t.noVideosFound}</p>
         <p class="text-xs text-gray-400">{t.noVideosSubtitle}</p>
     </div>
@@ -43,11 +43,7 @@
                         onSelect(item);
                     }
                 }}
-                class={`group relative flex cursor-pointer flex-col overflow-hidden rounded-lg border text-left transition-all ${
-                    isSelected
-                        ? "border-theme-500 bg-theme-50/40 ring-2 ring-theme-500"
-                        : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-xs"
-                }`}
+                class={`group relative flex cursor-pointer flex-col overflow-hidden rounded-lg border text-left transition-all ${isSelected ? "border-theme-500 bg-theme-50/40 ring-2 ring-theme-500" : "border-gray-200 bg-white hover:border-gray-300 "}`}
             >
                 <div class="relative aspect-video w-full overflow-hidden bg-black">
                     {#if thumbUrl}
@@ -59,12 +55,12 @@
                         />
                     {:else}
                         <div class="flex h-full w-full items-center justify-center text-gray-600">
-                            <FilmIcon size={24} />
+                            <Icon icon="lucide:film" width={24} height={24} />
                         </div>
                     {/if}
                     {#if isSelected}
                         <div
-                            class="absolute top-1.5 right-1.5 flex size-5 items-center justify-center rounded-full bg-theme-600 text-white shadow"
+                            class="absolute top-1.5 right-1.5 flex size-5 items-center justify-center rounded-full bg-theme-600 text-white"
                         >
                             <svg class="size-3" viewBox="0 0 12 12" fill="none">
                                 <path

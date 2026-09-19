@@ -1,9 +1,11 @@
 <script lang="ts">
+    import type { ResolvedPathname } from "$app/types";
+
     interface Props {
         t: Record<string, string>;
         page: number;
         totalPage: number;
-        buildHref: (page: number) => string;
+        buildHref: (page: number) => ResolvedPathname;
     }
 
     let { t, page, totalPage, buildHref }: Props = $props();
@@ -48,7 +50,7 @@
     {:else}
         <a
             href={buildHref(page - 1)}
-            class="cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 shadow-2xs transition-colors hover:bg-gray-50 md:px-4"
+            class="cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 md:px-4"
         >
             {t.prev}
         </a>
@@ -62,11 +64,7 @@
                 <a
                     href={buildHref(entry)}
                     aria-current={entry === page ? "page" : undefined}
-                    class={`flex h-9 min-w-8 cursor-pointer items-center justify-center rounded-lg px-2.5 py-2 text-sm transition-colors md:min-w-9 md:px-3 ${
-                        entry === page
-                            ? "bg-theme-600 font-semibold text-white shadow-2xs"
-                            : "font-medium text-gray-900 hover:bg-gray-100"
-                    }`}
+                    class={`flex h-9 min-w-8 cursor-pointer items-center justify-center rounded-lg px-2.5 py-2 text-sm transition-colors md:min-w-9 md:px-3 ${entry === page ? "bg-theme-600 font-semibold text-white" : "font-medium text-gray-900 hover:bg-gray-100"}`}
                 >
                     {entry}
                 </a>
@@ -84,7 +82,7 @@
     {:else}
         <a
             href={buildHref(page + 1)}
-            class="cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 shadow-2xs transition-colors hover:bg-gray-50 md:px-4"
+            class="cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50 md:px-4"
         >
             {t.next}
         </a>

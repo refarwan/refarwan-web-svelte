@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ChevronLeft, ChevronRight, X as XIcon } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
 
     import type { SlideShowImage } from "./nodes/resizable-slideshow-node";
 
@@ -31,7 +31,7 @@
         <div class="flex gap-2 overflow-x-auto pb-1">
             {#each selectedItems as item, idx (item.id || item.src + idx)}
                 <div
-                    class="group relative flex size-18 shrink-0 flex-col overflow-hidden rounded-lg border border-gray-300 bg-white shadow-2xs"
+                    class="group relative flex size-18 shrink-0 flex-col overflow-hidden rounded-lg border border-gray-300 bg-white"
                 >
                     <img
                         src={item.src}
@@ -53,7 +53,7 @@
                         aria-label="Remove slide"
                         class="absolute top-1 right-1 flex size-4.5 cursor-pointer items-center justify-center rounded-full bg-red-600 text-white opacity-90 transition hover:scale-110 hover:opacity-100"
                     >
-                        <XIcon size={10} />
+                        <Icon icon="lucide:x" width={10} height={10} />
                     </button>
 
                     <!-- Reorder buttons overlay -->
@@ -66,7 +66,7 @@
                             onclick={() => onMove(idx, idx - 1)}
                             class="cursor-pointer text-white hover:text-theme-300 disabled:opacity-30"
                         >
-                            <ChevronLeft size={12} />
+                            <Icon icon="lucide:chevron-left" width={12} height={12} />
                         </button>
                         <button
                             type="button"
@@ -74,7 +74,7 @@
                             onclick={() => onMove(idx, idx + 1)}
                             class="cursor-pointer text-white hover:text-theme-300 disabled:opacity-30"
                         >
-                            <ChevronRight size={12} />
+                            <Icon icon="lucide:chevron-right" width={12} height={12} />
                         </button>
                     </div>
                 </div>

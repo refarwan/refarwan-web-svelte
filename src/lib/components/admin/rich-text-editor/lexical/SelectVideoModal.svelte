@@ -1,16 +1,15 @@
 <script lang="ts">
-    import { ChevronLeft, ChevronRight, SearchIcon } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
     import { onMount } from "svelte";
     import { SvelteURLSearchParams } from "svelte/reactivity";
-
     import { authorizedHttp } from "$lib/api/authorized-http";
-
     import SelectVideoEmbedTab from "./SelectVideoEmbedTab.svelte";
     import SelectVideoGrid from "./SelectVideoGrid.svelte";
     import SelectVideoHeader from "./SelectVideoHeader.svelte";
     import SelectVideoModalFooter from "./SelectVideoModalFooter.svelte";
 
-    import type { ListResponse, VideoItem } from "$lib/types";
+    import type { ListResponse } from "$lib/types/api-response";
+    import type { VideoItem } from "$lib/types/video";
 
     interface Props {
         t: Record<string, string>;
@@ -91,9 +90,7 @@
     role="dialog"
     aria-modal="true"
 >
-    <div
-        class="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl bg-white shadow-2xl"
-    >
+    <div class="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl bg-white">
         <SelectVideoHeader
             title={t.selectVideoTitle}
             subtitle={t.selectVideoSubtitle}
@@ -108,8 +105,10 @@
             {#if activeTab === "library"}
                 <div class="mb-4">
                     <div class="relative">
-                        <SearchIcon
-                            size={14}
+                        <Icon
+                            icon="lucide:search"
+                            width={14}
+                            height={14}
                             class="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
                         />
                         <input
@@ -143,7 +142,7 @@
                                 onclick={() => void fetchVideos(page - 1)}
                                 class="cursor-pointer rounded border border-gray-300 p-1 text-gray-600 hover:bg-gray-50 disabled:opacity-40"
                             >
-                                <ChevronLeft size={14} />
+                                <Icon icon="lucide:chevron-left" width={14} height={14} />
                             </button>
                             <button
                                 type="button"
@@ -151,7 +150,7 @@
                                 onclick={() => void fetchVideos(page + 1)}
                                 class="cursor-pointer rounded border border-gray-300 p-1 text-gray-600 hover:bg-gray-50 disabled:opacity-40"
                             >
-                                <ChevronRight size={14} />
+                                <Icon icon="lucide:chevron-right" width={14} height={14} />
                             </button>
                         </div>
                     </div>

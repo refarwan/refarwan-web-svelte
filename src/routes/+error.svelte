@@ -1,33 +1,34 @@
 <script lang="ts">
     import { page } from "$app/state";
-    import { resolve } from "$app/paths";
+    import { CONTENT_LANGUAGES } from "$lib/constants/content-language";
+    import { ERROR_TRANSLATION } from "$lib/i18n/error";
+    import { NOT_FOUND_TRANSLATION } from "$lib/i18n/not-found";
+    import ErrorContent from "./_components/ErrorContent.svelte";
+    import NotFoundContent from "./_components/NotFoundContent.svelte";
 
-    import NotFoundContent from "$lib/components/NotFoundContent.svelte";
-    import { getNotFoundTranslation } from "$lib/i18n/not-found";
-
-    const t = getNotFoundTranslation("en");
-    const homeHref = resolve("/[[lang=lang]]", { lang: undefined });
+    const langCode = $derived(
+        CONTENT_LANGUAGES.find((item) => item.locale === page.params.lang)?.locale ?? "en-US"
+    );
+    const notFoundT = $derived(NOT_FOUND_TRANSLATION[langCode]);
+    const errorT = $derived(ERROR_TRANSLATION[langCode]);
+    const homeHref = $derived(
+        `/${(page.params.lang !== "en-US" && CONTENT_LANGUAGES.find((l) => l.locale === page.params.lang)?.locale) || ""}`
+    );
+    const contactHref = $derived(`${homeHref}#contact`);
 </script>
 
 <div class="flex min-h-screen flex-col bg-white font-sans text-gray-900 antialiased">
     <main class="mx-auto flex max-w-7xl flex-1 items-center justify-center px-4">
         {#if page.status === 404}
-            <NotFoundContent {t} {homeHref} contactHref={`${homeHref}#contact`} />
+            <NotFoundContent t={notFoundT} {homeHref} {contactHref} />
         {:else}
-            <div class="flex flex-col items-center justify-center py-20 text-center">
-                <span class="text-6xl font-black tracking-tight text-theme-600 select-none"
-                    >{page.status}</span
-                >
-                <p class="mt-4 text-sm leading-relaxed text-gray-500">
-                    {page.error?.message ?? "Something went wrong."}
-                </p>
-                <a
-                    href={homeHref}
-                    class="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-theme-600 px-6 text-[15px] font-semibold text-white transition-colors hover:bg-theme-700"
-                >
-                    {t.backHome}
-                </a>
-            </div>
+            <ErrorContent
+                status={page.status}
+                message={page.error?.message}
+                t={errorT}
+                {homeHref}
+                {contactHref}
+            />
         {/if}
     </main>
 </div>

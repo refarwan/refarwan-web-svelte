@@ -1,12 +1,11 @@
 {
-    "name": "refarwan-web-svelte",
+    "name": "refarwan-web-svelte-new",
     "private": true,
     "version": "0.0.1",
     "type": "module",
     "scripts": {
         "dev": "vite dev",
         "build": "vite build",
-        "start": "bun run build/index.js",
         "preview": "vite preview",
         "prepare": "svelte-kit sync || echo ''",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -16,11 +15,13 @@
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
-        "@sveltejs/adapter-node": "^5.5.7",
+        "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
+        "@iconify/svelte": "^5.2.2",
+        "@sveltejs/adapter-auto": "^7.0.1",
         "@sveltejs/kit": "^2.63.0",
         "@sveltejs/vite-plugin-svelte": "^7.1.2",
         "@tailwindcss/vite": "^4.3.0",
-        "@types/ioredis": "^5.0.0",
+        "@types/color": "^4.2.1",
         "@types/node": "^24",
         "eslint": "^10.4.1",
         "eslint-config-prettier": "^10.1.8",
@@ -41,9 +42,7 @@
         "axios": "^1.20.0",
         "color": "^5.0.3",
         "hls.js": "^1.7.3",
-        "ioredis": "^6.0.0",
-        "lucide-svelte": "^1.0.1",
-        "simple-icons": "^16.31.0",
+        "redis": "^6.2.1",
         "svelte-lexical": "^0.6.5"
     }
 }

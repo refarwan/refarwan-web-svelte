@@ -1,10 +1,9 @@
 <script lang="ts">
     import { getContext } from "svelte";
-    import type { Writable } from "svelte/store";
-
+    import { formatHeading, formatParagraph, getActiveEditor } from "svelte-lexical";
     import DropdownSelect from "$lib/components/admin/DropdownSelect.svelte";
 
-    import { formatHeading, formatParagraph, getActiveEditor } from "svelte-lexical";
+    import type { Writable } from "svelte/store";
 
     interface Props {
         t: Record<string, string>;

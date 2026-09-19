@@ -33,7 +33,7 @@
             type="button"
             onclick={onConfirm}
             disabled={!selectedId}
-            class="cursor-pointer rounded-lg bg-theme-600 px-4 py-2 text-xs font-semibold text-white shadow-2xs hover:bg-theme-700 disabled:opacity-40"
+            class="cursor-pointer rounded-lg bg-theme-600 px-4 py-2 text-xs font-semibold text-white hover:bg-theme-700 disabled:opacity-40"
         >
             {insertLabel}
         </button>

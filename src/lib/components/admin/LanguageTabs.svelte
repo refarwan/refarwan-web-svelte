@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ContentLanguage } from "$lib/types";
+    import type { ContentLanguage } from "$lib/types/content-language";
 
     interface Props {
         languages: ContentLanguage[];
@@ -16,11 +16,7 @@
             <button
                 type="button"
                 onclick={() => onSelect(lang.code)}
-                class={`inline-flex h-6.5 cursor-pointer items-center gap-1 rounded-full pr-2.5 pl-2 text-xs transition-colors ${
-                    activeCode === lang.code
-                        ? "bg-theme-600 font-semibold text-white shadow-2xs"
-                        : "font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
-                }`}
+                class={`inline-flex h-6.5 cursor-pointer items-center gap-1 rounded-full pr-2.5 pl-2 text-xs transition-colors ${activeCode === lang.code ? "bg-theme-600 font-semibold text-white " : "font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"}`}
             >
                 <span class="text-[11px] leading-none select-none">{lang.flag}</span>
                 <span class="text-xs leading-none uppercase">{lang.code}</span>

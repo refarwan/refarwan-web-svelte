@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { ImageIcon, Loader2 } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
 
-    import type { ImageLibraryItem } from "$lib/types";
+    import type { ImageLibraryItem } from "$lib/types/image-library";
     import type { SlideShowImage } from "./nodes/resizable-slideshow-node";
 
     interface Props {
@@ -22,12 +22,12 @@
 
 {#if loading}
     <div class="flex h-56 flex-col items-center justify-center gap-2 text-gray-400">
-        <Loader2 class="size-6 animate-spin text-theme-600" />
+        <Icon icon="lucide:loader-2" class="size-6 animate-spin text-theme-600" />
         <p class="text-xs">{t.loadingImages}</p>
     </div>
 {:else if items.length === 0}
     <div class="flex h-56 flex-col items-center justify-center gap-2 text-gray-400">
-        <ImageIcon class="size-10 text-gray-300" strokeWidth={1.5} />
+        <Icon icon="lucide:image" class="size-10 text-gray-300" />
         <p class="text-sm font-medium text-gray-600">{t.noImagesFound}</p>
         <p class="text-xs text-gray-400">{t.noImagesSubtitle}</p>
     </div>
@@ -40,11 +40,7 @@
             <button
                 type="button"
                 onclick={() => onToggle(item)}
-                class={`group relative flex aspect-square cursor-pointer flex-col overflow-hidden rounded-lg border text-left transition-all ${
-                    isSelected
-                        ? "border-theme-500 bg-theme-50/30 ring-2 ring-theme-500"
-                        : "border-gray-200 bg-gray-50 hover:border-gray-300 hover:shadow-xs"
-                }`}
+                class={`group relative flex aspect-square cursor-pointer flex-col overflow-hidden rounded-lg border text-left transition-all ${isSelected ? "border-theme-500 bg-theme-50/30 ring-2 ring-theme-500" : "border-gray-200 bg-gray-50 hover:border-gray-300 "}`}
             >
                 <img
                     src={thumbUrl}
@@ -54,11 +50,7 @@
                 />
 
                 <div
-                    class={`absolute top-1.5 right-1.5 flex size-5 items-center justify-center rounded-full text-[11px] font-bold shadow-xs transition-all ${
-                        isSelected
-                            ? "scale-100 bg-theme-600 text-white"
-                            : "border border-white/80 bg-black/40 text-white opacity-70 group-hover:opacity-100"
-                    }`}
+                    class={`absolute top-1.5 right-1.5 flex size-5 items-center justify-center rounded-full text-[11px] font-bold transition-all ${isSelected ? "scale-100 bg-theme-600 text-white" : "border border-white/80 bg-black/40 text-white opacity-70 group-hover:opacity-100"}`}
                 >
                     {#if isSelected}
                         {orderNum}

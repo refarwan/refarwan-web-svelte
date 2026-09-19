@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { X as XIcon } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
 
     interface Props {
         title: string;
@@ -33,7 +33,7 @@
         class="cursor-pointer rounded-lg p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
         title="Tutup"
     >
-        <XIcon class="size-5" />
+        <Icon icon="lucide:x" class="size-5" />
     </button>
 </div>
 
@@ -41,22 +41,14 @@
     <button
         type="button"
         onclick={() => onTabChange("library")}
-        class={`relative cursor-pointer px-4 py-2 text-xs font-semibold transition-colors ${
-            activeTab === "library"
-                ? "border-b-2 border-theme-600 text-theme-600"
-                : "text-gray-500 hover:text-gray-700"
-        }`}
+        class={`relative cursor-pointer px-4 py-2 text-xs font-semibold transition-colors ${activeTab === "library" ? "border-b-2 border-theme-600 text-theme-600" : "text-gray-500 hover:text-gray-700"}`}
     >
         {tabLibraryLabel}
     </button>
     <button
         type="button"
         onclick={() => onTabChange("upload")}
-        class={`relative cursor-pointer px-4 py-2 text-xs font-semibold transition-colors ${
-            activeTab === "upload"
-                ? "border-b-2 border-theme-600 text-theme-600"
-                : "text-gray-500 hover:text-gray-700"
-        }`}
+        class={`relative cursor-pointer px-4 py-2 text-xs font-semibold transition-colors ${activeTab === "upload" ? "border-b-2 border-theme-600 text-theme-600" : "text-gray-500 hover:text-gray-700"}`}
     >
         {tabUploadLabel}
     </button>

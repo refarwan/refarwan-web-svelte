@@ -1,6 +1,6 @@
 import Color from "color";
 
-import type { ThemeShades } from "$lib/types";
+import type { ThemeShades } from "$lib/types/theme-shades";
 
 const TINT_FACTORS: Record<string, number> = {
     "50": 0.95,
@@ -24,16 +24,16 @@ export function generateColorShades(hex: string): ThemeShades | null {
         const white = Color("#ffffff");
         const black = Color("#000000");
 
-        const shades: ThemeShades = {};
+        const shades = {} as ThemeShades;
 
         for (const [shade, weight] of Object.entries(TINT_FACTORS)) {
-            shades[shade] = base.mix(white, weight).hex().toLowerCase();
+            shades[shade as keyof ThemeShades] = base.mix(white, weight).hex().toLowerCase();
         }
 
         shades["500"] = base.hex().toLowerCase();
 
         for (const [shade, weight] of Object.entries(SHADE_FACTORS)) {
-            shades[shade] = base.mix(black, weight).hex().toLowerCase();
+            shades[shade as keyof ThemeShades] = base.mix(black, weight).hex().toLowerCase();
         }
 
         return shades;

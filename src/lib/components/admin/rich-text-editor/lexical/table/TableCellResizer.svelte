@@ -4,6 +4,7 @@
         $isTableCellNode as isTableCellNode
     } from "@lexical/table";
     import { $getNearestNodeFromDOMNode as getNearestNodeFromDOMNode } from "lexical";
+
     import type { LexicalEditor } from "lexical";
 
     interface Props {
@@ -209,6 +210,6 @@
     <!-- pointer-events:none so the line itself doesn't interfere -->
     <div
         style={`left: ${indicatorX}px; top: ${indicatorTop}px; height: ${indicatorHeight}px;`}
-        class="pointer-events-none fixed z-[9999] w-0.5 -translate-x-1/2 rounded-full bg-theme-500 shadow-md"
+        class="pointer-events-none fixed z-[9999] w-0.5 -translate-x-1/2 rounded-full bg-theme-500"
     ></div>
 {/if}

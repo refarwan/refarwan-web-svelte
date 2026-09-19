@@ -1,6 +1,6 @@
 import { decodeJwt } from "$lib/utils/decode-jwt";
 
-import type { AuthUser } from "$lib/types";
+import type { AuthUser } from "$lib/types/auth";
 
 class AuthStore {
     accessToken = $state<string | null>(null);

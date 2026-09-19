@@ -1,11 +1,5 @@
 <script lang="ts">
-    import {
-        CheckIcon,
-        ChevronRightIcon,
-        LoaderCircleIcon,
-        SettingsIcon
-    } from "lucide-svelte/icons";
-
+    import Icon from "@iconify/svelte";
     import { readyResolutions } from "./resolution";
 
     import type { ResolutionOption } from "./resolution";
@@ -57,7 +51,7 @@
         class="grid h-8 w-8 place-content-center rounded-full text-white transition-colors hover:bg-white/15"
         aria-label="Settings"
     >
-        <SettingsIcon class="h-4.5 w-4.5" />
+        <Icon icon="lucide:settings" class="h-4.5 w-4.5" />
     </button>
 
     {#if isOpen}
@@ -76,7 +70,7 @@
                         {#if hasProcessing}
                             <span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
                         {/if}
-                        <ChevronRightIcon class="h-3.5 w-3.5 text-gray-400" />
+                        <Icon icon="lucide:chevron-right" class="h-3.5 w-3.5 text-gray-400" />
                     </span>
                 </button>
                 <button
@@ -87,7 +81,7 @@
                     <span class="text-gray-300">Speed</span>
                     <span class="flex items-center gap-1 font-medium text-theme-400">
                         {speedLabel}
-                        <ChevronRightIcon class="h-3.5 w-3.5 text-gray-400" />
+                        <Icon icon="lucide:chevron-right" class="h-3.5 w-3.5 text-gray-400" />
                     </span>
                 </button>
             {:else if tab === "quality"}
@@ -96,7 +90,7 @@
                     onclick={() => (tab = "main")}
                     class="flex w-full items-center gap-1 border-b border-white/10 px-3 py-1.5 text-left text-xs font-semibold text-gray-400 hover:text-white"
                 >
-                    <ChevronRightIcon class="h-3.5 w-3.5 rotate-180" />
+                    <Icon icon="lucide:chevron-right" class="h-3.5 w-3.5 rotate-180" />
                     <span>Quality</span>
                 </button>
 
@@ -111,7 +105,7 @@
                     >
                         <span>Auto</span>
                         {#if selectedQuality === "auto"}
-                            <CheckIcon class="h-3.5 w-3.5 text-theme-400" />
+                            <Icon icon="lucide:check" class="h-3.5 w-3.5 text-theme-400" />
                         {/if}
                     </button>
                 {/if}
@@ -128,7 +122,7 @@
                         >
                             <span>{resolution.label}</span>
                             {#if selectedQuality === resolution.quality}
-                                <CheckIcon class="h-3.5 w-3.5 text-theme-400" />
+                                <Icon icon="lucide:check" class="h-3.5 w-3.5 text-theme-400" />
                             {/if}
                         </button>
                     {:else}
@@ -137,7 +131,7 @@
                         >
                             <span>{resolution.label}</span>
                             <span class="inline-flex items-center gap-1 text-xs text-amber-400">
-                                <LoaderCircleIcon class="h-3 w-3 animate-spin" />
+                                <Icon icon="lucide:loader-circle" class="h-3 w-3 animate-spin" />
                                 Processing
                             </span>
                         </div>
@@ -149,7 +143,7 @@
                     onclick={() => (tab = "main")}
                     class="flex w-full items-center gap-1 border-b border-white/10 px-3 py-1.5 text-left text-xs font-semibold text-gray-400 hover:text-white"
                 >
-                    <ChevronRightIcon class="h-3.5 w-3.5 rotate-180" />
+                    <Icon icon="lucide:chevron-right" class="h-3.5 w-3.5 rotate-180" />
                     <span>Speed</span>
                 </button>
 
@@ -166,7 +160,7 @@
                     >
                         <span>{rate === 1 ? "Normal" : `${rate}x`}</span>
                         {#if rate === playbackRate}
-                            <CheckIcon class="h-3.5 w-3.5 text-theme-400" />
+                            <Icon icon="lucide:check" class="h-3.5 w-3.5 text-theme-400" />
                         {/if}
                     </button>
                 {/each}

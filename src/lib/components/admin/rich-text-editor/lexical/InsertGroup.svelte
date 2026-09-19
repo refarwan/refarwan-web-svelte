@@ -1,11 +1,9 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import { $insertNodeToNearestRoot as insertNodeToNearestRoot } from "@lexical/utils";
-    import { MinusIcon } from "lucide-svelte/icons";
-
     import { getActiveEditor } from "svelte-lexical";
-
-    import { $createResizableHorizontalRuleNode as createResizableHorizontalRuleNode } from "./nodes/resizable-horizontal-rule-node";
     import ImageButton from "./ImageButton.svelte";
+    import { $createResizableHorizontalRuleNode as createResizableHorizontalRuleNode } from "./nodes/resizable-horizontal-rule-node";
     import SlideShowButton from "./SlideShowButton.svelte";
     import TableButton from "./TableButton.svelte";
     import ToolbarButton from "./ToolbarButton.svelte";
@@ -27,7 +25,7 @@
 </script>
 
 <ToolbarButton title={t.horizontalRule} onclick={insertHorizontalRule}>
-    <MinusIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:minus" width={14} height={14} />
 </ToolbarButton>
 <TableButton {t} />
 <ImageButton {t} />

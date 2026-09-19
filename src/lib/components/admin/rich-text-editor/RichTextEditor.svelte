@@ -3,21 +3,22 @@
     import { ListItemNode, ListNode } from "@lexical/list";
     import { HeadingNode, QuoteNode } from "@lexical/rich-text";
     import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
-
+    import { CLEAR_EDITOR_COMMAND } from "lexical";
+    import { untrack } from "svelte";
     import {
         Composer,
         ContentEditable,
+        generateHtmlFromNodes,
         LinkPlugin,
         ListPlugin,
+        OnChangePlugin,
         PlaceHolder,
         RichTextPlugin,
         SharedHistoryPlugin,
         TabIndentationPlugin,
-        TablePlugin,
-        generateHtmlFromNodes
+        TablePlugin
     } from "svelte-lexical";
     import { theme } from "svelte-lexical/dist/themes/default";
-
     import EditorToolbar from "./lexical/EditorToolbar.svelte";
     import { ResizableHorizontalRuleNode } from "./lexical/nodes/resizable-horizontal-rule-node";
     import { ResizableImageNode } from "./lexical/nodes/resizable-image-node";
@@ -27,13 +28,37 @@
 
     interface Props {
         t: Record<string, string>;
+        initialContent?: unknown;
+        onChange?: (content: { json: unknown; html: string }) => void;
     }
 
-    let { t }: Props = $props();
+    let { t, initialContent, onChange }: Props = $props();
+
+    const parseInitialState = (content: unknown): string | undefined => {
+        if (!content) return undefined;
+        let parsed: unknown = content;
+        if (typeof content === "string") {
+            try {
+                parsed = JSON.parse(content);
+            } catch {
+                return undefined;
+            }
+        }
+        if (
+            parsed &&
+            typeof parsed === "object" &&
+            "root" in parsed &&
+            (parsed as { root?: { type?: string } }).root?.type
+        ) {
+            return typeof content === "string" ? content : JSON.stringify(content);
+        }
+        return undefined;
+    };
 
     const initialConfig = {
         namespace: "ArticleEditor",
         theme,
+        editorState: untrack(() => parseInitialState(initialContent)),
         nodes: [
             HeadingNode,
             QuoteNode,
@@ -51,32 +76,56 @@
         ],
 
         onError: (error: Error) => {
-            throw error;
+            console.error("Lexical editor error:", error);
         }
     };
 
     let composer: Composer;
+
+    let prevContent = $state(untrack(() => initialContent));
+    let skipNextSync = false;
+    $effect(() => {
+        if (!composer) return;
+        if (initialContent !== prevContent) {
+            prevContent = initialContent;
+            if (skipNextSync) {
+                skipNextSync = false;
+                return;
+            }
+            setContent(initialContent);
+        }
+    });
+
+    export function getContent(): { json: unknown; html: string } {
+        if (!composer) return { json: {}, html: "" };
+        const editor = composer.getEditor();
+        let html = "";
+        editor.read(() => {
+            html = generateHtmlFromNodes(editor);
+        });
+        const json = editor.getEditorState().toJSON();
+        return { json, html };
+    }
+
+    export function setContent(content: unknown) {
+        if (!composer) return;
+        const editor = composer.getEditor();
+        const stateStr = parseInitialState(content);
+        if (!stateStr) {
+            editor.dispatchCommand(CLEAR_EDITOR_COMMAND, undefined);
+            return;
+        }
+        try {
+            const parsedState = editor.parseEditorState(stateStr);
+            editor.setEditorState(parsedState);
+        } catch (e) {
+            console.error("Failed to parse editor state", e);
+            editor.dispatchCommand(CLEAR_EDITOR_COMMAND, undefined);
+        }
+    }
 </script>
 
-<button
-    onclick={() => {
-        const editor = composer.getEditor();
-        editor.read(() => {
-            const html = generateHtmlFromNodes(editor);
-            console.log(html);
-        });
-    }}>Export HTML</button
->
-
-<button
-    onclick={() => {
-        console.log(composer.getEditor().toJSON());
-    }}
->
-    Export JSON
-</button>
-
-<div class="overflow-hidden rounded-lg border border-gray-300 bg-white shadow-2xs">
+<div class="overflow-hidden rounded-lg border border-gray-300 bg-white">
     <Composer {initialConfig} bind:this={composer}>
         <EditorToolbar {t} />
 
@@ -96,6 +145,19 @@
         <TablePlugin hasCellMerge={true} hasCellBackgroundColor={true} />
         <TableEnhancePlugin {t} />
         <TabIndentationPlugin />
+        <OnChangePlugin
+            ignoreSelectionChange={true}
+            ignoreHistoryMergeTagChange={true}
+            onChange={(editorState, editor) => {
+                if (!onChange) return;
+                editorState.read(() => {
+                    const html = generateHtmlFromNodes(editor);
+                    const json = editorState.toJSON();
+                    skipNextSync = true;
+                    onChange({ json, html });
+                });
+            }}
+        />
     </Composer>
 </div>
 

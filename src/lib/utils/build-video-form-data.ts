@@ -1,4 +1,4 @@
-import type { ContentLanguage } from "$lib/types";
+import type { ContentLanguage } from "$lib/types/content-language";
 
 interface BuildVideoFormDataInput {
     videoFile: File;

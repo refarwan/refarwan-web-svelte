@@ -1,6 +1,5 @@
 import { $applyNodeReplacement, DecoratorNode } from "lexical";
 import { mount } from "svelte";
-
 import ResizableHorizontalRuleComponent from "./ResizableHorizontalRuleComponent.svelte";
 
 import type {

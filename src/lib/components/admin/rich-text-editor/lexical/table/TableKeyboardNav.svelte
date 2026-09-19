@@ -7,10 +7,10 @@
         $isTableRowNode as isTableRowNode
     } from "@lexical/table";
     import {
+        COMMAND_PRIORITY_CRITICAL,
         $getSelection as getSelection,
         $isElementNode as isElementNode,
         $isRangeSelection as isRangeSelection,
-        COMMAND_PRIORITY_CRITICAL,
         KEY_ENTER_COMMAND,
         KEY_TAB_COMMAND
     } from "lexical";

@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { ChevronDownIcon } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
+
     import type { DropdownOption } from "./DropdownSelect.svelte";
 
     interface Props {
@@ -44,7 +45,8 @@
             {selectedOption ? selectedOption.label : placeholder}
         </span>
     </span>
-    <ChevronDownIcon
+    <Icon
+        icon="lucide:chevron-down"
         class={`h-4 w-4 shrink-0 text-gray-500 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
     />
 </button>

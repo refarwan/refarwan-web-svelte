@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { CheckIcon } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
+
     import type { DropdownOption } from "./DropdownSelect.svelte";
 
     interface Props {
@@ -28,9 +29,7 @@
     aria-selected={isSelected}
     onmouseenter={onHover}
     onclick={onSelect}
-    class={`flex w-full cursor-pointer items-center justify-between px-3.5 py-2 text-left text-[13px] transition-colors ${
-        isActive ? "bg-theme-50 text-theme-900" : "text-gray-800 hover:bg-gray-50"
-    }`}
+    class={`flex w-full cursor-pointer items-center justify-between px-3.5 py-2 text-left text-[13px] transition-colors ${isActive ? "bg-theme-50 text-theme-900" : "text-gray-800 hover:bg-gray-50"}`}
 >
     <span class="flex items-center gap-2.5 truncate">
         {#if option.icon}
@@ -41,6 +40,6 @@
         </span>
     </span>
     {#if isSelected}
-        <CheckIcon class="h-4 w-4 shrink-0 text-theme-600" />
+        <Icon icon="lucide:check" class="h-4 w-4 shrink-0 text-theme-600" />
     {/if}
 </button>

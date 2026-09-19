@@ -1,14 +1,12 @@
+import { env } from "$env/dynamic/public";
 import axios from "axios";
-
 import { authStore } from "$lib/stores/auth.svelte";
 import { popup } from "$lib/stores/popup.svelte";
 import { getAdminLangCookie } from "$lib/utils/admin-lang-cookie";
 import { decodeJwt } from "$lib/utils/decode-jwt";
-
 import { http } from "./http";
 
 import type { AxiosError } from "axios";
-import { env } from "$env/dynamic/public";
 
 interface ErrorResponseData {
     message?: string;

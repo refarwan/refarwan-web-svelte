@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { X as XIcon } from "lucide-svelte/icons";
+    import Icon from "@iconify/svelte";
 
     interface Props {
         title: string;
@@ -33,7 +33,7 @@
         aria-label="Close"
         class="cursor-pointer rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
     >
-        <XIcon size={18} />
+        <Icon icon="lucide:x" width={18} height={18} />
     </button>
 </div>
 
@@ -41,22 +41,14 @@
     <button
         type="button"
         onclick={() => onTabChange("library")}
-        class={`cursor-pointer border-b-2 px-4 py-2.5 text-xs font-medium transition-colors ${
-            activeTab === "library"
-                ? "border-theme-600 text-theme-600"
-                : "border-transparent text-gray-500 hover:text-gray-700"
-        }`}
+        class={`cursor-pointer border-b-2 px-4 py-2.5 text-xs font-medium transition-colors ${activeTab === "library" ? "border-theme-600 text-theme-600" : "border-transparent text-gray-500 hover:text-gray-700"}`}
     >
         {tabLibraryLabel}
     </button>
     <button
         type="button"
         onclick={() => onTabChange("embed")}
-        class={`cursor-pointer border-b-2 px-4 py-2.5 text-xs font-medium transition-colors ${
-            activeTab === "embed"
-                ? "border-theme-600 text-theme-600"
-                : "border-transparent text-gray-500 hover:text-gray-700"
-        }`}
+        class={`cursor-pointer border-b-2 px-4 py-2.5 text-xs font-medium transition-colors ${activeTab === "embed" ? "border-theme-600 text-theme-600" : "border-transparent text-gray-500 hover:text-gray-700"}`}
     >
         {tabEmbedLabel}
     </button>

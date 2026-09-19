@@ -1,11 +1,8 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import { INSERT_TABLE_COMMAND } from "@lexical/table";
-    import { TableIcon } from "lucide-svelte/icons";
-
     import { getActiveEditor } from "svelte-lexical";
-
     import { popup } from "$lib/stores/popup.svelte";
-
     import ToolbarButton from "./ToolbarButton.svelte";
 
     interface Props {
@@ -66,11 +63,11 @@
 </script>
 
 <ToolbarButton title={t.table} onclick={openTablePopup}>
-    <TableIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:table" width={14} height={14} />
 </ToolbarButton>
 
 {#snippet tablePopupSnippet()}
-    <div class="w-64 rounded-xl border border-gray-200 bg-white p-4 shadow-xl">
+    <div class="w-64 rounded-xl border border-gray-200 bg-white p-4">
         <h3 class="mb-3 text-sm font-semibold text-gray-700">{t.tableModalTitle}</h3>
 
         {#if !showCustom}
@@ -93,11 +90,7 @@
                                 hoverCol = c;
                             }}
                             onclick={() => insertFromGrid(r, c)}
-                            class={`h-5 w-5 rounded-sm border transition-colors ${
-                                r <= hoverRow && c <= hoverCol
-                                    ? "border-theme-500 bg-theme-100"
-                                    : "border-gray-200 bg-gray-50 hover:border-gray-300"
-                            }`}
+                            class={`h-5 w-5 rounded-sm border transition-colors ${r <= hoverRow && c <= hoverCol ? "border-theme-500 bg-theme-100" : "border-gray-200 bg-gray-50 hover:border-gray-300"}`}
                         ></button>
                     {/each}
                 {/each}

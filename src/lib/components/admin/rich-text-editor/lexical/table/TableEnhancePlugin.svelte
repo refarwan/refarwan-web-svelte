@@ -1,6 +1,5 @@
 <script lang="ts">
     import { getEditor } from "svelte-lexical";
-
     import { getActiveTableDetails } from "./table-commands";
     import TableCellResizer from "./TableCellResizer.svelte";
     import TableFloatingToolbar from "./TableFloatingToolbar.svelte";

@@ -1,11 +1,8 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import { $insertNodeToNearestRoot as insertNodeToNearestRoot } from "@lexical/utils";
-    import { VideoIcon } from "lucide-svelte/icons";
-
     import { getActiveEditor } from "svelte-lexical";
-
     import { popup } from "$lib/stores/popup.svelte";
-
     import { $createResizableVideoNode as createResizableVideoNode } from "./nodes/resizable-video-node";
     import SelectVideoModal from "./SelectVideoModal.svelte";
     import ToolbarButton from "./ToolbarButton.svelte";
@@ -44,7 +41,7 @@
 </script>
 
 <ToolbarButton title={t.video} onclick={openPopup}>
-    <VideoIcon size={14} strokeWidth={2.5} />
+    <Icon icon="lucide:video" width={14} height={14} />
 </ToolbarButton>
 
 {#snippet videoPopupSnippet()}
