@@ -1,15 +1,22 @@
 <script lang="ts">
-    import type { ChartDayData } from "../../../data/admin-dashboard";
+    import { formatViews } from "$lib/utils/watch-format";
+
+    import type { DashboardChartDay } from "$lib/types/dashboard";
 
     interface Props {
         title: string;
         desc: string;
-        days: ChartDayData[];
+        days: DashboardChartDay[];
     }
 
     let { title, desc, days }: Props = $props();
 
-    const Y_AXIS_TICKS = ["2.5k", "2k", "1.5k", "1k", "500"];
+    const maxValue = $derived(Math.max(1, ...days.map((item) => item.value)));
+    const yAxisTicks = $derived(
+        [1, 0.75, 0.5, 0.25, 0].map((ratio) => formatViews(Math.round(maxValue * ratio)))
+    );
+    const heightPercent = (value: number) =>
+        value === 0 ? 0 : Math.max(4, Math.round((value / maxValue) * 100));
 </script>
 
 <div class="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5">
@@ -22,17 +29,17 @@
         <div
             class="mb-2 flex items-center justify-between border-b border-gray-100 px-1 pb-1 text-[10px] text-gray-400"
         >
-            {#each Y_AXIS_TICKS as tick (tick)}
+            {#each yAxisTicks as tick, index (index)}
                 <span>{tick}</span>
             {/each}
         </div>
 
         <div class="flex h-36 items-end justify-between gap-2 pt-2">
-            {#each days as item (item.day)}
+            {#each days as item, index (index)}
                 <div class="group flex h-full flex-1 flex-col items-center justify-end">
                     <div class="flex h-full w-full items-end justify-center">
                         <div
-                            style={`height: ${item.heightPercent}%`}
+                            style={`height: ${heightPercent(item.value)}%`}
                             title={`${item.day}: ${item.value}`}
                             class="relative w-full max-w-7 origin-bottom rounded-t-xs bg-theme-600 transition-all duration-300 group-hover:scale-y-105 hover:bg-theme-700"
                         ></div>
