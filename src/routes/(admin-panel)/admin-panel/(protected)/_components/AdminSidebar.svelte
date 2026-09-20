@@ -62,7 +62,14 @@
             label: "Project",
             href: resolve("/admin-panel/project"),
             icon: "lucide:folder-git-2",
-            exact: true
+            subItems: [
+                { label: t.project, href: resolve("/admin-panel/project"), exact: true },
+                {
+                    label: t.projectCategories,
+                    href: resolve("/admin-panel/project/categories"),
+                    exact: true
+                }
+            ]
         },
         {
             label: t.settings,
