@@ -14,14 +14,18 @@ export interface DashboardPopularItem {
     id: string;
     title: string | null;
     thumbnail: ImageVariant | null;
-    count: number;
+    count: number | null;
+    createdAt: string;
 }
 
 export interface DashboardSummary {
     articles: DashboardStat;
     videos: DashboardStat;
+    projects: DashboardStat;
     articleReadsChart: DashboardChartDay[];
     videoViewsChart: DashboardChartDay[];
+    projectsAddedChart: DashboardChartDay[];
     popularArticles: DashboardPopularItem[];
     popularVideos: DashboardPopularItem[];
+    latestProjects: DashboardPopularItem[];
 }

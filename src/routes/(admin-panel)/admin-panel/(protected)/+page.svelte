@@ -27,6 +27,12 @@
             icon: "lucide:video",
             value: summary?.videos.total ?? 0,
             trend: summary?.videos.trend ?? 0
+        },
+        {
+            title: t.statProjects,
+            icon: "lucide:folder-git-2",
+            value: summary?.projects.total ?? 0,
+            trend: summary?.projects.trend ?? 0
         }
     ]);
 </script>
@@ -35,7 +41,7 @@
     {#if dashboard.loading}
         <p class="text-sm text-gray-400">{t.loading}</p>
     {:else}
-        <section class="grid grid-cols-1 gap-4 md:gap-6 xl:grid-cols-2">
+        <section class="grid grid-cols-1 gap-4 md:gap-6 xl:grid-cols-3">
             {#each metrics as metric (metric.title)}
                 <StatCard
                     title={metric.title}
@@ -47,7 +53,7 @@
             {/each}
         </section>
 
-        <section class="grid grid-cols-1 gap-4 md:gap-6 xl:grid-cols-2">
+        <section class="grid grid-cols-1 gap-4 md:gap-6 xl:grid-cols-3">
             <AnalyticsChart
                 title={t.chartArticleReadsTitle}
                 desc={t.chartArticleReadsDesc}
@@ -57,6 +63,11 @@
                 title={t.chartVideoViewersTitle}
                 desc={t.chartVideoViewersDesc}
                 days={summary?.videoViewsChart ?? []}
+            />
+            <AnalyticsChart
+                title={t.chartProjectsAddedTitle}
+                desc={t.chartProjectsAddedDesc}
+                days={summary?.projectsAddedChart ?? []}
             />
         </section>
 
@@ -73,6 +84,12 @@
                 buttonLabel={t.popularVideosButton}
                 items={summary?.popularVideos ?? []}
                 countLabel={t.popularVideosCountLabel}
+                emptyLabel={t.noData}
+            />
+            <PopularListCard
+                title={t.latestProjectsTitle}
+                buttonLabel={t.latestProjectsButton}
+                items={summary?.latestProjects ?? []}
                 emptyLabel={t.noData}
             />
         </section>

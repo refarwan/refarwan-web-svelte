@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { formatArticleDate } from "$lib/utils/format-date";
     import { formatViews } from "$lib/utils/watch-format";
 
     import type { DashboardPopularItem } from "$lib/types/dashboard";
@@ -7,12 +8,12 @@
         title: string;
         buttonLabel: string;
         items: DashboardPopularItem[];
-        countLabel: string;
+        countLabel?: string;
         emptyLabel: string;
         onAddClick?: () => void;
     }
 
-    let { title, buttonLabel, items, countLabel, emptyLabel, onAddClick }: Props = $props();
+    let { title, buttonLabel, items, countLabel = "", emptyLabel, onAddClick }: Props = $props();
 </script>
 
 <div class="flex flex-col rounded-xl border border-gray-200 bg-white p-5">
@@ -56,9 +57,13 @@
                     {item.title}
                 </span>
 
-                <span class="shrink-0 text-xs font-normal text-gray-400"
-                    >{formatViews(item.count)} {countLabel}</span
-                >
+                <span class="shrink-0 text-xs font-normal text-gray-400">
+                    {#if item.count !== null}
+                        {formatViews(item.count)} {countLabel}
+                    {:else}
+                        {formatArticleDate(item.createdAt)}
+                    {/if}
+                </span>
             </div>
         {:else}
             <p class="py-6 text-center text-sm text-gray-400">{emptyLabel}</p>
