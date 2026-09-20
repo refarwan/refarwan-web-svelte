@@ -2,10 +2,13 @@
     import { resolve } from "$app/paths";
 
     import type { PublicArticleCategoryItem } from "$lib/types/article-category";
+    import type { PublicProjectCategoryItem } from "$lib/types/project-category";
     import type { PublicVideoCategoryItem } from "$lib/types/video-category";
 
     interface Props {
-        categories: (PublicVideoCategoryItem | PublicArticleCategoryItem)[];
+        categories: (
+            PublicVideoCategoryItem | PublicArticleCategoryItem | PublicProjectCategoryItem
+        )[];
         activeSlug: string;
         allLabel: string;
         buildHref: (slug: string) => string;
