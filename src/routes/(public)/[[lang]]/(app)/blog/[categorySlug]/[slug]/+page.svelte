@@ -32,13 +32,57 @@
 
     const readingTime = $derived(calculateReadingTime(data.article.contentHTML));
 
-    $effect(() => {
-        if (data.article?.id) {
+    let readRecorded = false;
+    let visibleSeconds = 0;
+
+    const recordRead = async () => {
+        try {
             const apiUrl = env.PUBLIC_API_URL || "http://localhost:3000";
-            void fetch(`${apiUrl}/article/${data.article.id}/read`, {
-                method: "POST"
-            }).catch(() => {});
+            await fetch(`${apiUrl}/article/${data.article.id}/read`, { method: "POST" });
+        } catch {
+            // read tracking is non-critical — fail silently
         }
+    };
+
+    const getScrollDepth = () => {
+        const doc = document.documentElement;
+        const scrollable = doc.scrollHeight - doc.clientHeight;
+        if (scrollable <= 0) return 1;
+        return Math.min(1, window.scrollY / scrollable);
+    };
+
+    $effect(() => {
+        if (!data.article?.id) return;
+
+        readRecorded = false;
+        visibleSeconds = 0;
+        let lastTick = document.visibilityState === "visible" ? performance.now() : null;
+        const timeThreshold = Math.min(15, Math.max(6, readingTime * 60 * 0.15));
+
+        const check = () => {
+            if (readRecorded) return;
+
+            const now = performance.now();
+            if (document.visibilityState === "visible") {
+                if (lastTick !== null) visibleSeconds += (now - lastTick) / 1000;
+                lastTick = now;
+            } else {
+                lastTick = null;
+            }
+
+            if (visibleSeconds >= timeThreshold && getScrollDepth() >= 0.4) {
+                readRecorded = true;
+                void recordRead();
+            }
+        };
+
+        const interval = setInterval(check, 1000);
+        document.addEventListener("visibilitychange", check);
+
+        return () => {
+            clearInterval(interval);
+            document.removeEventListener("visibilitychange", check);
+        };
     });
 </script>
 
