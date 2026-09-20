@@ -5,24 +5,39 @@ export const jaJP: HomeTranslation = {
     metaDescription:
         "モダンな JavaScript & TypeScript アーキテクチャに特化したフルスタック開発者。PHP などのバックエンド技術にも適応し、エンドツーエンドの Web アプリケーションを構築します。",
     hero: {
-        role: "フルスタック JavaScript エンジニア",
+        role: "フルスタックTypeScript＆パフォーマンスエンジニア",
         description:
-            "フロントエンドからバックエンドまで、情熱を持って高品質な Web アプリケーションを構築します。ジョグジャカルタ在住で、質の高いデジタルソリューションを提供します。",
+            "フロントエンドからバックエンドまで、モダンなTypeScript設計に特化しています。SvelteKit、Next.js、Bun、Hono、PostgreSQLを駆使し、低レイテンシーで保守性の高いクリーンなコードを提供します。インドネシアを拠点に、世界中のクライアントと協動しています。",
         viewProjects: "プロジェクトを見る"
     },
     about: {
         title: "私について",
-        bio1: "SMK N 1 Bantul ソフトウェア工学科を卒業後、独学で Web プログラミングを深めました。モダンな UI と堅牢なバックエンドシステムの構築に強い情熱を持っています。",
-        bio2: "常に最新の JavaScript エコシステムをキャッチアップし、クリーンで構造化されたコードで複雑な課題を解決することを得意としています。",
+        bio1: "TypeScriptを中心としたモダンなWeb開発を専門とするソフトウェアエンジニアです。ソフトウェア工学の基礎を出発点に知見を深め、直感的なUI設計から高パフォーマンスで堅牢なバックエンドシステムの構築まで幅広く手掛けています。",
+        bio2: "SvelteKit、Bun、Honoといった最新のエコシステムを積極的に取り入れ、効率的なデータ設計、保守性の高いクリーンコード、そして技術的負債を残さないスケーラブルな開発を徹底しています。",
         experienceTitle: "職歴・経歴",
         experiences: [
             {
-                role: "Web プログラマー",
+                role: "シニアバックエンドエンジニア",
+                company: "Somactech",
+                period: "2025年9月 - 現在"
+            },
+            {
+                role: "フルスタックエンジニア（業務委託）",
+                company: "フリーランス",
+                period: "2023年4月 - 現在"
+            },
+            {
+                role: "プロダクト＆エンジニアリング責任者",
+                company: "Bitbite",
+                period: "2023年5月 - 2023年12月"
+            },
+            {
+                role: "Webプログラマー",
                 company: "PT Fresh Galang Mandiri",
                 period: "2022年8月 - 2023年3月"
             },
             {
-                role: "IT サポート & プログラマー",
+                role: "ITサポート 兼 プログラマー",
                 company: "Toko Kamera Mbantul",
                 period: "2017年6月 - 2022年7月"
             }

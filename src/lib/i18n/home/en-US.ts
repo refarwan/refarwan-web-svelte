@@ -5,17 +5,32 @@ export const enUS: HomeTranslation = {
     metaDescription:
         "Fullstack Developer specializing in modern JavaScript & TypeScript architectures. Building end-to-end web applications with adaptable experience across backend stacks like PHP.",
     hero: {
-        role: "Fullstack JavaScript Developer",
+        role: "Full-Stack TypeScript & Performance Engineer ",
         description:
-            "I craft websites and web applications across both frontend and backend with passion. Based in Yogyakarta with high enthusiasm to deliver high-quality digital solutions.",
+            "I specialize in modern TypeScript architectures across frontend and backend—leveraging SvelteKit, Next.js, Bun, Hono, and PostgreSQL to deliver minimal latency, clean code, and zero technical debt. Based in Indonesia, working with clients worldwide.",
         viewProjects: "View Projects"
     },
     about: {
         title: "About Me",
-        bio1: "I graduated from SMK N 1 Bantul majoring in Software Engineering. After graduating, I pursued self-taught web programming. I have a strong passion for building modern user interfaces and robust backend systems.",
-        bio2: "Always keeping up-to-date with the latest JavaScript ecosystem and enjoying solving complex problems through clean, well-structured code.",
+        bio1: "I am a software engineer specializing in modern TypeScript architectures across frontend and backend. Starting from a strong foundation in Software Engineering, I have continuously advanced my technical expertise—architecting high-performance backend systems and responsive user interfaces.",
+        bio2: "Always adapting to cutting-edge web ecosystems—such as SvelteKit, Bun, and Hono—I focus on efficient data architectures, clean and maintainable code, and scalable solutions that eliminate technical debt.",
         experienceTitle: "Work Experience",
         experiences: [
+            {
+                role: "Senior Backend Engineer",
+                company: "Somactech",
+                period: "September 2025 - Present"
+            },
+            {
+                role: "Independent Full-Stack Contractor",
+                company: "Freelance",
+                period: "April 2023 - Present"
+            },
+            {
+                role: "Head of Product & Engineering",
+                company: "Bitbite",
+                period: "May 2023 - December 2023"
+            },
             {
                 role: "Web Programmer",
                 company: "PT Fresh Galang Mandiri",

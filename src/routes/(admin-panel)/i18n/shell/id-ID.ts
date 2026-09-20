@@ -12,6 +12,8 @@ export const idID: Shell = {
     watchUploadVideo: "Unggah Vidio",
     watchCategories: "Kategori Vidio",
     project: "Proyek",
+    projectCreateProject: "Buat Proyek",
+    projectCategories: "Kategori Proyek",
     myAccount: "Akun Saya",
     changePassword: "Ubah Password",
     settings: "Pengaturan",

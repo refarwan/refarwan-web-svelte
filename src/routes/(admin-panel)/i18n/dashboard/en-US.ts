@@ -9,12 +9,16 @@ export const enUS: Dashboard = {
     chartArticleReadsDesc: "Article read counts over the past 7 days",
     chartVideoViewersTitle: "Video Viewers",
     chartVideoViewersDesc: "Video viewer counts over the past 7 days",
-    chartProjectViewersTitle: "Project Viewers",
-    chartProjectViewersDesc: "Project page view statistics",
+    chartProjectsAddedTitle: "New Projects",
+    chartProjectsAddedDesc: "Number of projects added over the past 7 days",
     popularArticlesTitle: "Popular Articles",
     popularArticlesButton: "+ Add Article",
+    popularArticlesCountLabel: "reads",
     popularVideosTitle: "Popular Videos",
     popularVideosButton: "+ Add Video",
-    popularProjectsTitle: "Popular Projects",
-    popularProjectsButton: "+ Add Project"
+    popularVideosCountLabel: "views",
+    latestProjectsTitle: "Latest Projects",
+    latestProjectsButton: "+ Add Project",
+    loading: "Loading data...",
+    noData: "No data yet"
 };

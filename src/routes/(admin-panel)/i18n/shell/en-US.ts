@@ -12,6 +12,8 @@ export const enUS: Shell = {
     watchUploadVideo: "Upload Video",
     watchCategories: "Video Categories",
     project: "Project",
+    projectCreateProject: "Create Project",
+    projectCategories: "Project Categories",
     myAccount: "My Account",
     changePassword: "Change Password",
     settings: "Settings",
