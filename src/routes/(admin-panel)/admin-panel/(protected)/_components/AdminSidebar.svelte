@@ -65,6 +65,11 @@
             subItems: [
                 { label: t.project, href: resolve("/admin-panel/project"), exact: true },
                 {
+                    label: t.projectCreateProject,
+                    href: resolve("/admin-panel/project/create-project"),
+                    exact: true
+                },
+                {
                     label: t.projectCategories,
                     href: resolve("/admin-panel/project/categories"),
                     exact: true

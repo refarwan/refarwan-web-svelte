@@ -26,3 +26,8 @@ export interface PublicProjectCategoryItem {
     slug: string;
     name: string;
 }
+
+export interface AdminOptionItem {
+    id: string;
+    name: string;
+}

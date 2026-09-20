@@ -10,6 +10,7 @@ export type Shell = {
     watchUploadVideo: string;
     watchCategories: string;
     project: string;
+    projectCreateProject: string;
     projectCategories: string;
     myAccount: string;
     changePassword: string;
