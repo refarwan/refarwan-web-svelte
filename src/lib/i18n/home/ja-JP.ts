@@ -59,7 +59,7 @@ export const jaJP: HomeTranslation = {
                 projectName: "Jualkamera.com Webサイト",
                 description:
                     "Mbantul カメラ店のカタログサイト。POS（レジシステム）機能を備え、レジでの取引発生時に在庫がリアルタイムで自動更新されます。モダンスタックで高パフォーマンスと高度な状態管理を実現しています。",
-                visitWebsite: "Webサイトを見る",
+                visitWebsite: "詳細を見る",
                 imageSrc: "/www.jualkamera.com.png",
                 url: "https://jualkamera.com"
             },
@@ -69,7 +69,7 @@ export const jaJP: HomeTranslation = {
                 projectName: "Annora Cipta Kreasi Webサイト",
                 description:
                     "企業プロファイルおよび人材育成・研修プラットフォーム（ソフトスキル、パブリックスピーキング、心理サービス、キャパシティビルディング）。講習スケジュール管理、ブログ記事、高速な登録フォームを完備。",
-                visitWebsite: "Webサイトを見る",
+                visitWebsite: "詳細を見る",
                 imageSrc: "/www.annorakreasi.com.png",
                 url: "https://www.annorakreasi.com"
             }

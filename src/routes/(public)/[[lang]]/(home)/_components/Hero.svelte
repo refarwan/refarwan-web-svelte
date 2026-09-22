@@ -1,11 +1,18 @@
 <script lang="ts">
+    import { resolve } from "$app/paths";
+
     import type { HeroTranslation } from "$lib/i18n/home";
+    import type { ContentLocale } from "$lib/i18n/types";
 
     interface Props {
         t: HeroTranslation;
+        currentLang?: ContentLocale;
     }
 
-    let { t }: Props = $props();
+    let { currentLang = "en-US", t }: Props = $props();
+
+    const localePrefix = $derived(currentLang === "en-US" ? "" : `/${currentLang}`);
+    const projectHref = $derived(resolve(`${localePrefix}/project` as `/${string}`));
 </script>
 
 <section id="home" class="w-full bg-white py-12 md:pt-16 md:pb-20 lg:pt-24 lg:pb-28">
@@ -30,7 +37,7 @@
 
             <div class="mt-8">
                 <a
-                    href="#projects"
+                    href={projectHref}
                     class="inline-flex h-13 items-center justify-center rounded-xl bg-theme-600 px-8 text-base font-semibold text-white transition-colors hover:bg-theme-700"
                 >
                     {t.viewProjects}
@@ -48,7 +55,7 @@
                 class="relative h-64 w-64 overflow-hidden rounded-full border-8 border-white md:h-80 md:w-80 lg:h-90 lg:w-90"
             >
                 <img
-                    src="/images/profile.png"
+                    src={t.photoUrl || "/images/profile.png"}
                     alt="Aan Refarwan - Fullstack JavaScript Developer"
                     fetchpriority="high"
                     class="h-full w-full object-cover"

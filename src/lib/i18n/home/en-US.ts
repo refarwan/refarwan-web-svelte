@@ -59,7 +59,7 @@ export const enUS: HomeTranslation = {
                 projectName: "Website Jualkamera.com",
                 description:
                     "A catalog website for the Mbantul Camera store with POS (Point of Sale) functionality, ensuring real-time stock updates as all transactions are recorded at the checkout register. Built with a focus on high performance and complex state management using a modern stack.",
-                visitWebsite: "Visit Website",
+                visitWebsite: "View Details",
                 imageSrc: "/www.jualkamera.com.png",
                 url: "https://jualkamera.com"
             },
@@ -69,7 +69,7 @@ export const enUS: HomeTranslation = {
                 projectName: "Website Annora Cipta Kreasi",
                 description:
                     "Company profile and HR training platform (soft skills, public speaking, psychology service, capacity building). Features training class schedules, dynamic articles/blog, and high-performance interactive registration forms.",
-                visitWebsite: "Visit Website",
+                visitWebsite: "View Details",
                 imageSrc: "/www.annorakreasi.com.png",
                 url: "https://www.annorakreasi.com"
             }

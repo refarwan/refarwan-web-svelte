@@ -28,7 +28,7 @@
                     {t.experienceTitle}
                 </h3>
                 <div class="mt-6 flex flex-col gap-4 md:gap-5">
-                    {#each t.experiences as exp (exp.role)}
+                    {#each t.experiences ?? [] as exp (exp.role)}
                         <div class="rounded-2xl border border-theme-100 bg-white p-6">
                             <div class="flex items-center justify-between gap-4">
                                 <h4 class="text-lg font-bold text-gray-900">{exp.role}</h4>

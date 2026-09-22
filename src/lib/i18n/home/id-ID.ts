@@ -59,7 +59,7 @@ export const idID: HomeTranslation = {
                 projectName: "Website Jualkamera.com",
                 description:
                     "Website katalog toko Kamera Mbantul dengan fitur POS (Point of Sale), sehingga stok produk selalu terbarui secara otomatis secara real-time saat transaksi terjadi di kasir. Dibangun dengan fokus pada performa tinggi dan manajemen state kompleks menggunakan modern stack.",
-                visitWebsite: "Kunjungi Website",
+                visitWebsite: "Lihat Detail",
                 imageSrc: "/www.jualkamera.com.png",
                 url: "https://jualkamera.com"
             },
@@ -69,7 +69,7 @@ export const idID: HomeTranslation = {
                 projectName: "Website Annora Cipta Kreasi",
                 description:
                     "Website profil perusahaan dan platform pelatihan SDM (soft skills, public speaking, psychology service, capacity building). Dilengkapi sistem manajemen jadwal kelas, artikel/blog, serta formulir pendaftaran interaktif berkinerja tinggi.",
-                visitWebsite: "Kunjungi Website",
+                visitWebsite: "Lihat Detail",
                 imageSrc: "/www.annorakreasi.com.png",
                 url: "https://www.annorakreasi.com"
             }

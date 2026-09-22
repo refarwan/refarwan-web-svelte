@@ -1,5 +1,6 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
+    import { resolve } from "$app/paths";
 
     import type { ProjectsTranslation } from "$lib/i18n/home";
 
@@ -22,8 +23,9 @@
         </div>
 
         <div class="mt-10 flex flex-col gap-8 md:mt-12 md:gap-10">
-            {#each t.items as project, index (project.id)}
+            {#each t.items ?? [] as project, index (project.id)}
                 {@const isEven = index % 2 === 1}
+                {@const isExternal = project.url?.startsWith("http")}
                 <div
                     class="grid grid-cols-1 items-center gap-8 rounded-3xl border border-theme-100/80 bg-white p-6 md:p-8 lg:grid-cols-12 lg:gap-12 lg:p-10"
                 >
@@ -59,18 +61,31 @@
                             {project.description}
                         </p>
 
-                        <a
-                            href={project.url}
-                            target="_blank"
-                            rel="noopener noreferrer external"
-                            class="group mt-6 inline-flex items-center gap-2 text-base font-semibold text-theme-600 transition-colors hover:text-theme-700"
-                        >
-                            <span>{project.visitWebsite}</span>
-                            <Icon
-                                icon="lucide:arrow-right"
-                                class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
-                            />
-                        </a>
+                        {#if isExternal}
+                            <a
+                                href={project.url}
+                                target="_blank"
+                                rel="noopener noreferrer external"
+                                class="group mt-6 inline-flex items-center gap-2 text-base font-semibold text-theme-600 transition-colors hover:text-theme-700"
+                            >
+                                <span>{project.visitWebsite}</span>
+                                <Icon
+                                    icon="lucide:arrow-right"
+                                    class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+                                />
+                            </a>
+                        {:else}
+                            <a
+                                href={resolve(project.url as `/${string}`)}
+                                class="group mt-6 inline-flex items-center gap-2 text-base font-semibold text-theme-600 transition-colors hover:text-theme-700"
+                            >
+                                <span>{project.visitWebsite}</span>
+                                <Icon
+                                    icon="lucide:arrow-right"
+                                    class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
+                                />
+                            </a>
+                        {/if}
                     </div>
                 </div>
             {/each}

@@ -2,6 +2,7 @@ export interface HeroTranslation {
     role: string;
     description: string;
     viewProjects: string;
+    photoUrl?: string | null;
 }
 
 export interface AboutExperience {
@@ -18,9 +19,15 @@ export interface AboutTranslation {
     experiences: AboutExperience[];
 }
 
+export interface SkillItem {
+    name: string;
+    icon: string;
+}
+
 export interface SkillsTranslation {
     title: string;
     description: string;
+    items?: SkillItem[];
 }
 
 export interface ProjectItem {

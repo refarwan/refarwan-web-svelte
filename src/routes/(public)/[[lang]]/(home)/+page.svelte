@@ -8,7 +8,7 @@
 
     const { data } = $props();
 
-    const t = $derived(HOME_TRANSLATIONS[data?.currentLang ?? "en-US"]);
+    const t = $derived(data.homeData ?? HOME_TRANSLATIONS[data?.currentLang ?? "en-US"]);
 </script>
 
 <svelte:head>
@@ -19,7 +19,7 @@
 </svelte:head>
 
 <div>
-    <Hero t={t.hero} />
+    <Hero t={t.hero} currentLang={data?.currentLang ?? "en-US"} />
     <About t={t.about} />
     <Skills t={t.skills} />
     <Projects t={t.projects} />

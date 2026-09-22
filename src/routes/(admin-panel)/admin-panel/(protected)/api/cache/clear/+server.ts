@@ -4,7 +4,15 @@ import { getRedis } from "$lib/server/redis";
 
 import type { RequestHandler } from "./$types";
 
-const ALLOWED_TAGS = ["setting", "settings", "videos", "categories"];
+const ALLOWED_TAGS = [
+    "setting",
+    "settings",
+    "videos",
+    "categories",
+    "landing-page",
+    "projects",
+    "articles"
+];
 
 export const POST: RequestHandler = async ({ request }) => {
     const authHeader = request.headers.get("authorization");
