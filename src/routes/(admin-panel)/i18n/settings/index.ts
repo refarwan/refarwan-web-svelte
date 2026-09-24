@@ -1,10 +1,9 @@
 import { enUS } from "./en-US";
 import { idID } from "./id-ID";
 
-import type { AdminLocale } from "../types";
-import type { Settings } from "./types";
+import type { SettingsTranslations } from "./types";
 
-export const SETTINGS_TRANSLATIONS: Record<AdminLocale, Settings> = {
+export const SETTINGS_TRANSLATIONS: SettingsTranslations = {
     "en-US": enUS,
     "id-ID": idID
 };

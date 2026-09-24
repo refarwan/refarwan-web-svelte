@@ -1,4 +1,5 @@
 import { env } from "$env/dynamic/public";
+import { NODE_ENV } from "$env/static/private";
 import { getRedis } from "./redis";
 
 export const getApiData = async <T>(
@@ -8,6 +9,7 @@ export const getApiData = async <T>(
     headers?: HeadersInit
 ): Promise<T | undefined> => {
     const cacheKey = tag ? `${tag}:${endpoint}` : null;
+    const isDev = NODE_ENV === "development";
 
     try {
         const apiUrl = env.PUBLIC_API_URL || "http://localhost:3000";
@@ -15,9 +17,13 @@ export const getApiData = async <T>(
 
         if (redis && cacheKey) {
             const cached = await redis.get(cacheKey);
-            if (cached) return JSON.parse(cached) as T | undefined;
+            if (cached) {
+                if (isDev) console.log(`[cache] HIT  ${endpoint}`);
+                return JSON.parse(cached) as T | undefined;
+            }
         }
 
+        if (isDev) console.log(`[cache] ${cacheKey ? "MISS" : "SKIP"} ${endpoint}`);
         const res = await fetchFn(`${apiUrl}/${endpoint}`, { method: "GET", headers });
 
         if (!res.ok) {

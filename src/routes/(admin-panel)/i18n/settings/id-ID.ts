@@ -1,6 +1,6 @@
-import type { Settings } from "./types";
+import type { SettingsTranslationObjects } from "./types";
 
-export const idID: Settings = {
+export const idID: SettingsTranslationObjects = {
     metadataTitle: "Metadata Situs",
     metadataDescription: "Judul, deskripsi, dan favicon yang tampil ke pengunjung.",
     siteTitle: "Judul Situs",

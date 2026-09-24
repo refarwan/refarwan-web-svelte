@@ -1,6 +1,5 @@
 import { COMMON_TRANSLATIONS } from "../../../i18n/common";
 import { SETTINGS_TRANSLATIONS } from "../../../i18n/settings";
-import { setAdminLang } from "../../../server/admin-lang";
 
 import type { Actions, PageServerLoad } from "./$types";
 
@@ -14,10 +13,17 @@ export const load: PageServerLoad = async ({ parent }) => {
 };
 
 export const actions: Actions = {
-    setAdminLang: async ({ request, cookies }) => {
-        const raw = await request.formData();
-        const lang = raw.get("lang");
-        if (lang === "en-US" || lang === "id-ID") setAdminLang(cookies, lang);
+    setPreferredLanguage: async ({ request, cookies }) => {
+        const formData = await request.formData();
+        const lang = formData.get("admin_preferred_language");
+
+        if (lang === "en-US" || lang === "id-ID") {
+            cookies.set("admin_preferred_language", lang, {
+                path: "/admin-panel",
+                sameSite: "strict"
+            });
+        }
+
         return { success: true };
     }
 };

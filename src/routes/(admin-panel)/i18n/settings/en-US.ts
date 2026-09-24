@@ -1,6 +1,6 @@
-import type { Settings } from "./types";
+import type { SettingsTranslationObjects } from "./types";
 
-export const enUS: Settings = {
+export const enUS: SettingsTranslationObjects = {
     metadataTitle: "Site Metadata",
     metadataDescription: "Title, description, and favicon shown to visitors.",
     siteTitle: "Site Title",

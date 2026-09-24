@@ -1,8 +1,10 @@
 <script lang="ts">
-    import Icon from "@iconify/svelte";
     import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
     import { untrack } from "svelte";
+    import FilledButton from "../../../_components/FilledButton.svelte";
+    import PasswordField from "../../../_components/PasswordField.svelte";
+    import Textfield from "../../../_components/Textfield.svelte";
     import { http } from "../../api/http";
     import { LOGIN_TRANSLATIONS } from "../../i18n/login";
     import { authStore } from "../../stores/auth.svelte";
@@ -11,28 +13,52 @@
     import type { DataResponse } from "$lib/types/api-response";
 
     let { data } = $props();
-    const t = LOGIN_TRANSLATIONS[untrack(() => data.currentLang)];
+    let currentLang = $state(untrack(() => data.currentLang) || "id-ID");
+    const t = $derived(LOGIN_TRANSLATIONS[currentLang]);
 
     let showPassword = $state(false);
     let submitting = $state(false);
     let identifier = $state("");
     let password = $state("");
     let error = $state("");
+    let hasSubmitted = $state(false);
+
+    const switchLanguage = async (lang: "id-ID" | "en-US") => {
+        currentLang = lang;
+        const formData = new FormData();
+        formData.append("admin_preferred_language", lang);
+        await fetch("?/setPreferredLanguage", {
+            method: "POST",
+            body: formData
+        });
+    };
 
     $effect(() => {
         if (authStore.accessToken) void goto(resolve("/admin-panel"));
     });
 
+    const identifierErrors = $derived.by(() => {
+        const errors: string[] = [];
+        if (hasSubmitted && !identifier.trim()) {
+            errors.push(t.identifierRequired);
+        }
+        return errors;
+    });
+
+    const passwordErrors = $derived.by(() => {
+        const errors: string[] = [];
+        if (hasSubmitted && !password) {
+            errors.push(t.passwordRequired);
+        }
+        return errors;
+    });
+
     const handleSubmit = async (event: SubmitEvent) => {
         event.preventDefault();
         error = "";
+        hasSubmitted = true;
 
-        if (!identifier.trim()) {
-            error = t.identifierRequired;
-            return;
-        }
-        if (!password) {
-            error = t.passwordRequired;
+        if (!identifier.trim() || !password) {
             return;
         }
 
@@ -52,12 +78,22 @@
     };
 </script>
 
+{#snippet languageButtonItem(isActive: boolean, text: string, value: "en-US" | "id-ID")}
+    <button
+        disabled={isActive}
+        onclick={() => switchLanguage(value)}
+        class="cursor-pointer px-2 py-1 text-gray-500 transition-colors hover:text-theme-600 disabled:cursor-default disabled:font-semibold disabled:text-gray-900"
+    >
+        {text}
+    </button>
+{/snippet}
+
 <main class="flex min-h-screen w-full flex-col md:flex-row">
     <div class="grid h-48.5 place-content-center bg-theme-700 md:h-screen md:w-76.75 xl:w-xl">
         <img src="/ercms-logo-cell.png" alt="ERCMS Logo" class="h-auto w-26.25 md:w-50" />
     </div>
 
-    <div class="grid flex-1 place-content-center p-6">
+    <div class="relative grid flex-1 place-content-center p-6">
         <form class="flex w-85 flex-col gap-6 xl:w-125" onsubmit={handleSubmit}>
             <div>
                 <h1 class="text-[28px] leading-10.5 font-extrabold tracking-normal text-gray-900">
@@ -77,14 +113,15 @@
                     <label class="text-sm leading-5.25 font-medium text-gray-700" for="identifier">
                         {t.identifierLabel}
                     </label>
-                    <input
+                    <Textfield
                         id="identifier"
                         name="identifier"
                         type="text"
-                        required
                         bind:value={identifier}
                         placeholder={t.identifierPlaceholder}
-                        class="h-12 w-full rounded-xl border border-gray-200 bg-white px-4 text-sm leading-5.25 text-gray-900 placeholder:text-gray-400 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
+                        isError={identifierErrors.length > 0}
+                        supporting={identifierErrors}
+                        class="w-full"
                     />
                 </div>
 
@@ -92,39 +129,30 @@
                     <label class="text-sm leading-5.25 font-medium text-gray-700" for="password">
                         {t.passwordLabel}
                     </label>
-                    <div class="relative flex items-center">
-                        <input
-                            id="password"
-                            name="password"
-                            type={showPassword ? "text" : "password"}
-                            required
-                            bind:value={password}
-                            placeholder="••••••••"
-                            class="h-12 w-full rounded-xl border border-gray-200 bg-white px-4 pr-12 text-sm leading-5.25 text-gray-900 placeholder:text-gray-400 focus:border-theme-500 focus:ring-1 focus:ring-theme-500 focus:outline-none"
-                        />
-                        <button
-                            type="button"
-                            onclick={() => (showPassword = !showPassword)}
-                            aria-label={showPassword ? "Hide password" : "Show password"}
-                            class="absolute right-3.5 flex items-center justify-center text-gray-400 transition-colors hover:text-gray-600"
-                        >
-                            {#if showPassword}
-                                <Icon icon="lucide:eye-off" class="h-5 w-5" />
-                            {:else}
-                                <Icon icon="lucide:eye" class="h-5 w-5" />
-                            {/if}
-                        </button>
-                    </div>
+                    <PasswordField
+                        id="password"
+                        name="password"
+                        bind:value={password}
+                        placeholder="••••••••"
+                        isError={passwordErrors.length > 0}
+                        supporting={passwordErrors}
+                        {showPassword}
+                        onTogglePassword={() => (showPassword = !showPassword)}
+                        class="w-full"
+                    />
                 </div>
             </div>
 
-            <button
-                type="submit"
-                disabled={submitting}
-                class="flex h-12 w-full items-center justify-center rounded-xl bg-theme-600 text-base leading-6 font-semibold text-white transition-colors duration-200 hover:bg-theme-700 disabled:cursor-not-allowed disabled:opacity-70"
-            >
+            <FilledButton type="submit" disabled={submitting}>
                 {submitting ? t.submitting : t.submit}
-            </button>
+            </FilledButton>
         </form>
+
+        <div class="absolute right-6 bottom-6 flex items-center gap-2 text-sm text-gray-600">
+            {@render languageButtonItem(currentLang === "en-US", "Engllish", "en-US")}
+
+            <span class="text-gray-300">|</span>
+            {@render languageButtonItem(currentLang === "id-ID", "Bahasa Indonesia", "id-ID")}
+        </div>
     </div>
 </main>

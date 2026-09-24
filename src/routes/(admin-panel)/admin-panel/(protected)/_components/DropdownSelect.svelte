@@ -27,7 +27,7 @@
     let {
         id,
         label,
-        value,
+        value = $bindable(),
         options,
         placeholder = "Select...",
         onChange,

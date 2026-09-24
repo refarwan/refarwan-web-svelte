@@ -1,3 +1,4 @@
+import { invalidateAll } from "$app/navigation";
 import { CONTENT_LANGUAGES } from "$lib/constants/content-language";
 import { authorizedHttp } from "../../../api/authorized-http";
 import { clearFrontendCache } from "../../../api/clear-frontend-cache";
@@ -145,6 +146,7 @@ class SettingsFormState {
             this.isThemeChanged = false;
             popup.success({ message: this.getT().updated });
             await clearFrontendCache("settings");
+            await invalidateAll();
         } catch (err) {
             popup.error({ message: axiosErrorMessage(err, "Update failed") });
         } finally {
@@ -160,6 +162,8 @@ class SettingsFormState {
             this.selectedColor = DEFAULT_THEME_SHADES["500"];
             this.isThemeChanged = false;
             popup.success({ message: this.getT().resetDone });
+            await clearFrontendCache("settings");
+            await invalidateAll();
         } catch (err) {
             popup.error({ message: axiosErrorMessage(err, this.getT().resetFailed) });
         } finally {
