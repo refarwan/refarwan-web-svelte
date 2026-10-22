@@ -48,6 +48,7 @@
     let contents = $state<Record<string, { json: unknown; html: string }>>({});
     let categoryId = $state("");
     let status = $state("draft");
+    let operationalStatus = $state("live");
 
     let thumbnailFile = $state<File | null>(null);
     let thumbnailPreviewUrl = $state("");
@@ -161,6 +162,7 @@
                 formData.append("categoryId", categoryId);
             }
             formData.append("status", status);
+            formData.append("operationalStatus", operationalStatus);
             formData.append("thumbnail", thumbnailFile);
             formData.append("contentJSON", JSON.stringify(primaryContent.json));
             formData.append("contentHTML", primaryContent.html);
@@ -222,6 +224,8 @@
             onThumbnailClear={clearThumbnail}
             {status}
             onStatusChange={(value) => (status = value)}
+            {operationalStatus}
+            onOperationalStatusChange={(value) => (operationalStatus = value)}
             {tags}
             {tagInput}
             onTagInputChange={(value) => (tagInput = value)}

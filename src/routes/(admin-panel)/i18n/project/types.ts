@@ -21,6 +21,11 @@ export type ProjectTranslationObjects = {
     statusDraft: string;
     statusPublished: string;
     statusArchived: string;
+    operationalStatusLabel: string;
+    operationalStatusPlaceholder: string;
+    operationalStatusLive: string;
+    operationalStatusInDevelopment: string;
+    operationalStatusDiscontinued: string;
     tagsLabel: string;
     tagInputPlaceholderEmpty: string;
     tagInputPlaceholderFilled: string;
@@ -82,6 +87,9 @@ export type ProjectTranslationObjects = {
     closeLabel: string;
     authorLabel: string;
     editProjectLabel: string;
+    editPageTitle: string;
+    updated: string;
+    updateFailed: string;
     linksLabel: string;
     noLinks: string;
     prev: string;

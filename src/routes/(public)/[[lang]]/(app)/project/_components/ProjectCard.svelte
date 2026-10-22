@@ -2,6 +2,7 @@
     import Icon from "@iconify/svelte";
     import { resolve } from "$app/paths";
     import { formatArticleDate } from "$lib/utils/format-date";
+    import OperationalStatusBadge from "./OperationalStatusBadge.svelte";
 
     import type { ResolvedPathname } from "$app/types";
     import type { PublicProjectItem } from "$lib/types/project";
@@ -42,15 +43,18 @@
             </div>
         {/if}
 
-        {#if project.category}
-            <div class="absolute top-3 right-3">
+        <div class="absolute top-3 right-3 flex items-center gap-1.5">
+            {#if project.operationalStatus}
+                <OperationalStatusBadge status={project.operationalStatus} {lang} />
+            {/if}
+            {#if project.category}
                 <span
-                    class="inline-block rounded-md bg-white/90 px-2.5 py-1 text-xs font-semibold text-theme-700 backdrop-blur-xs"
+                    class="inline-block rounded-md bg-white/90 px-2.5 py-1 text-xs font-semibold text-theme-700 shadow-xs backdrop-blur-xs"
                 >
                     {project.category}
                 </span>
-            </div>
-        {/if}
+            {/if}
+        </div>
     </a>
 
     <div class="flex flex-1 flex-col p-5 sm:p-6">

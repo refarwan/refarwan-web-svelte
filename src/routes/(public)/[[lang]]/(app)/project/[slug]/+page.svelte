@@ -64,6 +64,7 @@
             createdAt={data.project.createdAt}
             category={data.project.category}
             {categoryHref}
+            operationalStatus={data.project.operationalStatus}
             lang={currentLang}
         />
 

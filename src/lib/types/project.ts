@@ -1,6 +1,7 @@
 import type { ImageVariant } from "./image";
 
 export type ProjectStatus = "published" | "draft" | "archived";
+export type OperationalStatus = "in_development" | "live" | "discontinued";
 
 export interface ProjectAuthor {
     id: string;
@@ -25,6 +26,7 @@ export interface ProjectItem {
     slug: string;
     shortDescription: string | null;
     status: ProjectStatus;
+    operationalStatus: OperationalStatus;
     category: string | null;
     categoryId: string | null;
     thumbnail: ImageVariant;
@@ -48,6 +50,7 @@ export interface PublicProjectItem {
     title: string | null;
     slug: string;
     shortDescription: string | null;
+    operationalStatus: OperationalStatus;
     category: string | null;
     categorySlug: string | null;
     thumbnail: ImageVariant;
