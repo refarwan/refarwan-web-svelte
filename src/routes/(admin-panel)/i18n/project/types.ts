@@ -82,6 +82,9 @@ export type ProjectTranslationObjects = {
     closeLabel: string;
     authorLabel: string;
     editProjectLabel: string;
+    editPageTitle: string;
+    updated: string;
+    updateFailed: string;
     linksLabel: string;
     noLinks: string;
     prev: string;
