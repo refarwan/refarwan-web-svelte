@@ -1,6 +1,6 @@
-import type { Account } from "./types";
+import type { AccountTranslationObjects } from "./types";
 
-export const idID: Account = {
+export const idID: AccountTranslationObjects = {
     title: "Akun Saya",
     description: "Kelola informasi pribadi dan foto profil Anda.",
     photoTitle: "Foto Profil",

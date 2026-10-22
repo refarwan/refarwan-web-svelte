@@ -1,6 +1,6 @@
-import type { BlogArticle } from "./types";
+import type { BlogArticleTranslationObjects } from "./types";
 
-export const enUS: BlogArticle = {
+export const enUS: BlogArticleTranslationObjects = {
     pageHeading: "Create New Article",
     titleLabel: "Article Title",
     titlePlaceholder: "Enter article title...",

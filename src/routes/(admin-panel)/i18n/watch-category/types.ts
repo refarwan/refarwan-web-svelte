@@ -1,4 +1,6 @@
-export type WatchCategory = {
+import type { AdminLocale } from "../types";
+
+export type WatchCategoryTranslationObjects = {
     searchPlaceholder: string;
     addCategory: string;
     tableName: string;
@@ -36,3 +38,5 @@ export type WatchCategory = {
     prev: string;
     next: string;
 };
+
+export type WatchCategoryTranslations = Record<AdminLocale, WatchCategoryTranslationObjects>;

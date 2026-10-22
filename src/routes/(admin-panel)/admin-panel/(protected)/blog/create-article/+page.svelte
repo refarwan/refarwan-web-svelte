@@ -41,7 +41,7 @@
         categories.map((category) => ({ value: category.id, label: category.name }))
     );
 
-    let activeLangCode = $state(untrack(() => data.contentLanguages[0]?.code ?? "en"));
+    let activeLangCode = $state(untrack(() => data.contentLanguages[0]?.locale ?? "en-US"));
 
     let titles = $state<Record<string, string>>({});
     let shortDescriptions = $state<Record<string, string>>({});
@@ -90,7 +90,7 @@
     };
 
     const primaryTitle = $derived(
-        titles.en?.trim() ||
+        titles["en-US"]?.trim() ||
             titles[activeLangCode]?.trim() ||
             Object.values(titles)
                 .find((title) => title.trim())
@@ -99,7 +99,7 @@
     );
 
     const primaryShortDescription = $derived(
-        shortDescriptions.en?.trim() || shortDescriptions[activeLangCode]?.trim() || ""
+        shortDescriptions["en-US"]?.trim() || shortDescriptions[activeLangCode]?.trim() || ""
     );
 
     const primaryContent = $derived(
@@ -113,15 +113,15 @@
             data.contentLanguages
                 .filter(
                     (lang) =>
-                        lang.code !== "en" &&
-                        (titles[lang.code]?.trim() || contents[lang.code]?.html)
+                        lang.locale !== "en-US" &&
+                        (titles[lang.locale]?.trim() || contents[lang.locale]?.html)
                 )
                 .map((lang) => ({
                     languageCode: lang.locale,
-                    title: titles[lang.code]?.trim() || primaryTitle,
-                    shortDescription: shortDescriptions[lang.code]?.trim() || "",
-                    contentJSON: contents[lang.code]?.json ?? {},
-                    contentHTML: contents[lang.code]?.html ?? ""
+                    title: titles[lang.locale]?.trim() || primaryTitle,
+                    shortDescription: shortDescriptions[lang.locale]?.trim() || "",
+                    contentJSON: contents[lang.locale]?.json ?? {},
+                    contentHTML: contents[lang.locale]?.html ?? ""
                 }))
         )
     );

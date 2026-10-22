@@ -33,7 +33,7 @@
     const recordView = async () => {
         try {
             const apiUrl = env.PUBLIC_API_URL || "http://localhost:3000";
-            await fetch(`${apiUrl}/video/${video.id}/view`, { method: "POST" });
+            await fetch(`${apiUrl}/video/public/${video.id}/view`, { method: "POST" });
         } catch {
             // view tracking is non-critical — fail silently
         }

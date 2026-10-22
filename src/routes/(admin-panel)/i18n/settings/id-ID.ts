@@ -1,6 +1,6 @@
-import type { Settings } from "./types";
+import type { SettingsTranslationObjects } from "./types";
 
-export const idID: Settings = {
+export const idID: SettingsTranslationObjects = {
     metadataTitle: "Metadata Situs",
     metadataDescription: "Judul, deskripsi, dan favicon yang tampil ke pengunjung.",
     siteTitle: "Judul Situs",
@@ -20,6 +20,7 @@ export const idID: Settings = {
     languagesTitle: "Bahasa Konten",
     languagesDescription: "Bahasa yang tersedia di situs publik.",
     defaultLanguage: "Bawaan",
+    setAsDefault: "Jadikan default",
     activeLanguage: "Aktif",
     addLanguage: "Tambah Bahasa",
     addLanguageModalTitle: "Tambah Bahasa Konten",

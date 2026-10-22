@@ -1,6 +1,6 @@
-import type { BlogArticleEditor } from "./types";
+import type { BlogArticleEditorTranslationObjects } from "./types";
 
-export const enUS: BlogArticleEditor = {
+export const enUS: BlogArticleEditorTranslationObjects = {
     tabHome: "Home",
     tabInsert: "Insert",
     undo: "Undo",

@@ -6,8 +6,7 @@
     import LanguageSwitcher from "../../../_components/LanguageSwitcher.svelte";
     import AppsDropdown from "./AppsDropdown.svelte";
 
-    import type { ContentLocale } from "$lib/i18n/types";
-    import type { ContentLanguage } from "$lib/types/content-language";
+    import type { ContentLanguage, ContentLocale } from "$lib/types/content-language";
 
     interface Props {
         appName: string;
@@ -20,10 +19,14 @@
 
     let isAppsOpen = $state(false);
 
+    const defaultOption = $derived(
+        contentLanguages.find((opt) => opt.default) ?? contentLanguages[0]
+    );
+    const defaultLocale = $derived(defaultOption?.locale ?? "en-US");
     const t = $derived(
         APPS_DROPDOWN_TRANSLATIONS[currentLang] ?? APPS_DROPDOWN_TRANSLATIONS["en-US"]
     );
-    const localePrefix = $derived(currentLang === "en-US" ? "" : `/${currentLang}`);
+    const localePrefix = $derived(currentLang === defaultLocale ? "" : `/${currentLang}`);
     const appHref = $derived(
         resolve(
             (currentApp === "home"

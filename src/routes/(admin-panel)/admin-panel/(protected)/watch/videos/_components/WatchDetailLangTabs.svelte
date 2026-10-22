@@ -1,9 +1,5 @@
 <script lang="ts">
-    export interface TabLang {
-        code: string;
-        name: string;
-        flag: string;
-    }
+    import type { TabLang } from "./watch-detail-content";
 
     interface Props {
         tabLanguages: TabLang[];
@@ -18,11 +14,11 @@
     <div
         class="flex w-full shrink-0 items-center gap-1.5 overflow-x-auto rounded-full whitespace-nowrap"
     >
-        {#each tabLanguages as tab (tab.code)}
-            {@const isActive = activeLangCode === tab.code}
+        {#each tabLanguages as tab (tab.locale)}
+            {@const isActive = activeLangCode === tab.locale}
             <button
                 type="button"
-                onclick={() => onSelect(tab.code)}
+                onclick={() => onSelect(tab.locale)}
                 class={`flex shrink-0 cursor-pointer items-center justify-center gap-1 rounded-full py-1 pr-2.5 pl-2 text-[12px] transition-colors ${isActive ? "bg-theme-600 font-medium text-white" : "font-semibold text-gray-500 hover:bg-gray-100"}`}
             >
                 <span class="text-[11px] leading-none">{tab.flag}</span>

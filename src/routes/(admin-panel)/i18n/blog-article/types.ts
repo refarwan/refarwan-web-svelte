@@ -1,4 +1,6 @@
-export type BlogArticle = {
+import type { AdminLocale } from "../types";
+
+export type BlogArticleTranslationObjects = {
     pageHeading: string;
     titleLabel: string;
     titlePlaceholder: string;
@@ -78,3 +80,5 @@ export type BlogArticle = {
     prev: string;
     next: string;
 };
+
+export type BlogArticleTranslations = Record<AdminLocale, BlogArticleTranslationObjects>;

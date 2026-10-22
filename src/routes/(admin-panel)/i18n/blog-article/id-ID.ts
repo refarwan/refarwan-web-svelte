@@ -1,6 +1,6 @@
-import type { BlogArticle } from "./types";
+import type { BlogArticleTranslationObjects } from "./types";
 
-export const idID: BlogArticle = {
+export const idID: BlogArticleTranslationObjects = {
     pageHeading: "Buat Artikel Baru",
     titleLabel: "Judul Artikel",
     titlePlaceholder: "Masukkan judul artikel...",

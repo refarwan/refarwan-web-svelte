@@ -1,6 +1,6 @@
-import type { Common } from "./types";
+import type { CommonTranslationObjects } from "./types";
 
-export const idID: Common = {
+export const idID: CommonTranslationObjects = {
     cancel: "Batal",
     unsavedTitle: "Perubahan Belum Disimpan",
     unsavedMessage:

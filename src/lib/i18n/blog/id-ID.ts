@@ -1,6 +1,6 @@
-import type { BlogTranslation } from "./types";
+import type { BlogTranslationObjects } from "./types";
 
-export const idID: BlogTranslation = {
+export const idID: BlogTranslationObjects = {
     pageTitle: "Blog Rekayasa Perangkat Lunak & Desain",
     pageDescription:
         "Artikel mendalam tentang arsitektur perangkat lunak, frontend engineering, dan desain antarmuka.",

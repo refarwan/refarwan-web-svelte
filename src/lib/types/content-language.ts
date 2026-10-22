@@ -1,8 +1,13 @@
-import type { ContentLocale } from "../i18n/types";
+export type ContentLocale = "en-US" | "id-ID" | "ja-JP";
+
+export interface ContentLanguageSetting {
+    code: ContentLocale;
+    default: boolean;
+}
 
 export interface ContentLanguage {
-    code: string;
     locale: ContentLocale;
     name: string;
     flag: string;
+    default?: boolean;
 }

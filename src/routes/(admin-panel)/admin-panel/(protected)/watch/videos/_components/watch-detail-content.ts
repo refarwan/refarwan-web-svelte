@@ -1,58 +1,29 @@
+import { CONTENT_LANGUAGES, DEFAULT_CONTENT_LANGUAGE } from "$lib/i18n/content-language";
+
 import type { ContentLanguage } from "$lib/types/content-language";
 import type { VideoDetail } from "$lib/types/video";
-import type { TabLang } from "./WatchDetailLangTabs.svelte";
 
-const defaultFlags: Record<string, string> = {
-    en: "🇬🇧",
-    id: "🇮🇩",
-    ja: "🇯🇵",
-    ko: "🇰🇷",
-    zh: "🇨🇳",
-    es: "🇪🇸",
-    fr: "🇫🇷",
-    de: "🇩🇪",
-    ar: "🇸🇦"
-};
+export type TabLang = ContentLanguage;
 
 export function buildTabLanguages(
     contentLanguages: ContentLanguage[] = [],
     video: VideoDetail
 ): TabLang[] {
-    const list: TabLang[] = [];
-    if (contentLanguages.length > 0) {
-        for (const cl of contentLanguages) {
-            const code = cl.code.toLowerCase();
-            list.push({
-                code,
-                name: cl.name || code.toUpperCase(),
-                flag: cl.flag || defaultFlags[code] || "🌐"
-            });
-        }
-    } else {
-        list.push({ code: "en", name: "EN", flag: "🇬🇧" });
-        list.push({ code: "id", name: "ID", flag: "🇮🇩" });
-    }
+    const list: TabLang[] =
+        contentLanguages.length > 0 ? [...contentLanguages] : [DEFAULT_CONTENT_LANGUAGE];
 
-    if (video.translations) {
-        for (const tr of video.translations) {
-            const code = tr.languageCode.toLowerCase();
-            if (!list.some((l) => l.code === code)) {
-                list.push({
-                    code,
-                    name: code.toUpperCase(),
-                    flag: defaultFlags[code] || "🌐"
-                });
-            }
-        }
+    for (const tr of video.translations ?? []) {
+        const language = CONTENT_LANGUAGES.find((l) => l.locale === tr.languageCode);
+        if (language && !list.some((l) => l.locale === language.locale)) list.push(language);
     }
     return list;
 }
 
 export function resolveActiveContent(
     video: VideoDetail,
-    activeLangCode: string
+    activeLocale: string
 ): { title: string; description: string; isFallback: boolean } {
-    if (activeLangCode === "en") {
+    if (activeLocale === DEFAULT_CONTENT_LANGUAGE.locale) {
         return {
             title: video.title || "",
             description: video.description || "",
@@ -60,9 +31,7 @@ export function resolveActiveContent(
         };
     }
 
-    const translation = video.translations?.find(
-        (tr) => tr.languageCode.toLowerCase() === activeLangCode
-    );
+    const translation = video.translations?.find((tr) => tr.languageCode === activeLocale);
 
     if (translation) {
         return {

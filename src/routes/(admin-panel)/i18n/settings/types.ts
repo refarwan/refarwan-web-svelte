@@ -1,4 +1,6 @@
-export type Settings = {
+import type { AdminLocale } from "../types";
+
+export type SettingsTranslationObjects = {
     metadataTitle: string;
     metadataDescription: string;
     siteTitle: string;
@@ -17,6 +19,7 @@ export type Settings = {
     languagesTitle: string;
     languagesDescription: string;
     defaultLanguage: string;
+    setAsDefault: string;
     activeLanguage: string;
     addLanguage: string;
     addLanguageModalTitle: string;
@@ -37,3 +40,5 @@ export type Settings = {
     loadFailed: string;
     resetFailed: string;
 };
+
+export type SettingsTranslations = Record<AdminLocale, SettingsTranslationObjects>;

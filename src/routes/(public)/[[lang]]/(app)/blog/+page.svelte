@@ -41,7 +41,7 @@
             if (data.activeCategory !== "all") query.set("categorySlug", data.activeCategory);
 
             const apiUrl = env.PUBLIC_API_URL || "http://localhost:3000";
-            const res = await fetch(`${apiUrl}/article/all-summary?${query.toString()}`, {
+            const res = await fetch(`${apiUrl}/article/public/all-summary?${query.toString()}`, {
                 headers: { "Accept-Language": currentLang }
             });
 

@@ -1,4 +1,6 @@
-export type WatchVideo = {
+import type { AdminLocale } from "../types";
+
+export type WatchVideoTranslationObjects = {
     searchPlaceholder: string;
     addVideo: string;
     tableTitle: string;
@@ -113,3 +115,5 @@ export type WatchVideo = {
     prev: string;
     next: string;
 };
+
+export type WatchVideoTranslations = Record<AdminLocale, WatchVideoTranslationObjects>;

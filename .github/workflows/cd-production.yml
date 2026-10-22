@@ -35,6 +35,21 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: Checkout code (untuk ambil docker-compose)
+              uses: actions/checkout@v4
+
+            # Salin docker-compose.yml dari runner ke VPS
+            - name: Copy docker-compose to VPS
+              uses: appleboy/scp-action@master
+              with:
+                  host: ${{ secrets.HOST_PRODUCTION }}
+                  username: ${{ secrets.USERNAME_PRODUCTION }}
+                  key: ${{ secrets.PRIVATE_KEY_PRODUCTION }}
+                  port: ${{ secrets.PORT_PRODUCTION || 22 }}
+                  source: "docker-compose.yml"
+                  target: ${{ secrets.PATH_PRODUCTION }}
+
+            # Jalankan pull image dan up container
             - name: Deploy using SSH
               uses: appleboy/ssh-action@master
               with:
@@ -46,28 +61,24 @@ jobs:
                       set -e
                       cd ${{ secrets.PATH_PRODUCTION }}
 
-                      # Pull git terbaru dari branch main
-                      git fetch origin
-                      git reset --hard origin/main
-
                       # 1. Login ke GHCR di VPS
-                      echo ${{ secrets.CR_PAT }} | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
+                      echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
                       # 2. Pull image
-                      sudo IMAGE_VERSION=latest docker compose pull refarwan-web-svelte
+                      IMAGE_VERSION=latest docker compose pull refarwan-web-svelte
 
                       # 3. Jalankan container
-                      sudo IMAGE_VERSION=latest docker compose up -d
+                      IMAGE_VERSION=latest docker compose up -d
 
-                      # 4. Cleanup background
-                      (sudo docker image prune -a -f) > /dev/null 2>&1 &
+                      # 4. Bersihkan image usang (dangling image)
+                      docker image prune -f
                       echo "Deployment Production selesai!"
 
             - name: Hapus image lama di GHCR
               uses: vlaurin/action-ghcr-prune@v0.6.0
               with:
                   token: ${{ secrets.CR_PAT }}
-                  user: ${{ github.actor }}
+                  user: ${{ github.repository_owner }}
                   container: refarwan-web-svelte
                   dry-run: false
                   keep-last: 0

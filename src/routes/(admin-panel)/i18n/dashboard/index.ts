@@ -1,10 +1,9 @@
 import { enUS } from "./en-US";
 import { idID } from "./id-ID";
 
-import type { AdminLocale } from "../types";
-import type { Dashboard } from "./types";
+import type { DashboardTranslations } from "./types";
 
-export const DASHBOARD_TRANSLATIONS: Record<AdminLocale, Dashboard> = {
+export const DASHBOARD_TRANSLATIONS: DashboardTranslations = {
     "en-US": enUS,
     "id-ID": idID
 };

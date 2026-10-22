@@ -1,6 +1,6 @@
-import type { Login } from "./types";
+import type { LoginTranslationObjects } from "./types";
 
-export const idID: Login = {
+export const idID: LoginTranslationObjects = {
     title: "Selamat Datang",
     subtitle: "Masuk ke akun Anda untuk melanjutkan",
     identifierLabel: "Email",

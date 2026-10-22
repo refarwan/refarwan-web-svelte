@@ -1,6 +1,6 @@
-import type { ProjectCategory } from "./types";
+import type { ProjectCategoryTranslationObjects } from "./types";
 
-export const enUS: ProjectCategory = {
+export const enUS: ProjectCategoryTranslationObjects = {
     searchPlaceholder: "Search categories...",
     addCategory: "Add Category",
     tableName: "Category Name",

@@ -1,10 +1,11 @@
 import { json } from "@sveltejs/kit";
+import { NODE_ENV } from "$env/static/private";
 import { clearApiCache } from "$lib/server/api-data";
 import { getRedis } from "$lib/server/redis";
 
 import type { RequestHandler } from "./$types";
 
-const ALLOWED_TAGS = ["setting", "settings", "videos", "categories"];
+const ALLOWED_TAGS = ["settings", "videos", "categories", "landing-page", "projects", "articles"];
 
 export const POST: RequestHandler = async ({ request }) => {
     const authHeader = request.headers.get("authorization");
@@ -38,7 +39,7 @@ export const POST: RequestHandler = async ({ request }) => {
             return json({ error: "Too many cache clear requests. Please wait." }, { status: 429 });
         }
 
-        console.log(tag);
+        if (NODE_ENV === "development") console.log(`Reset Cache : ${tag}`);
 
         await clearApiCache(tag);
         return json({ success: true });

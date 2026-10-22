@@ -1,10 +1,9 @@
 import { enUS } from "./en-US";
 import { idID } from "./id-ID";
 
-import type { AdminLocale } from "../types";
-import type { WatchCategory } from "./types";
+import type { WatchCategoryTranslations } from "./types";
 
-export const WATCH_CATEGORY_TRANSLATIONS: Record<AdminLocale, WatchCategory> = {
+export const WATCH_CATEGORY_TRANSLATIONS: WatchCategoryTranslations = {
     "en-US": enUS,
     "id-ID": idID
 };

@@ -21,13 +21,13 @@ export const load: PageServerLoad = async ({ url, fetch, parent }) => {
 
     const [categoriesRes, articlesRes] = await Promise.all([
         getApiData<DataResponse<PublicArticleCategoryItem[]>>(
-            "article-category/all",
+            "article-category/public/all",
             undefined,
             fetch,
             headers
         ),
         getApiData<ListResponse<PublicArticleItem[]>>(
-            `article/all-summary?${query.toString()}`,
+            `article/public/all-summary?${query.toString()}`,
             undefined,
             fetch,
             headers

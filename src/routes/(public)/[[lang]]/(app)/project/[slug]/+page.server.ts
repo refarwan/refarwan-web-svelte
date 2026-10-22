@@ -27,7 +27,7 @@ export const load: PageServerLoad = async ({ params, fetch, parent }) => {
 
     const relatedRes = project.categorySlug
         ? await getApiData<ListResponse<PublicProjectItem[]>>(
-              `project/all-summary?limit=4&categorySlug=${encodeURIComponent(project.categorySlug)}`,
+              `project/public/all-summary?limit=4&categorySlug=${encodeURIComponent(project.categorySlug)}`,
               undefined,
               fetch,
               headers

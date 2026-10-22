@@ -1,10 +1,9 @@
 import { enUS } from "./en-US";
 import { idID } from "./id-ID";
 
-import type { AdminLocale } from "../types";
-import type { NotFound } from "./types";
+import type { NotFoundTranslations } from "./types";
 
-export const NOT_FOUND_TRANSLATIONS: Record<AdminLocale, NotFound> = {
+export const NOT_FOUND_TRANSLATIONS: NotFoundTranslations = {
     "en-US": enUS,
     "id-ID": idID
 };

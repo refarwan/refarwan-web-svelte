@@ -1,6 +1,6 @@
-import type { BlogCategory } from "./types";
+import type { BlogCategoryTranslationObjects } from "./types";
 
-export const enUS: BlogCategory = {
+export const enUS: BlogCategoryTranslationObjects = {
     searchPlaceholder: "Search categories...",
     addCategory: "Add Category",
     tableName: "Category Name",

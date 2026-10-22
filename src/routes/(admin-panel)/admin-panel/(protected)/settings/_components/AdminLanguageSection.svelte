@@ -1,33 +1,31 @@
 <script lang="ts">
-    import { enhance } from "$app/forms";
-    import { tick, untrack } from "svelte";
+    import { invalidateAll } from "$app/navigation";
     import DropdownSelect from "../../_components/DropdownSelect.svelte";
 
+    import type { SettingsTranslationObjects } from "../../../../i18n/settings/types";
+
     interface Props {
-        t: Record<string, string>;
-        initialLang: string;
+        t: SettingsTranslationObjects;
+        initialLang: "en-US" | "id-ID";
     }
 
     let { t, initialLang }: Props = $props();
 
-    let adminLang = $state(untrack(() => initialLang));
-    let adminLangForm: HTMLFormElement | undefined = $state();
     let adminLangPending = $state(false);
 
     const adminLangOptions = [
         { value: "en-US", label: "English", icon: "🇺🇸" },
-        { value: "id-ID", label: "Indonesia", icon: "🇮🇩" }
+        { value: "id-ID", label: "Bahasa Indonesia", icon: "🇮🇩" }
     ];
 
-    const onAdminLangChange = async (lang: string) => {
-        if (lang !== "en-US" && lang !== "id-ID") return;
-        adminLang = lang;
-        adminLangPending = true;
-        // The hidden input's value is bound reactively, so wait for Svelte to flush
-        // the DOM update before reading it via requestSubmit(), otherwise the form
-        // would submit the previous (stale) language value.
-        await tick();
-        adminLangForm?.requestSubmit();
+    const switchLanguage = async (lang: "id-ID" | "en-US") => {
+        const formData = new FormData();
+        formData.append("admin_preferred_language", lang);
+        await fetch("?/setPreferredLanguage", {
+            method: "POST",
+            body: formData
+        });
+        await invalidateAll();
     };
 </script>
 
@@ -45,25 +43,14 @@
     </div>
     <hr class="my-4 border-gray-200" />
 
-    <form
-        method="POST"
-        action="?/setAdminLang"
-        bind:this={adminLangForm}
-        use:enhance={() => {
-            return async ({ update }) => {
-                await update();
-                adminLangPending = false;
-            };
+    <DropdownSelect
+        label={t.displayLanguage}
+        bind:value={initialLang}
+        options={adminLangOptions}
+        onChange={(value) => {
+            if (value === "en-US" || value === "id-ID") switchLanguage(value);
         }}
-    >
-        <input type="hidden" name="lang" value={adminLang} />
-        <DropdownSelect
-            label={t.displayLanguage}
-            value={adminLang}
-            options={adminLangOptions}
-            onChange={onAdminLangChange}
-            helperText={t.languageHelper}
-            disabled={adminLangPending}
-        />
-    </form>
+        helperText={t.languageHelper}
+        disabled={adminLangPending}
+    />
 </section>

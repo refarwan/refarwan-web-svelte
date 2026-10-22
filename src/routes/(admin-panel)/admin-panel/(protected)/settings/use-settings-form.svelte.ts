@@ -1,4 +1,5 @@
-import { CONTENT_LANGUAGES } from "$lib/constants/content-language";
+import { invalidateAll } from "$app/navigation";
+import { CONTENT_LANGUAGES } from "$lib/i18n/content-language";
 import { authorizedHttp } from "../../../api/authorized-http";
 import { clearFrontendCache } from "../../../api/clear-frontend-cache";
 import { DEFAULT_THEME_SHADES } from "../../../constants/theme-shades";
@@ -8,19 +9,25 @@ import { generateColorShades } from "../../../utils/generate-color-shades";
 import { useUnsavedChangesGuard } from "../../../utils/unsaved-changes-guard.svelte";
 
 import type { DataResponse } from "$lib/types/api-response";
+import type {
+    ContentLanguage,
+    ContentLanguageSetting,
+    ContentLocale
+} from "$lib/types/content-language";
 import type { AdminSettingsData } from "$lib/types/setting";
 import type { ThemeShades } from "$lib/types/theme-shades";
-import type { Common } from "../../../i18n/common/types";
-import type { Settings } from "../../../i18n/settings/types";
+import type { CommonTranslationObjects } from "../../../i18n/common/types";
+import type { SettingsTranslationObjects } from "../../../i18n/settings/types";
 
-type SettingsT = Settings;
-type CommonT = Common;
+type SettingsT = SettingsTranslationObjects;
+type CommonT = CommonTranslationObjects;
 
 interface Snapshot {
     title: string;
     description: string;
     color: string;
     languages: string[];
+    contentLanguages: ContentLanguageSetting[];
 }
 
 class SettingsFormState {
@@ -36,6 +43,7 @@ class SettingsFormState {
     themeShades = $state<ThemeShades>(DEFAULT_THEME_SHADES);
     isThemeChanged = $state(false);
 
+    contentLanguages = $state<ContentLanguageSetting[]>([{ code: "en-US", default: true }]);
     otherContentLanguages = $state<string[]>([]);
 
     submitting = $state(false);
@@ -45,7 +53,8 @@ class SettingsFormState {
         title: "",
         description: "",
         color: DEFAULT_THEME_SHADES["500"],
-        languages: []
+        languages: [],
+        contentLanguages: [{ code: "en-US", default: true }]
     });
 
     private getT: () => SettingsT;
@@ -72,13 +81,41 @@ class SettingsFormState {
             this.faviconPreview = setting.appMetadata.favicon;
             this.selectedColor = setting.theme["500"] ?? DEFAULT_THEME_SHADES["500"];
             this.themeShades = setting.theme;
-            this.otherContentLanguages = setting.otherContentLanguages;
+
+            if (setting.contentLanguages && setting.contentLanguages.length > 0) {
+                const list = setting.contentLanguages;
+                const defaultIndex = list.findIndex((l) => l.default);
+                if (defaultIndex > 0) {
+                    const defaultItem = { ...list[defaultIndex], default: true };
+                    const others = list
+                        .filter((_, idx) => idx !== defaultIndex)
+                        .map((l) => ({ ...l, default: false }));
+                    this.contentLanguages = [defaultItem, ...others];
+                } else if (defaultIndex === -1 && list.length > 0) {
+                    this.contentLanguages = [
+                        { ...list[0], default: true },
+                        ...list.slice(1).map((l) => ({ ...l, default: false }))
+                    ];
+                } else {
+                    this.contentLanguages = list;
+                }
+            } else {
+                const others = setting.otherContentLanguages ?? [];
+                this.contentLanguages = [
+                    { code: "en-US", default: true },
+                    ...others.map((code) => ({ code: code as ContentLocale, default: false }))
+                ];
+            }
+            this.otherContentLanguages = this.contentLanguages
+                .filter((l) => !l.default)
+                .map((l) => l.code);
 
             this.snapshot = {
                 title: this.title,
                 description: this.description,
                 color: this.selectedColor,
-                languages: [...this.otherContentLanguages]
+                languages: [...this.otherContentLanguages],
+                contentLanguages: JSON.parse(JSON.stringify(this.contentLanguages))
             };
         } catch (err) {
             this.loadError = axiosErrorMessage(err, this.getT().loadFailed);
@@ -88,26 +125,35 @@ class SettingsFormState {
     }
 
     get isDirty(): boolean {
+        const currentLangStr = JSON.stringify(this.contentLanguages);
+        const snapshotLangStr = JSON.stringify(this.snapshot.contentLanguages);
         return (
             this.title !== this.snapshot.title ||
             this.description !== this.snapshot.description ||
             this.faviconFile !== null ||
             this.isThemeChanged ||
             this.selectedColor !== this.snapshot.color ||
-            this.otherContentLanguages.join(",") !== this.snapshot.languages.join(",")
+            currentLangStr !== snapshotLangStr
         );
     }
 
-    get availableLanguages() {
-        return CONTENT_LANGUAGES.filter(
-            (lang) => lang.code !== "en" && !this.otherContentLanguages.includes(lang.locale)
-        );
+    get availableLanguages(): ContentLanguage[] {
+        const activeCodes = new Set(this.contentLanguages.map((l) => l.code));
+        return CONTENT_LANGUAGES.filter((lang) => !activeCodes.has(lang.locale));
     }
 
-    get activeLanguages() {
-        return this.otherContentLanguages
-            .map((locale) => CONTENT_LANGUAGES.find((lang) => lang.locale === locale))
-            .filter((lang) => lang !== undefined);
+    get activeLanguages(): ContentLanguage[] {
+        const list: ContentLanguage[] = [];
+        for (const item of this.contentLanguages) {
+            const info = CONTENT_LANGUAGES.find((lang) => lang.locale === item.code);
+            if (info) {
+                list.push({
+                    ...info,
+                    default: item.default
+                });
+            }
+        }
+        return list;
     }
 
     onColorChange = (color: string): void => {
@@ -118,12 +164,35 @@ class SettingsFormState {
     };
 
     onAddLanguage = (locale: string): void => {
-        if (this.otherContentLanguages.includes(locale)) return;
-        this.otherContentLanguages = [...this.otherContentLanguages, locale];
+        if (this.contentLanguages.some((l) => l.code === locale)) return;
+        this.contentLanguages = [
+            ...this.contentLanguages,
+            { code: locale as ContentLocale, default: false }
+        ];
+        this.otherContentLanguages = this.contentLanguages
+            .filter((l) => !l.default)
+            .map((l) => l.code);
     };
 
     onRemoveLanguage = (locale: string): void => {
-        this.otherContentLanguages = this.otherContentLanguages.filter((code) => code !== locale);
+        const target = this.contentLanguages.find((l) => l.code === locale);
+        if (target?.default) return; // Cannot remove default language
+        this.contentLanguages = this.contentLanguages.filter((l) => l.code !== locale);
+        this.otherContentLanguages = this.contentLanguages
+            .filter((l) => !l.default)
+            .map((l) => l.code);
+    };
+
+    onSetDefaultLanguage = (locale: string): void => {
+        const target = this.contentLanguages.find((l) => l.code === locale);
+        if (!target) return;
+        const defaultItem: ContentLanguageSetting = { code: target.code, default: true };
+        const others = this.contentLanguages
+            .filter((l) => l.code !== locale)
+            .map((l) => ({ ...l, default: false }));
+
+        this.contentLanguages = [defaultItem, ...others];
+        this.otherContentLanguages = others.map((l) => l.code);
     };
 
     handleSubmit = async (event: SubmitEvent): Promise<void> => {
@@ -132,6 +201,9 @@ class SettingsFormState {
         if (!this.isThemeChanged) formData.delete("colorCode");
         if (!this.faviconFile) formData.delete("favicon");
 
+        formData.set("contentLanguages", JSON.stringify(this.contentLanguages));
+        formData.set("otherContentLanguages", JSON.stringify(this.otherContentLanguages));
+
         this.submitting = true;
         try {
             await authorizedHttp.put("/setting", formData);
@@ -139,12 +211,14 @@ class SettingsFormState {
                 title: this.title,
                 description: this.description,
                 color: this.selectedColor,
-                languages: [...this.otherContentLanguages]
+                languages: [...this.otherContentLanguages],
+                contentLanguages: JSON.parse(JSON.stringify(this.contentLanguages))
             };
             this.faviconFile = null;
             this.isThemeChanged = false;
             popup.success({ message: this.getT().updated });
             await clearFrontendCache("settings");
+            await invalidateAll();
         } catch (err) {
             popup.error({ message: axiosErrorMessage(err, "Update failed") });
         } finally {
@@ -160,6 +234,8 @@ class SettingsFormState {
             this.selectedColor = DEFAULT_THEME_SHADES["500"];
             this.isThemeChanged = false;
             popup.success({ message: this.getT().resetDone });
+            await clearFrontendCache("settings");
+            await invalidateAll();
         } catch (err) {
             popup.error({ message: axiosErrorMessage(err, this.getT().resetFailed) });
         } finally {

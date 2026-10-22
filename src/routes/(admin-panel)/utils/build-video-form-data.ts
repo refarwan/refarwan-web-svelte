@@ -16,11 +16,11 @@ interface BuildVideoFormDataInput {
 
 export const buildVideoFormData = (input: BuildVideoFormDataInput): FormData => {
     const translations = input.contentLanguages
-        .filter((lang) => lang.code !== "en" && input.titles[lang.code]?.trim())
+        .filter((lang) => lang.locale !== "en-US" && input.titles[lang.locale]?.trim())
         .map((lang) => ({
             languageCode: lang.locale,
-            title: input.titles[lang.code].trim(),
-            description: input.descriptions[lang.code]?.trim() || input.titles[lang.code].trim()
+            title: input.titles[lang.locale].trim(),
+            description: input.descriptions[lang.locale]?.trim() || input.titles[lang.locale].trim()
         }));
 
     const formData = new FormData();

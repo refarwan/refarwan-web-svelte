@@ -3,17 +3,18 @@
     import { mobileMenu } from "$lib/stores/mobile-menu.svelte";
 
     import type { ResolvedPathname } from "$app/types";
-    import type { NavTranslation } from "$lib/i18n/home-nav";
-    import type { ContentLocale } from "$lib/i18n/types";
+    import type { HomeNavTranslationObjects } from "$lib/i18n/home-nav/types";
+    import type { ContentLocale } from "$lib/types/content-language";
 
     interface Props {
         currentLang: ContentLocale;
-        t: NavTranslation;
+        defaultLang?: ContentLocale;
+        t: HomeNavTranslationObjects;
     }
 
-    let { currentLang, t }: Props = $props();
+    let { currentLang, defaultLang = "en-US", t }: Props = $props();
 
-    const localePrefix = $derived(currentLang === "en-US" ? "" : `/${currentLang}`);
+    const localePrefix = $derived(currentLang === defaultLang ? "" : `/${currentLang}`);
 
     const navItems = $derived<{ label: string; href: ResolvedPathname }[]>([
         { label: t.home, href: "#home" as ResolvedPathname },

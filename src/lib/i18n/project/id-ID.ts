@@ -1,6 +1,6 @@
-import type { ProjectTranslation } from "./types";
+import type { ProjectTranslationObjects } from "./types";
 
-export const idID: ProjectTranslation = {
+export const idID: ProjectTranslationObjects = {
     pageTitle: "Etalase Proyek",
     pageDescription:
         "Kumpulan proyek yang pernah saya bangun, dari aplikasi web hingga eksperimen mobile.",

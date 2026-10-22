@@ -1,6 +1,6 @@
-import type { Shell } from "./types";
+import type { ShellTranslationObjects } from "./types";
 
-export const idID: Shell = {
+export const idID: ShellTranslationObjects = {
     notFound: "Halaman Tidak Ditemukan",
     dashboard: "Dasbor",
     landingPage: "Halaman Beranda",
@@ -17,6 +17,5 @@ export const idID: Shell = {
     myAccount: "Akun Saya",
     changePassword: "Ubah Password",
     settings: "Pengaturan",
-    logout: "Keluar",
-    comingSoon: "Bagian ini akan segera hadir."
+    logout: "Keluar"
 };

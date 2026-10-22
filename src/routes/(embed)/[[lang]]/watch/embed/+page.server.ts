@@ -1,8 +1,8 @@
-import { CONTENT_LANGUAGES, DEFAULT_CONTENT_LANGUAGE } from "$lib/constants/content-language";
+import { CONTENT_LANGUAGES, DEFAULT_CONTENT_LANGUAGE } from "$lib/i18n/content-language";
 import { getApiData } from "$lib/server/api-data";
 
-import type { ContentLocale } from "$lib/i18n/types";
 import type { DataResponse } from "$lib/types/api-response";
+import type { ContentLocale } from "$lib/types/content-language";
 import type { ImageVariant } from "$lib/types/image";
 import type { VideoEmbedDetail } from "$lib/types/video";
 import type { PageServerLoad } from "./$types";
@@ -21,7 +21,7 @@ export const load: PageServerLoad = async ({ url, params, fetch }) => {
 
     const [videoRes, logoRes] = await Promise.all([
         getApiData<DataResponse<VideoEmbedDetail>>(
-            `video/embed/${videoId}`,
+            `video/public/embed/${videoId}`,
             undefined,
             fetch,
             headers

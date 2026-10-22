@@ -2,10 +2,10 @@
     import Icon from "@iconify/svelte";
     import { resolve } from "$app/paths";
 
-    import type { NotFoundTranslation } from "$lib/i18n/not-found";
+    import type { NotFoundTranslationObjects } from "$lib/i18n/not-found/types";
 
     interface Props {
-        t: NotFoundTranslation;
+        t: NotFoundTranslationObjects;
         homeHref: string;
         contactHref: string;
     }

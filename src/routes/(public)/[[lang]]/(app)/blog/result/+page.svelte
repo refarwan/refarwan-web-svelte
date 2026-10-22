@@ -51,7 +51,7 @@
             if (data.search) query.set("search", data.search);
 
             const apiUrl = env.PUBLIC_API_URL || "http://localhost:3000";
-            const res = await fetch(`${apiUrl}/article/all-summary?${query.toString()}`, {
+            const res = await fetch(`${apiUrl}/article/public/all-summary?${query.toString()}`, {
                 headers: { "Accept-Language": currentLang }
             });
 

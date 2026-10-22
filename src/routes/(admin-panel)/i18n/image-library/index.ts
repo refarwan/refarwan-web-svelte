@@ -1,10 +1,9 @@
 import { enUS } from "./en-US";
 import { idID } from "./id-ID";
 
-import type { AdminLocale } from "../types";
-import type { ImageLibrary } from "./types";
+import type { ImageLibraryTranslations } from "./types";
 
-export const IMAGE_LIBRARY_TRANSLATIONS: Record<AdminLocale, ImageLibrary> = {
+export const IMAGE_LIBRARY_TRANSLATIONS: ImageLibraryTranslations = {
     "en-US": enUS,
     "id-ID": idID
 };

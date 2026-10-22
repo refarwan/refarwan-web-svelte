@@ -18,10 +18,14 @@ services:
     refarwan-web-svelte:
         container_name: refarwan-web-svelte
         image: ghcr.io/refarwan/refarwan-web-svelte:${IMAGE_VERSION:-staging}
+        depends_on:
+            refarwan-web-svelte-redis:
+                condition: service_healthy
         env_file:
             - path: .env
               required: true
         environment:
+            NODE_ENV: production
             REDIS_URL: redis://:${REDIS_PASSWORD}@refarwan-web-svelte-redis:6379
         ports:
             - 127.0.0.1:${PORT}:${PORT}

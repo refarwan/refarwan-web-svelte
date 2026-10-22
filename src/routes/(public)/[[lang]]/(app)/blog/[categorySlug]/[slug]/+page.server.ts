@@ -27,7 +27,7 @@ export const load: PageServerLoad = async ({ params, fetch, parent }) => {
 
     // Fetch related articles in the same category
     const relatedRes = await getApiData<ListResponse<PublicArticleItem[]>>(
-        `article/all-summary?limit=4&categorySlug=${encodeURIComponent(categorySlug)}`,
+        `article/public/all-summary?limit=4&categorySlug=${encodeURIComponent(categorySlug)}`,
         undefined,
         fetch,
         headers

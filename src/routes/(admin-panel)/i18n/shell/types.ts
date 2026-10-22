@@ -1,4 +1,6 @@
-export type Shell = {
+import type { AdminLocale } from "../types";
+
+export type ShellTranslationObjects = {
     notFound: string;
     dashboard: string;
     landingPage: string;
@@ -16,5 +18,6 @@ export type Shell = {
     changePassword: string;
     settings: string;
     logout: string;
-    comingSoon: string;
 };
+
+export type ShellTranslations = Record<AdminLocale, ShellTranslationObjects>;

@@ -13,6 +13,8 @@ FROM oven/bun:1-slim AS runner
 
 WORKDIR /app
 
+ENV NODE_ENV=production
+
 COPY package.json bun.lock ./
 COPY patches ./patches
 RUN bun install --production --frozen-lockfile

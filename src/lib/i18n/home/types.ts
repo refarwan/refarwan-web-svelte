@@ -1,7 +1,10 @@
+import type { ContentLocale } from "$lib/types/content-language";
+
 export interface HeroTranslation {
     role: string;
     description: string;
     viewProjects: string;
+    photoUrl?: string | null;
 }
 
 export interface AboutExperience {
@@ -18,9 +21,15 @@ export interface AboutTranslation {
     experiences: AboutExperience[];
 }
 
+export interface SkillItem {
+    name: string;
+    icon: string;
+}
+
 export interface SkillsTranslation {
     title: string;
     description: string;
+    items?: SkillItem[];
 }
 
 export interface ProjectItem {
@@ -45,7 +54,7 @@ export interface CtaTranslation {
     button: string;
 }
 
-export interface HomeTranslation {
+export type HomeTranslationObjects = {
     metaTitle?: string;
     metaDescription?: string;
     hero: HeroTranslation;
@@ -53,4 +62,6 @@ export interface HomeTranslation {
     skills: SkillsTranslation;
     projects: ProjectsTranslation;
     cta: CtaTranslation;
-}
+};
+
+export type HomeTranslations = Record<ContentLocale, HomeTranslationObjects>;

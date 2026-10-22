@@ -1,5 +1,19 @@
 import { env } from "$env/dynamic/public";
+import { NODE_ENV } from "$env/static/private";
 import { getRedis } from "./redis";
+
+const getLangFromHeaders = (headers?: HeadersInit): string | undefined => {
+    if (!headers) return undefined;
+    if (headers instanceof Headers) {
+        return headers.get("Accept-Language") || undefined;
+    }
+    if (Array.isArray(headers)) {
+        const found = headers.find(([k]) => k.toLowerCase() === "accept-language");
+        return found ? found[1] : undefined;
+    }
+    const key = Object.keys(headers).find((k) => k.toLowerCase() === "accept-language");
+    return key ? (headers as Record<string, string>)[key] : undefined;
+};
 
 export const getApiData = async <T>(
     endpoint: string,
@@ -7,7 +21,9 @@ export const getApiData = async <T>(
     fetchFn: typeof fetch = fetch,
     headers?: HeadersInit
 ): Promise<T | undefined> => {
-    const cacheKey = tag ? `${tag}:${endpoint}` : null;
+    const lang = getLangFromHeaders(headers);
+    const cacheKey = tag ? (lang ? `${tag}:${lang}:${endpoint}` : `${tag}:${endpoint}`) : null;
+    const isDev = NODE_ENV === "development";
 
     try {
         const apiUrl = env.PUBLIC_API_URL || "http://localhost:3000";
@@ -15,9 +31,13 @@ export const getApiData = async <T>(
 
         if (redis && cacheKey) {
             const cached = await redis.get(cacheKey);
-            if (cached) return JSON.parse(cached) as T | undefined;
+            if (cached) {
+                if (isDev) console.log(`[cache] HIT  ${cacheKey}`);
+                return JSON.parse(cached) as T | undefined;
+            }
         }
 
+        if (isDev) console.log(`[cache] ${cacheKey ? "MISS" : "SKIP"} ${cacheKey ?? endpoint}`);
         const res = await fetchFn(`${apiUrl}/${endpoint}`, { method: "GET", headers });
 
         if (!res.ok) {

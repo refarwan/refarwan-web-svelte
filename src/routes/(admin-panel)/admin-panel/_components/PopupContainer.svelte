@@ -5,9 +5,16 @@
 
 {#each popup.items as item, index (item.id)}
     {#if item.type === "custom"}
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div
             style={`z-index: ${50 + index}`}
             class="animate-popup-backdrop fixed inset-0 flex items-center justify-center bg-black/40 p-4 backdrop-blur-xs"
+            onclick={(e) => {
+                if (e.target === e.currentTarget) {
+                    popup.remove(item.id);
+                }
+            }}
         >
             {@render item.component()}
         </div>
