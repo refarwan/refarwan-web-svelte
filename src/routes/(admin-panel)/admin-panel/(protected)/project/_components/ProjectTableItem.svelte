@@ -2,8 +2,8 @@
     import Icon from "@iconify/svelte";
     import { resolve } from "$app/paths";
     import CategoryBadge from "./CategoryBadge.svelte";
-    import StatusBadge from "./StatusBadge.svelte";
     import OperationalStatusBadge from "./OperationalStatusBadge.svelte";
+    import StatusBadge from "./StatusBadge.svelte";
 
     import type { ProjectItem } from "$lib/types/project";
 

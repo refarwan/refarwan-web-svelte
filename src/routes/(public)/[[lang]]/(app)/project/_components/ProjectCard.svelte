@@ -49,7 +49,7 @@
             {/if}
             {#if project.category}
                 <span
-                    class="inline-block rounded-md bg-white/90 px-2.5 py-1 text-xs font-semibold text-theme-700 backdrop-blur-xs shadow-xs"
+                    class="inline-block rounded-md bg-white/90 px-2.5 py-1 text-xs font-semibold text-theme-700 shadow-xs backdrop-blur-xs"
                 >
                     {project.category}
                 </span>

@@ -2,8 +2,8 @@
     import Icon from "@iconify/svelte";
     import { resolve } from "$app/paths";
     import CategoryBadge from "./CategoryBadge.svelte";
-    import StatusBadge from "./StatusBadge.svelte";
     import OperationalStatusBadge from "./OperationalStatusBadge.svelte";
+    import StatusBadge from "./StatusBadge.svelte";
 
     import type { ProjectDetail } from "$lib/types/project";
 
@@ -114,7 +114,10 @@
             <div class="flex flex-wrap items-center gap-2">
                 <CategoryBadge category={project.category} />
                 <StatusBadge status={project.status} lang={isEn ? "en" : "id"} />
-                <OperationalStatusBadge status={project.operationalStatus} lang={isEn ? "en" : "id"} />
+                <OperationalStatusBadge
+                    status={project.operationalStatus}
+                    lang={isEn ? "en" : "id"}
+                />
             </div>
 
             <!-- Title -->
