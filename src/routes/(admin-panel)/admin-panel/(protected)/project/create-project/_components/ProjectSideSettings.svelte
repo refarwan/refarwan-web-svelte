@@ -11,6 +11,8 @@
         onThumbnailClear: () => void;
         status: string;
         onStatusChange: (value: string) => void;
+        operationalStatus?: string;
+        onOperationalStatusChange?: (value: string) => void;
         tags: string[];
         tagInput: string;
         onTagInputChange: (value: string) => void;
@@ -34,6 +36,8 @@
         onThumbnailClear,
         status,
         onStatusChange,
+        operationalStatus = "live",
+        onOperationalStatusChange,
         tags,
         tagInput,
         onTagInputChange,
@@ -55,6 +59,18 @@
         { value: "published", label: t.statusPublished || "Published" },
         { value: "archived", label: t.statusArchived || "Archived" }
     ]);
+
+    const operationalStatusOptions = $derived([
+        { value: "live", label: t.operationalStatusLive || "Live" },
+        {
+            value: "in_development",
+            label: t.operationalStatusInDevelopment || "In Development"
+        },
+        {
+            value: "discontinued",
+            label: t.operationalStatusDiscontinued || "Discontinued"
+        }
+    ]);
 </script>
 
 <div class="w-full space-y-5 lg:w-75 lg:shrink-0">
@@ -75,6 +91,16 @@
         onChange={onStatusChange}
         placeholder={t.statusPlaceholder}
     />
+
+    {#if onOperationalStatusChange}
+        <DropdownSelect
+            label={t.operationalStatusLabel || "Operational Status"}
+            value={operationalStatus}
+            options={operationalStatusOptions}
+            onChange={onOperationalStatusChange}
+            placeholder={t.operationalStatusPlaceholder || "Select operational status"}
+        />
+    {/if}
 
     <TagsInput
         {t}

@@ -31,6 +31,7 @@
     let contents = $state<Record<string, { json: unknown; html: string }>>({});
     let categoryId = $state("");
     let status = $state("draft");
+    let operationalStatus = $state("live");
 
     let thumbnailFile = $state<File | null>(null);
     let thumbnailPreviewUrl = $state("");
@@ -78,6 +79,7 @@
         contents = seedContents;
         categoryId = project.categoryId ?? "";
         status = project.status;
+        operationalStatus = project.operationalStatus ?? "live";
         thumbnailPreviewUrl =
             project.thumbnail?.medium || project.thumbnail?.large || project.thumbnail?.small || "";
         githubLink = project.githubLink ?? "";
@@ -183,6 +185,7 @@
         formData.append("shortDescription", primaryShortDescription);
         formData.append("categoryId", categoryId);
         formData.append("status", status);
+        formData.append("operationalStatus", operationalStatus);
         if (thumbnailFile) {
             formData.append("thumbnail", thumbnailFile);
         }
@@ -240,6 +243,8 @@
                 onThumbnailClear={clearThumbnail}
                 {status}
                 onStatusChange={(value) => (status = value)}
+                {operationalStatus}
+                onOperationalStatusChange={(value) => (operationalStatus = value)}
                 {tags}
                 {tagInput}
                 onTagInputChange={(value) => (tagInput = value)}
