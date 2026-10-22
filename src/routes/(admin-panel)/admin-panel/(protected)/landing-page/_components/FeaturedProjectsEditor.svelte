@@ -2,7 +2,7 @@
     import Icon from "@iconify/svelte";
 
     import type { FeaturedProjectSummary } from "$lib/types/landing-page";
-    import type { LandingPageAdminTranslation } from "../../../../i18n/landing-page/types";
+    import type { LandingPageTranslationObjects } from "../../../../i18n/landing-page/types";
 
     interface Props {
         title: string;
@@ -16,7 +16,7 @@
         onRemoveProject: (id: string) => void;
         onMoveUpProject: (index: number) => void;
         onMoveDownProject: (index: number) => void;
-        t: LandingPageAdminTranslation;
+        t: LandingPageTranslationObjects;
     }
 
     let {

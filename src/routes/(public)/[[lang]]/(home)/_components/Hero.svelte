@@ -1,8 +1,8 @@
 <script lang="ts">
     import { resolve } from "$app/paths";
 
-    import type { HeroTranslation } from "$lib/i18n/home";
-    import type { ContentLocale } from "$lib/i18n/types";
+    import type { HeroTranslation } from "$lib/i18n/home/types";
+    import type { ContentLocale } from "$lib/types/content-language";
 
     interface Props {
         t: HeroTranslation;

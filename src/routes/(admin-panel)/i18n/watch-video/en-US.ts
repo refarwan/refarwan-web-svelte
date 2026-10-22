@@ -1,6 +1,6 @@
-import type { WatchVideo } from "./types";
+import type { WatchVideoTranslationObjects } from "./types";
 
-export const enUS: WatchVideo = {
+export const enUS: WatchVideoTranslationObjects = {
     searchPlaceholder: "Search videos...",
     addVideo: "Add Video",
     tableTitle: "Title",

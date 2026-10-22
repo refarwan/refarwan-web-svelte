@@ -1,4 +1,6 @@
-export interface LandingPageAdminTranslation {
+import type { AdminLocale } from "../types";
+
+export type LandingPageTranslationObjects = {
     pageTitle: string;
     pageDescription: string;
     metadataSection: string;
@@ -71,4 +73,6 @@ export interface LandingPageAdminTranslation {
     saved: string;
     saveFailed: string;
     loadFailed: string;
-}
+};
+
+export type LandingPageTranslations = Record<AdminLocale, LandingPageTranslationObjects>;

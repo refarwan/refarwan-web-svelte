@@ -23,7 +23,7 @@
         videoEdit.categories.map((category) => ({ value: category.id, label: category.name }))
     );
 
-    let activeLangCode = $state(untrack(() => data.contentLanguages[0]?.code ?? "en"));
+    let activeLangCode = $state(untrack(() => data.contentLanguages[0]?.locale ?? "en-US"));
     let titles = $state<Record<string, string>>({});
     let descriptions = $state<Record<string, string>>({});
     let categoryId = $state("");
@@ -45,13 +45,13 @@
         const video = videoEdit.video;
         if (!video || isReady) return;
 
-        const seedTitles: Record<string, string> = { en: video.title ?? "" };
-        const seedDescriptions: Record<string, string> = { en: video.description ?? "" };
+        const seedTitles: Record<string, string> = { "en-US": video.title ?? "" };
+        const seedDescriptions: Record<string, string> = { "en-US": video.description ?? "" };
         for (const translation of video.translations) {
             const matchedLang = data.contentLanguages.find(
-                (l) => l.locale === translation.languageCode || l.code === translation.languageCode
+                (l) => l.locale === translation.languageCode
             );
-            const key = matchedLang ? matchedLang.code : translation.languageCode;
+            const key = matchedLang ? matchedLang.locale : translation.languageCode;
             seedTitles[key] = translation.title;
             seedDescriptions[key] = translation.description;
         }
@@ -101,7 +101,7 @@
     };
 
     const primaryTitle = $derived(
-        titles.en?.trim() ||
+        titles["en-US"]?.trim() ||
             titles[activeLangCode]?.trim() ||
             Object.values(titles)
                 .find((title) => title.trim())
@@ -109,17 +109,17 @@
             ""
     );
     const primaryDescription = $derived(
-        descriptions.en?.trim() || descriptions[activeLangCode]?.trim() || ""
+        descriptions["en-US"]?.trim() || descriptions[activeLangCode]?.trim() || ""
     );
 
     const translationsPayload = $derived(
         JSON.stringify(
             data.contentLanguages
-                .filter((lang) => lang.code !== "en" && titles[lang.code]?.trim())
+                .filter((lang) => lang.locale !== "en-US" && titles[lang.locale]?.trim())
                 .map((lang) => ({
                     languageCode: lang.locale,
-                    title: titles[lang.code].trim(),
-                    description: descriptions[lang.code]?.trim() || titles[lang.code].trim()
+                    title: titles[lang.locale].trim(),
+                    description: descriptions[lang.locale]?.trim() || titles[lang.locale].trim()
                 }))
         )
     );

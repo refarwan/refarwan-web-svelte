@@ -1,4 +1,6 @@
-export type Account = {
+import type { AdminLocale } from "../types";
+
+export type AccountTranslationObjects = {
     title: string;
     description: string;
     photoTitle: string;
@@ -35,3 +37,5 @@ export type Account = {
     saving: string;
     updated: string;
 };
+
+export type AccountTranslations = Record<AdminLocale, AccountTranslationObjects>;

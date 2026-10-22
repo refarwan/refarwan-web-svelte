@@ -1,4 +1,6 @@
-export type ChangePassword = {
+import type { AdminLocale } from "../types";
+
+export type ChangePasswordTranslationObjects = {
     title: string;
     description: string;
     oldPassword: string;
@@ -12,3 +14,5 @@ export type ChangePassword = {
     confirmPasswordMismatch: string;
     updated: string;
 };
+
+export type ChangePasswordTranslations = Record<AdminLocale, ChangePasswordTranslationObjects>;

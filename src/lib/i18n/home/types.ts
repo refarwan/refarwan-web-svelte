@@ -1,3 +1,5 @@
+import type { ContentLocale } from "$lib/types/content-language";
+
 export interface HeroTranslation {
     role: string;
     description: string;
@@ -52,7 +54,7 @@ export interface CtaTranslation {
     button: string;
 }
 
-export interface HomeTranslation {
+export type HomeTranslationObjects = {
     metaTitle?: string;
     metaDescription?: string;
     hero: HeroTranslation;
@@ -60,4 +62,6 @@ export interface HomeTranslation {
     skills: SkillsTranslation;
     projects: ProjectsTranslation;
     cta: CtaTranslation;
-}
+};
+
+export type HomeTranslations = Record<ContentLocale, HomeTranslationObjects>;

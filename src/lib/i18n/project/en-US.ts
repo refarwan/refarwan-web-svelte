@@ -1,6 +1,6 @@
-import type { ProjectTranslation } from "./types";
+import type { ProjectTranslationObjects } from "./types";
 
-export const enUS: ProjectTranslation = {
+export const enUS: ProjectTranslationObjects = {
     pageTitle: "Project Showcase",
     pageDescription: "A collection of projects I've built, from web apps to mobile experiments.",
     categoriesAll: "All",

@@ -1,10 +1,9 @@
 import { enUS } from "./en-US";
 import { idID } from "./id-ID";
 
-import type { AdminLocale } from "../types";
-import type { WatchVideo } from "./types";
+import type { WatchVideoTranslations } from "./types";
 
-export const WATCH_VIDEO_TRANSLATIONS: Record<AdminLocale, WatchVideo> = {
+export const WATCH_VIDEO_TRANSLATIONS: WatchVideoTranslations = {
     "en-US": enUS,
     "id-ID": idID
 };

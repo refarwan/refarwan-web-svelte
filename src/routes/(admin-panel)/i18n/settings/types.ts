@@ -19,6 +19,7 @@ export type SettingsTranslationObjects = {
     languagesTitle: string;
     languagesDescription: string;
     defaultLanguage: string;
+    setAsDefault: string;
     activeLanguage: string;
     addLanguage: string;
     addLanguageModalTitle: string;

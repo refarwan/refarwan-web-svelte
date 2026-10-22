@@ -2,7 +2,7 @@
     import Icon from "@iconify/svelte";
     import { resolve } from "$app/paths";
 
-    import type { ProjectsTranslation } from "$lib/i18n/home";
+    import type { ProjectsTranslation } from "$lib/i18n/home/types";
 
     interface Props {
         t: ProjectsTranslation;

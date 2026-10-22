@@ -3,13 +3,13 @@
     import { resolve } from "$app/paths";
     import { formatTimeAgo, formatViews } from "$lib/utils/watch-format";
 
-    import type { WatchTranslation } from "$lib/i18n/watch";
+    import type { WatchTranslationObjects } from "$lib/i18n/watch/types";
     import type { PublicVideoDetail } from "$lib/types/video";
 
     interface Props {
         video: PublicVideoDetail;
         lang: string;
-        t: WatchTranslation;
+        t: WatchTranslationObjects;
         categoryHref: string;
     }
 

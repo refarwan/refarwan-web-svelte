@@ -1,4 +1,6 @@
-export type ProjectCategory = {
+import type { AdminLocale } from "../types";
+
+export type ProjectCategoryTranslationObjects = {
     searchPlaceholder: string;
     addCategory: string;
     tableName: string;
@@ -34,3 +36,5 @@ export type ProjectCategory = {
     prev: string;
     next: string;
 };
+
+export type ProjectCategoryTranslations = Record<AdminLocale, ProjectCategoryTranslationObjects>;

@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { LandingPageAdminTranslation } from "../../../../i18n/landing-page/types";
+    import type { LandingPageTranslationObjects } from "../../../../i18n/landing-page/types";
 
     interface Props {
         metaTitle?: string;
         metaDescription?: string;
-        t: LandingPageAdminTranslation;
+        t: LandingPageTranslationObjects;
     }
 
     let { metaTitle = $bindable(), metaDescription = $bindable(), t }: Props = $props();

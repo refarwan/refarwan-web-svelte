@@ -1,6 +1,6 @@
-import type { ChangePassword } from "./types";
+import type { ChangePasswordTranslationObjects } from "./types";
 
-export const enUS: ChangePassword = {
+export const enUS: ChangePasswordTranslationObjects = {
     title: "Change Password",
     description: "Choose a strong password you don’t use elsewhere.",
     oldPassword: "Old Password",

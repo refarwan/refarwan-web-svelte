@@ -1,10 +1,9 @@
 import { enUS } from "./en-US";
 import { idID } from "./id-ID";
 
-import type { AdminLocale } from "../types";
-import type { ChangePassword } from "./types";
+import type { ChangePasswordTranslations } from "./types";
 
-export const CHANGE_PASSWORD_TRANSLATIONS: Record<AdminLocale, ChangePassword> = {
+export const CHANGE_PASSWORD_TRANSLATIONS: ChangePasswordTranslations = {
     "en-US": enUS,
     "id-ID": idID
 };

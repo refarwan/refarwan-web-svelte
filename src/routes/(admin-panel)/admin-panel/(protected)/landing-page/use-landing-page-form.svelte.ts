@@ -12,8 +12,8 @@ import type {
     LandingPageTranslationForm,
     UpdateLandingPagePayload
 } from "$lib/types/landing-page";
-import type { Common } from "../../../i18n/common/types";
-import type { LandingPageAdminTranslation } from "../../../i18n/landing-page/types";
+import type { CommonTranslationObjects } from "../../../i18n/common/types";
+import type { LandingPageTranslationObjects } from "../../../i18n/landing-page/types";
 
 export class LandingPageFormState {
     loading = $state(true);
@@ -32,12 +32,12 @@ export class LandingPageFormState {
     activeLocale = $state("en-US");
 
     private snapshot = $state("");
-    private getT: () => LandingPageAdminTranslation;
-    private getCommonT: () => Common;
+    private getT: () => LandingPageTranslationObjects;
+    private getCommonT: () => CommonTranslationObjects;
 
     constructor(
-        getT: () => LandingPageAdminTranslation,
-        getCommonT: () => Common,
+        getT: () => LandingPageTranslationObjects,
+        getCommonT: () => CommonTranslationObjects,
         getInitialLocale: () => string = () => "en-US"
     ) {
         this.getT = getT;

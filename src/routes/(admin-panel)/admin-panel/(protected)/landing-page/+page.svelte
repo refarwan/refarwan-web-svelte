@@ -28,11 +28,11 @@
     );
 
     let activeLangCode = $derived(
-        contentLanguages.find((l) => l.locale === form.activeLocale)?.code ?? "en"
+        contentLanguages.find((l) => l.locale === form.activeLocale)?.locale ?? "en-US"
     );
 
     const handleSelectLanguage = (code: string) => {
-        const found = contentLanguages.find((l) => l.code === code);
+        const found = contentLanguages.find((l) => l.locale === code);
         if (found) {
             form.activeLocale = found.locale;
         }

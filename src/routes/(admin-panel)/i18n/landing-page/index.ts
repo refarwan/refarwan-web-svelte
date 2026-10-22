@@ -1,12 +1,9 @@
 import { enUS } from "./en-US";
 import { idID } from "./id-ID";
 
-import type { LandingPageAdminTranslation } from "./types";
+import type { LandingPageTranslations } from "./types";
 
-export type { LandingPageAdminTranslation } from "./types";
-
-export const LANDING_PAGE_TRANSLATIONS: Record<string, LandingPageAdminTranslation> = {
+export const LANDING_PAGE_TRANSLATIONS: LandingPageTranslations = {
     "en-US": enUS,
-    "id-ID": idID,
-    "ja-JP": enUS // Fallback to English for Admin UI if Japanese is selected as admin language
+    "id-ID": idID
 };

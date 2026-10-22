@@ -1,10 +1,9 @@
 import { enUS } from "./en-US";
 import { idID } from "./id-ID";
 
-import type { AdminLocale } from "../types";
-import type { Project } from "./types";
+import type { ProjectTranslations } from "./types";
 
-export const PROJECT_TRANSLATIONS: Record<AdminLocale, Project> = {
+export const PROJECT_TRANSLATIONS: ProjectTranslations = {
     "en-US": enUS,
     "id-ID": idID
 };

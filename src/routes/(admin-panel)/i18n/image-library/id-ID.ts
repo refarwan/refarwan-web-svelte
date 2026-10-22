@@ -1,6 +1,6 @@
-import type { ImageLibrary } from "./types";
+import type { ImageLibraryTranslationObjects } from "./types";
 
-export const idID: ImageLibrary = {
+export const idID: ImageLibraryTranslationObjects = {
     title: "Pustaka Gambar",
     uploadImage: "Unggah Gambar",
     searchPlaceholder: "Cari gambar...",

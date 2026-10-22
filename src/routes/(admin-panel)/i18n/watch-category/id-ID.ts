@@ -1,6 +1,6 @@
-import type { WatchCategory } from "./types";
+import type { WatchCategoryTranslationObjects } from "./types";
 
-export const idID: WatchCategory = {
+export const idID: WatchCategoryTranslationObjects = {
     searchPlaceholder: "Cari kategori...",
     addCategory: "Tambah Kategori",
     tableName: "Nama Kategori",

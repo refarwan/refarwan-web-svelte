@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ parent, fetch }) => {
     const contentLanguages = await getActiveContentLangs(fetch);
 
     return {
-        t: LANDING_PAGE_TRANSLATIONS[currentLang] ?? LANDING_PAGE_TRANSLATIONS["en-US"],
+        t: LANDING_PAGE_TRANSLATIONS[currentLang],
         common: COMMON_TRANSLATIONS[currentLang],
         contentLanguages
     };

@@ -1,4 +1,6 @@
-export type Dashboard = {
+import type { AdminLocale } from "../types";
+
+export type DashboardTranslationObjects = {
     statArticles: string;
     statVideos: string;
     statProjects: string;
@@ -20,3 +22,5 @@ export type Dashboard = {
     loading: string;
     noData: string;
 };
+
+export type DashboardTranslations = Record<AdminLocale, DashboardTranslationObjects>;

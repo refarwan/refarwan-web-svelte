@@ -1,6 +1,6 @@
-import type { LandingPageAdminTranslation } from "./types";
+import type { LandingPageTranslationObjects } from "./types";
 
-export const enUS: LandingPageAdminTranslation = {
+export const enUS: LandingPageTranslationObjects = {
     pageTitle: "Landing Page",
     pageDescription: "Manage content, SEO metadata, and featured projects for the home page.",
     metadataSection: "SEO & Metadata",

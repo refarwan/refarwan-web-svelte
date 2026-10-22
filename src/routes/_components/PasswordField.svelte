@@ -22,7 +22,7 @@
         supporting = [],
         class: className = "",
         showPassword = false,
-        onTogglePassword,
+        onTogglePassword
     }: Props = $props();
 </script>
 
@@ -41,7 +41,7 @@
             type="button"
             onclick={onTogglePassword}
             aria-label={showPassword ? "Hide password" : "Show password"}
-            class="absolute right-3 flex items-center justify-center text-gray-400 transition-colors hover:text-gray-600 focus:outline-none focus:text-gray-600"
+            class="absolute right-3 flex items-center justify-center text-gray-400 transition-colors hover:text-gray-600 focus:text-gray-600 focus:outline-none"
         >
             {#if showPassword}
                 <Icon icon="lucide:eye-off" class="h-5 w-5" />

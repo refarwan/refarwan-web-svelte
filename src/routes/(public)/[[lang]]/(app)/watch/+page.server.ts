@@ -26,13 +26,13 @@ export const load: PageServerLoad = async ({ url, fetch, parent }) => {
 
     const [categoriesRes, videosRes] = await Promise.all([
         getApiData<DataResponse<PublicVideoCategoryItem[]>>(
-            "video-category/all",
+            "video-category/public/all",
             undefined,
             fetch,
             headers
         ),
         getApiData<ListResponse<PublicVideoItem[]>>(
-            `video/all-summary?${query.toString()}`,
+            `video/public/all-summary?${query.toString()}`,
             undefined,
             fetch,
             headers

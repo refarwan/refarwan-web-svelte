@@ -1,6 +1,6 @@
-import type { BlogTranslation } from "./types";
+import type { BlogTranslationObjects } from "./types";
 
-export const jaJP: BlogTranslation = {
+export const jaJP: BlogTranslationObjects = {
     pageTitle: "エンジニアリング＆デザインブログ",
     pageDescription:
         "ソフトウェアアーキテクチャ、フロントエンドエンジニアリング、UIデザインに関する詳細記事。",

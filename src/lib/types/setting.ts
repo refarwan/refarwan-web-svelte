@@ -1,3 +1,4 @@
+import type { ContentLanguageSetting } from "./content-language";
 import type { ThemeShades } from "./theme-shades";
 
 export interface ImageSource {
@@ -24,5 +25,6 @@ export interface PublicSettingsData {
 export interface AdminSettingsData {
     appMetadata: AppMetadata;
     theme: ThemeShades;
-    otherContentLanguages: string[];
+    otherContentLanguages?: string[];
+    contentLanguages?: ContentLanguageSetting[];
 }

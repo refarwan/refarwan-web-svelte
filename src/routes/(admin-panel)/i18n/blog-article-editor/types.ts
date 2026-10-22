@@ -1,4 +1,6 @@
-export type BlogArticleEditor = {
+import type { AdminLocale } from "../types";
+
+export type BlogArticleEditorTranslationObjects = {
     tabHome: string;
     tabInsert: string;
     undo: string;
@@ -91,3 +93,8 @@ export type BlogArticleEditor = {
     tableAlignCenter: string;
     tableAlignRight: string;
 };
+
+export type BlogArticleEditorTranslations = Record<
+    AdminLocale,
+    BlogArticleEditorTranslationObjects
+>;

@@ -1,7 +1,7 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
 
-    import type { SkillsTranslation } from "$lib/i18n/home";
+    import type { SkillsTranslation } from "$lib/i18n/home/types";
 
     interface SkillItem {
         name: string;

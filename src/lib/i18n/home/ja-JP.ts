@@ -1,6 +1,6 @@
-import type { HomeTranslation } from "./types";
+import type { HomeTranslationObjects } from "./types";
 
-export const jaJP: HomeTranslation = {
+export const jaJP: HomeTranslationObjects = {
     metaTitle: "Aan Refarwan | フルスタック TypeScript 開発者 & ソフトウェアエンジニア",
     metaDescription:
         "モダンな JavaScript & TypeScript アーキテクチャに特化したフルスタック開発者。PHP などのバックエンド技術にも適応し、エンドツーエンドの Web アプリケーションを構築します。",

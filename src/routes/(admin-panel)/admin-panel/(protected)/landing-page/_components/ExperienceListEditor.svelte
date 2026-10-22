@@ -2,12 +2,12 @@
     import Icon from "@iconify/svelte";
 
     import type { AboutExperience } from "$lib/types/landing-page";
-    import type { LandingPageAdminTranslation } from "../../../../i18n/landing-page/types";
+    import type { LandingPageTranslationObjects } from "../../../../i18n/landing-page/types";
 
     interface Props {
         experiences: AboutExperience[];
         onChange: (items: AboutExperience[]) => void;
-        t: LandingPageAdminTranslation;
+        t: LandingPageTranslationObjects;
     }
 
     let { experiences, onChange, t }: Props = $props();

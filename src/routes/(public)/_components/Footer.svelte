@@ -1,10 +1,10 @@
 <script lang="ts">
     import SocialIcons from "./SocialIcons.svelte";
 
-    import type { FooterTranslation } from "$lib/i18n/footer";
+    import type { FooterTranslationObjects } from "$lib/i18n/footer/types";
 
     interface Props {
-        t: FooterTranslation;
+        t: FooterTranslationObjects;
     }
 
     let { t }: Props = $props();

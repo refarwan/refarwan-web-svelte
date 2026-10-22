@@ -1,7 +1,7 @@
 <script lang="ts">
     import TechIconsInput from "../../_components/TechIconsInput.svelte";
 
-    import type { LandingPageAdminTranslation } from "../../../../i18n/landing-page/types";
+    import type { LandingPageTranslationObjects } from "../../../../i18n/landing-page/types";
 
     interface Props {
         skillsTitle: string;
@@ -9,7 +9,7 @@
         skills: string[];
         onAddSkill: (icon: string) => void;
         onRemoveSkill: (icon: string) => void;
-        t: LandingPageAdminTranslation;
+        t: LandingPageTranslationObjects;
     }
 
     let {

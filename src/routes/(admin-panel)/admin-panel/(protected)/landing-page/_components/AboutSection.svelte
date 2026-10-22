@@ -2,7 +2,7 @@
     import ExperienceListEditor from "./ExperienceListEditor.svelte";
 
     import type { AboutExperience } from "$lib/types/landing-page";
-    import type { LandingPageAdminTranslation } from "../../../../i18n/landing-page/types";
+    import type { LandingPageTranslationObjects } from "../../../../i18n/landing-page/types";
 
     interface Props {
         aboutTitle: string;
@@ -10,7 +10,7 @@
         aboutBio1: string;
         aboutBio2: string;
         aboutExperiences: AboutExperience[];
-        t: LandingPageAdminTranslation;
+        t: LandingPageTranslationObjects;
     }
 
     let {

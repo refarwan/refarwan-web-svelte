@@ -2,6 +2,7 @@
     import { page } from "$app/state";
     import { resolutionsFromFields } from "$lib/components/video-player/resolution";
     import VideoPlayer from "$lib/components/video-player/VideoPlayer.svelte";
+    import { DEFAULT_CONTENT_LANGUAGE } from "$lib/i18n/content-language";
     import { buildTabLanguages, resolveActiveContent } from "./watch-detail-content";
     import WatchDetailEmbedSection from "./WatchDetailEmbedSection.svelte";
     import WatchDetailFooter from "./WatchDetailFooter.svelte";
@@ -38,9 +39,9 @@
     let selectedLangCode = $state<string | null>(null);
 
     const activeLangCode = $derived(
-        selectedLangCode && tabLanguages.some((l) => l.code === selectedLangCode?.toLowerCase())
-            ? selectedLangCode.toLowerCase()
-            : tabLanguages[0]?.code?.toLowerCase() || "en"
+        selectedLangCode && tabLanguages.some((l) => l.locale === selectedLangCode)
+            ? selectedLangCode
+            : (tabLanguages[0]?.locale ?? DEFAULT_CONTENT_LANGUAGE.locale)
     );
 
     const activeContent = $derived(resolveActiveContent(video, activeLangCode));
@@ -93,8 +94,8 @@
             {#if activeContent.isFallback}
                 <p class="text-[11px] text-amber-600">
                     * {isEn
-                        ? `No ${activeLangCode.toUpperCase()} translation. Showing default content.`
-                        : `Belum ada terjemahan bahasa ${activeLangCode.toUpperCase()}. Menampilkan konten default.`}
+                        ? `No ${activeLangCode} translation. Showing default content.`
+                        : `Belum ada terjemahan bahasa ${activeLangCode}. Menampilkan konten default.`}
                 </p>
             {/if}
         </div>

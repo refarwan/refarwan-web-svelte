@@ -1,6 +1,6 @@
-import type { Dashboard } from "./types";
+import type { DashboardTranslationObjects } from "./types";
 
-export const enUS: Dashboard = {
+export const enUS: DashboardTranslationObjects = {
     statArticles: "Total Articles",
     statVideos: "Total Videos",
     statProjects: "Total Projects",

@@ -20,6 +20,7 @@ export const enUS: SettingsTranslationObjects = {
     languagesTitle: "Content Languages",
     languagesDescription: "Languages available on the public site.",
     defaultLanguage: "Default",
+    setAsDefault: "Set as default",
     activeLanguage: "Active",
     addLanguage: "Add Language",
     addLanguageModalTitle: "Add Content Language",

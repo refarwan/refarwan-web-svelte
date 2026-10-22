@@ -1,6 +1,6 @@
-import type { Shell } from "./types";
+import type { ShellTranslationObjects } from "./types";
 
-export const enUS: Shell = {
+export const enUS: ShellTranslationObjects = {
     notFound: "Page Not Found",
     dashboard: "Dashboard",
     landingPage: "Landing Page",
@@ -17,6 +17,5 @@ export const enUS: Shell = {
     myAccount: "My Account",
     changePassword: "Change Password",
     settings: "Settings",
-    logout: "Logout",
-    comingSoon: "This section is coming soon."
+    logout: "Logout"
 };

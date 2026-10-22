@@ -42,7 +42,7 @@
         categories.map((category) => ({ value: category.id, label: category.name }))
     );
 
-    let activeLangCode = $state(untrack(() => data.contentLanguages[0]?.code ?? "en"));
+    let activeLangCode = $state(untrack(() => data.contentLanguages[0]?.locale ?? "en-US"));
 
     let videoFile: File | null = $state(null);
     let videoPreviewUrl = $state("");
@@ -133,7 +133,7 @@
     };
 
     const primaryTitle = $derived(
-        titles.en?.trim() ||
+        titles["en-US"]?.trim() ||
             titles[activeLangCode]?.trim() ||
             Object.values(titles)
                 .find((title) => title.trim())
@@ -141,7 +141,7 @@
             ""
     );
     const primaryDescription = $derived(
-        descriptions.en?.trim() || descriptions[activeLangCode]?.trim() || ""
+        descriptions["en-US"]?.trim() || descriptions[activeLangCode]?.trim() || ""
     );
 
     const resetUploadState = () => {

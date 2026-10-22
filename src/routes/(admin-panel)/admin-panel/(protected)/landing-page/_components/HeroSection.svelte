@@ -1,7 +1,7 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
 
-    import type { LandingPageAdminTranslation } from "../../../../i18n/landing-page/types";
+    import type { LandingPageTranslationObjects } from "../../../../i18n/landing-page/types";
 
     interface Props {
         heroRole: string;
@@ -10,7 +10,7 @@
         photoUrl: string | null;
         onPhotoSelect: (file: File | undefined) => void;
         onPhotoClear: () => void;
-        t: LandingPageAdminTranslation;
+        t: LandingPageTranslationObjects;
     }
 
     let {

@@ -38,7 +38,7 @@
     const recordRead = async () => {
         try {
             const apiUrl = env.PUBLIC_API_URL || "http://localhost:3000";
-            await fetch(`${apiUrl}/article/${data.article.id}/read`, { method: "POST" });
+            await fetch(`${apiUrl}/article/public/${data.article.id}/read`, { method: "POST" });
         } catch {
             // read tracking is non-critical — fail silently
         }

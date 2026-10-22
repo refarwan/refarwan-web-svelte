@@ -1,6 +1,6 @@
-import type { ImageLibrary } from "./types";
+import type { ImageLibraryTranslationObjects } from "./types";
 
-export const enUS: ImageLibrary = {
+export const enUS: ImageLibraryTranslationObjects = {
     title: "Image Library",
     uploadImage: "Upload Image",
     searchPlaceholder: "Search images...",

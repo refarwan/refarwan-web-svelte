@@ -1,6 +1,6 @@
-import type { WatchCategory } from "./types";
+import type { WatchCategoryTranslationObjects } from "./types";
 
-export const enUS: WatchCategory = {
+export const enUS: WatchCategoryTranslationObjects = {
     searchPlaceholder: "Search categories...",
     addCategory: "Add Category",
     tableName: "Category Name",

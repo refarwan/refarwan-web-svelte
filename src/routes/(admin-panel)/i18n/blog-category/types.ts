@@ -1,4 +1,6 @@
-export type BlogCategory = {
+import type { AdminLocale } from "../types";
+
+export type BlogCategoryTranslationObjects = {
     searchPlaceholder: string;
     addCategory: string;
     tableName: string;
@@ -34,3 +36,5 @@ export type BlogCategory = {
     prev: string;
     next: string;
 };
+
+export type BlogCategoryTranslations = Record<AdminLocale, BlogCategoryTranslationObjects>;

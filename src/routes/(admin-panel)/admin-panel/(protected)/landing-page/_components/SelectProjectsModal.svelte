@@ -6,13 +6,13 @@
     import type { ListResponse } from "$lib/types/api-response";
     import type { FeaturedProjectSummary } from "$lib/types/landing-page";
     import type { ProjectItem } from "$lib/types/project";
-    import type { LandingPageAdminTranslation } from "../../../../i18n/landing-page/types";
+    import type { LandingPageTranslationObjects } from "../../../../i18n/landing-page/types";
 
     interface Props {
         selectedProjectIds: string[];
         onToggleProject: (project: FeaturedProjectSummary) => void;
         onClose: () => void;
-        t: LandingPageAdminTranslation;
+        t: LandingPageTranslationObjects;
     }
 
     let { selectedProjectIds, onToggleProject, onClose, t }: Props = $props();

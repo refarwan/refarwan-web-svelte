@@ -1,4 +1,6 @@
-export type Project = {
+import type { AdminLocale } from "../types";
+
+export type ProjectTranslationObjects = {
     createPageTitle: string;
     titleLabel: string;
     titlePlaceholder: string;
@@ -85,3 +87,5 @@ export type Project = {
     prev: string;
     next: string;
 };
+
+export type ProjectTranslations = Record<AdminLocale, ProjectTranslationObjects>;

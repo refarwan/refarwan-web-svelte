@@ -20,6 +20,7 @@ export const idID: SettingsTranslationObjects = {
     languagesTitle: "Bahasa Konten",
     languagesDescription: "Bahasa yang tersedia di situs publik.",
     defaultLanguage: "Bawaan",
+    setAsDefault: "Jadikan default",
     activeLanguage: "Aktif",
     addLanguage: "Tambah Bahasa",
     addLanguageModalTitle: "Tambah Bahasa Konten",

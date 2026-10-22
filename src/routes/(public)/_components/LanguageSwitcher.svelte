@@ -2,8 +2,7 @@
     import { resolve } from "$app/paths";
     import { page } from "$app/state";
 
-    import type { ContentLocale } from "$lib/i18n/types";
-    import type { ContentLanguage } from "$lib/types/content-language";
+    import type { ContentLanguage, ContentLocale } from "$lib/types/content-language";
 
     interface Props {
         currentLang: ContentLocale;
@@ -20,6 +19,10 @@
         contentLanguages.find((opt) => opt.locale === activeLanguage) ??
             contentLanguages[0] ?? { locale: "en-US", name: "English", flag: "🇺🇸" }
     );
+    const defaultOption = $derived(
+        contentLanguages.find((opt) => opt.default) ?? contentLanguages[0]
+    );
+    const defaultLocale = $derived(defaultOption?.locale ?? "en-US");
 
     const pathWithoutLang = $derived.by(() => {
         const currentLang = page.params.lang;
@@ -30,7 +33,7 @@
 
     const hrefFor = (option: ContentLanguage): string => {
         const rest = pathWithoutLang === "/" ? "" : pathWithoutLang;
-        const base = option.locale === "en-US" ? rest || "/" : `/${option.locale}${rest}`;
+        const base = option.locale === defaultLocale ? rest || "/" : `/${option.locale}${rest}`;
         return `${base}${page.url.search}`;
     };
 

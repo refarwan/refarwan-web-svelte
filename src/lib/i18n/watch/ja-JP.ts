@@ -1,6 +1,6 @@
-import type { WatchTranslation } from "./types";
+import type { WatchTranslationObjects } from "./types";
 
-export const jaJP: WatchTranslation = {
+export const jaJP: WatchTranslationObjects = {
     categoriesAll: "すべて",
     searchPlaceholder: "動画を検索...",
     views: "再生回数",

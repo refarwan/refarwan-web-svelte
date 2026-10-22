@@ -1,4 +1,6 @@
-export interface WatchTranslation {
+import type { ContentLocale } from "$lib/types/content-language";
+
+export type WatchTranslationObjects = {
     categoriesAll: string;
     searchPlaceholder: string;
     views: string;
@@ -20,4 +22,6 @@ export interface WatchTranslation {
     playOnWatch: string;
     loadMore: string;
     loading: string;
-}
+};
+
+export type WatchTranslations = Record<ContentLocale, WatchTranslationObjects>;

@@ -1,6 +1,6 @@
-import type { Project } from "./types";
+import type { ProjectTranslationObjects } from "./types";
 
-export const enUS: Project = {
+export const enUS: ProjectTranslationObjects = {
     createPageTitle: "Create Project",
     titleLabel: "Project Title",
     titlePlaceholder: "Enter project title...",

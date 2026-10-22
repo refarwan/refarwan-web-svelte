@@ -1,6 +1,6 @@
-import type { Account } from "./types";
+import type { AccountTranslationObjects } from "./types";
 
-export const enUS: Account = {
+export const enUS: AccountTranslationObjects = {
     title: "My Account",
     description: "Manage your personal information and profile photo.",
     photoTitle: "Profile Photo",

@@ -1,6 +1,6 @@
-import type { LandingPageAdminTranslation } from "./types";
+import type { LandingPageTranslationObjects } from "./types";
 
-export const idID: LandingPageAdminTranslation = {
+export const idID: LandingPageTranslationObjects = {
     pageTitle: "Halaman Beranda",
     pageDescription:
         "Kelola konten, metadata SEO, dan proyek unggulan untuk halaman beranda utama.",

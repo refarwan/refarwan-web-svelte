@@ -1,6 +1,6 @@
-import type { HomeTranslation } from "./types";
+import type { HomeTranslationObjects } from "./types";
 
-export const idID: HomeTranslation = {
+export const idID: HomeTranslationObjects = {
     metaTitle: "Aan Refarwan | Fullstack TypeScript Developer & Software Engineer",
     metaDescription:
         "Fullstack Developer yang berfokus pada arsitektur JavaScript & TypeScript modern. Membangun aplikasi web end-to-end dengan keahlian adaptif di backend seperti PHP.",

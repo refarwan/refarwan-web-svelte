@@ -1,4 +1,6 @@
-export type ImageLibrary = {
+import type { AdminLocale } from "../types";
+
+export type ImageLibraryTranslationObjects = {
     title: string;
     uploadImage: string;
     searchPlaceholder: string;
@@ -32,3 +34,5 @@ export type ImageLibrary = {
     prev: string;
     next: string;
 };
+
+export type ImageLibraryTranslations = Record<AdminLocale, ImageLibraryTranslationObjects>;

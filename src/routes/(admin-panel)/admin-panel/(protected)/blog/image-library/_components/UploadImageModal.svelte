@@ -4,12 +4,12 @@
     import UploadImageDropzone from "./UploadImageDropzone.svelte";
     import UploadImagePreview from "./UploadImagePreview.svelte";
 
-    import type { ImageLibrary } from "../../../../../i18n/image-library/types";
+    import type { ImageLibraryTranslationObjects } from "../../../../../i18n/image-library/types";
 
     interface Props {
         onClose: () => void;
         onUpload: (file: File) => Promise<void>;
-        t: ImageLibrary;
+        t: ImageLibraryTranslationObjects;
         cancelLabel: string;
     }
 

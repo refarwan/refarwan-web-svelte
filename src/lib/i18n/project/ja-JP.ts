@@ -1,6 +1,6 @@
-import type { ProjectTranslation } from "./types";
+import type { ProjectTranslationObjects } from "./types";
 
-export const jaJP: ProjectTranslation = {
+export const jaJP: ProjectTranslationObjects = {
     pageTitle: "プロジェクトショーケース",
     pageDescription: "Webアプリからモバイルの実験まで、これまでに作ったプロジェクトの一覧です。",
     categoriesAll: "すべて",

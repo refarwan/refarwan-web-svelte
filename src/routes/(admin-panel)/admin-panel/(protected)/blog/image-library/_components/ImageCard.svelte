@@ -1,14 +1,14 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
 
-    import type { ImageLibrary } from "../../../../../i18n/image-library/types";
+    import type { ImageLibraryTranslationObjects } from "../../../../../i18n/image-library/types";
     import type { ImageLibraryItem } from "../../../../../types/image-library";
 
     interface Props {
         item: ImageLibraryItem;
         onView: (item: ImageLibraryItem) => void;
         onDelete: (item: ImageLibraryItem) => void;
-        t: ImageLibrary;
+        t: ImageLibraryTranslationObjects;
     }
 
     let { item, onView, onDelete, t }: Props = $props();

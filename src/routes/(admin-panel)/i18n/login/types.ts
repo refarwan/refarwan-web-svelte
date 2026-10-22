@@ -1,4 +1,6 @@
-export interface Login {
+import type { AdminLocale } from "../types";
+
+export type LoginTranslationObjects = {
     title: string;
     subtitle: string;
     identifierLabel: string;
@@ -8,4 +10,6 @@ export interface Login {
     submitting: string;
     identifierRequired: string;
     passwordRequired: string;
-}
+};
+
+export type LoginTranslations = Record<AdminLocale, LoginTranslationObjects>;

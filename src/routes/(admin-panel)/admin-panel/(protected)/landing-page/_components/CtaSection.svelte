@@ -1,11 +1,11 @@
 <script lang="ts">
-    import type { LandingPageAdminTranslation } from "../../../../i18n/landing-page/types";
+    import type { LandingPageTranslationObjects } from "../../../../i18n/landing-page/types";
 
     interface Props {
         ctaTitle: string;
         ctaButton: string;
         ctaDescription: string;
-        t: LandingPageAdminTranslation;
+        t: LandingPageTranslationObjects;
     }
 
     let {

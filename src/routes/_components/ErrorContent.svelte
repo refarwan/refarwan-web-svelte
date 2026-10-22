@@ -2,12 +2,12 @@
     import Icon from "@iconify/svelte";
     import { resolve } from "$app/paths";
 
-    import type { ErrorTranslation } from "$lib/i18n/error";
+    import type { ErrorTranslationObjects } from "$lib/i18n/error/types";
 
     interface Props {
         status?: number;
         message?: string;
-        t: ErrorTranslation;
+        t: ErrorTranslationObjects;
         homeHref: string;
         contactHref: string;
     }

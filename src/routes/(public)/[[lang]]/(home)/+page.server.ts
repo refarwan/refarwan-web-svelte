@@ -1,8 +1,8 @@
 import { error } from "@sveltejs/kit";
-import { CONTENT_LANGUAGES } from "$lib/constants/content-language";
+import { CONTENT_LANGUAGES } from "$lib/i18n/content-language";
 import { getApiData } from "$lib/server/api-data";
 
-import type { HomeTranslation } from "$lib/i18n/home";
+import type { HomeTranslationObjects } from "$lib/i18n/home/types";
 import type { DataResponse } from "$lib/types/api-response";
 import type { PageServerLoad } from "./$types";
 
@@ -13,8 +13,8 @@ export const load: PageServerLoad = async ({ params, parent, fetch }) => {
 
     const { currentLang } = await parent();
 
-    const landingData = await getApiData<DataResponse<HomeTranslation>>(
-        `landing-page/public?locale=${currentLang}`,
+    const landingData = await getApiData<DataResponse<HomeTranslationObjects>>(
+        `landing-page/public`,
         "landing-page",
         fetch,
         { "Accept-Language": currentLang }

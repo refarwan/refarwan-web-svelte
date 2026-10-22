@@ -1,6 +1,6 @@
-import type { WatchTranslation } from "./types";
+import type { WatchTranslationObjects } from "./types";
 
-export const idID: WatchTranslation = {
+export const idID: WatchTranslationObjects = {
     categoriesAll: "Semua",
     searchPlaceholder: "Cari video...",
     views: "tayangan",

@@ -4,8 +4,7 @@
     import { mobileMenu } from "$lib/stores/mobile-menu.svelte";
     import LanguageSwitcher from "../../../_components/LanguageSwitcher.svelte";
 
-    import type { ContentLocale } from "$lib/i18n/types";
-    import type { ContentLanguage } from "$lib/types/content-language";
+    import type { ContentLanguage, ContentLocale } from "$lib/types/content-language";
 
     interface Props {
         currentLang: ContentLocale;
@@ -13,6 +12,14 @@
     }
 
     let { contentLanguages, currentLang }: Props = $props();
+
+    const defaultOption = $derived(
+        contentLanguages.find((opt) => opt.default) ?? contentLanguages[0]
+    );
+    const defaultLocale = $derived(defaultOption?.locale ?? "en-US");
+    const homeHref = $derived(
+        resolve((currentLang !== defaultLocale ? `/${currentLang}` : "/") as `/${string}`)
+    );
 </script>
 
 <header
@@ -20,7 +27,7 @@
 >
     <div class="mx-auto flex h-16 max-w-7xl items-center justify-between md:h-20">
         <a
-            href={resolve(`/${currentLang !== "en-US" ? currentLang : ""}`)}
+            href={homeHref}
             class="shrink-0 text-[22px] font-extrabold tracking-tight text-theme-700 transition-colors hover:text-theme-800"
         >
             Aan Refarwan

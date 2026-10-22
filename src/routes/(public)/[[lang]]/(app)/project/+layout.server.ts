@@ -1,8 +1,9 @@
 import { getApiData } from "$lib/server/api-data.js";
 
 import type { DataResponse } from "$lib/types/api-response";
+import type { LayoutServerLoad } from "./$types";
 
-export const load = async ({ fetch }) => {
+export const load: LayoutServerLoad = async ({ fetch }) => {
     interface Metadata {
         title: string;
         description: string;

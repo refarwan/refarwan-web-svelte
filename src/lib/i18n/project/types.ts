@@ -1,4 +1,6 @@
-export interface ProjectTranslation {
+import type { ContentLocale } from "$lib/types/content-language";
+
+export type ProjectTranslationObjects = {
     pageTitle: string;
     pageDescription: string;
     categoriesAll: string;
@@ -22,4 +24,6 @@ export interface ProjectTranslation {
     appsProjectLabel: string;
     appsWatchLabel: string;
     appsBlogLabel: string;
-}
+};
+
+export type ProjectTranslations = Record<ContentLocale, ProjectTranslationObjects>;

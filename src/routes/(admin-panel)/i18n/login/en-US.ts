@@ -1,6 +1,6 @@
-import type { Login } from "./types";
+import type { LoginTranslationObjects } from "./types";
 
-export const enUS: Login = {
+export const enUS: LoginTranslationObjects = {
     title: "Welcome Back",
     subtitle: "Sign in to your account to continue",
     identifierLabel: "Email",

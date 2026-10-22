@@ -5,7 +5,7 @@
     import { WATCH_TRANSLATIONS } from "$lib/i18n/watch";
 
     import type { ResolvedPathname } from "$app/types";
-    import type { ContentLocale } from "$lib/i18n/types";
+    import type { ContentLocale } from "$lib/types/content-language";
 
     let { data } = $props();
 

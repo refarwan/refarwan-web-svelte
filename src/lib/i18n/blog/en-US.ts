@@ -1,6 +1,6 @@
-import type { BlogTranslation } from "./types";
+import type { BlogTranslationObjects } from "./types";
 
-export const enUS: BlogTranslation = {
+export const enUS: BlogTranslationObjects = {
     pageTitle: "Engineering & Design Blog",
     pageDescription:
         "In-depth articles about software architecture, frontend engineering, and UI design.",

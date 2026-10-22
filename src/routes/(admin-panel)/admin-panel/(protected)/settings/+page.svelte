@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { CONTENT_LANGUAGES } from "$lib/constants/content-language";
     import { pageTitleStore } from "../../../stores/page-title.svelte";
     import { popup } from "../../../stores/popup.svelte";
     import AddLanguageModal from "./_components/AddLanguageModal.svelte";
@@ -75,6 +74,7 @@
                 availableLanguages={form.availableLanguages}
                 activeLanguages={form.activeLanguages}
                 onRemoveLanguage={form.onRemoveLanguage}
+                onSetDefaultLanguage={form.onSetDefaultLanguage}
                 onOpenAddLanguageModal={openAddLanguageModal}
             />
 
@@ -107,16 +107,17 @@
 
 {#snippet addLanguageSnippet()}
     <AddLanguageModal
-        activeCodes={CONTENT_LANGUAGES.filter((lang) =>
-            lang.code === "en" ? true : form.otherContentLanguages.includes(lang.locale)
-        ).map((lang) => lang.code)}
+        activeCodes={form.contentLanguages.map((lang) => lang.code)}
+        defaultCode={form.contentLanguages.find((lang) => lang.default)?.code ?? "en-US"}
         onClose={() => popup.remove(addLanguagePopupId)}
         onAddLanguage={form.onAddLanguage}
+        onRemoveLanguage={form.onRemoveLanguage}
         title={t.addLanguageModalTitle}
         searchPlaceholder={t.addLanguagePlaceholder}
         defaultLabel={t.defaultLanguage}
         activeLabel={t.activeLanguage}
         addLabel={t.addLanguageAction}
+        removeLabel={t.removeLanguage}
         doneLabel={t.done}
         closeLabel={t.closeModal}
     />

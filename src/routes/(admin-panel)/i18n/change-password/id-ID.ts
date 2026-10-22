@@ -1,6 +1,6 @@
-import type { ChangePassword } from "./types";
+import type { ChangePasswordTranslationObjects } from "./types";
 
-export const idID: ChangePassword = {
+export const idID: ChangePasswordTranslationObjects = {
     title: "Ubah Password",
     description: "Pilih kata sandi kuat yang tidak Anda gunakan di tempat lain.",
     oldPassword: "Password Lama",

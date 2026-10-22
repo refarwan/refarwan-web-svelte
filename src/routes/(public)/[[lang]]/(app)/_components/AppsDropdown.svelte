@@ -4,7 +4,7 @@
     import { APPS_DROPDOWN_TRANSLATIONS } from "$lib/i18n/apps-dropdown";
 
     import type { ResolvedPathname } from "$app/types";
-    import type { ContentLocale } from "$lib/i18n/types";
+    import type { ContentLocale } from "$lib/types/content-language";
 
     interface AppItem {
         name: string;
