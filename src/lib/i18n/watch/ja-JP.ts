@@ -21,5 +21,16 @@ export const jaJP: WatchTranslationObjects = {
     appsBlogLabel: "Blog",
     playOnWatch: "Watch で再生",
     loadMore: "もっと見る",
-    loading: "読み込み中..."
+    loading: "読み込み中...",
+    playlistsTab: "再生リスト",
+    videosTab: "動画",
+    playAll: "すべて再生",
+    playlistQueue: "再生キュー",
+    noPlaylists: "再生リストが見つかりません。",
+    playlistNotFound: "再生リストが見つかりません",
+    playlist: "再生リスト",
+    playlists: "再生リスト",
+    playlistVideos: "再生リストの動画",
+    totalDuration: "合計再生時間",
+    videosSuffix: "本"
 };

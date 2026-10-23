@@ -21,5 +21,16 @@ export const idID: WatchTranslationObjects = {
     appsBlogLabel: "Blog",
     playOnWatch: "Putar di Watch",
     loadMore: "Muat lebih banyak",
-    loading: "Memuat..."
+    loading: "Memuat...",
+    playlistsTab: "Playlist",
+    videosTab: "Video",
+    playAll: "Putar Semua",
+    playlistQueue: "Antrean Playlist",
+    noPlaylists: "Tidak ada playlist yang ditemukan.",
+    playlistNotFound: "Playlist Tidak Ditemukan",
+    playlist: "Playlist",
+    playlists: "Playlist",
+    playlistVideos: "Video dalam Playlist",
+    totalDuration: "Total Durasi",
+    videosSuffix: "video"
 };

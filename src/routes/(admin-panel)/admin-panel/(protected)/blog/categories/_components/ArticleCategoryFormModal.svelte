@@ -36,20 +36,30 @@
         cancelLabel
     }: Props = $props();
 
-    const defaultLocale = $derived(contentLanguages[0]?.locale ?? "en-US");
+    const defaultLocale = $derived(
+        contentLanguages.find((l) => l.default)?.locale ?? contentLanguages[0]?.locale ?? "en-US"
+    );
     const seedNames = (): Record<string, string> => {
-        const initialDefault = contentLanguages[0]?.locale ?? "en-US";
-        const names: Record<string, string> = { [initialDefault]: category?.name ?? "" };
+        const initialDefault =
+            contentLanguages.find((l) => l.default)?.locale ??
+            contentLanguages[0]?.locale ??
+            "en-US";
+        const names: Record<string, string> = {};
         for (const lang of contentLanguages) {
-            if (lang.locale === initialDefault) continue;
             const translation = category?.translations?.find((t) => t.languageCode === lang.locale);
-            names[lang.locale] = translation?.name ?? "";
+            names[lang.locale] =
+                translation?.name ?? (lang.locale === initialDefault ? (category?.name ?? "") : "");
         }
         return names;
     };
 
     let activeLangCode = $state<ContentLocale>(
-        untrack(() => contentLanguages[0]?.locale ?? "en-US")
+        untrack(
+            () =>
+                contentLanguages.find((l) => l.default)?.locale ??
+                contentLanguages[0]?.locale ??
+                "en-US"
+        )
     );
     let names = $state<Record<string, string>>(seedNames());
     let slug = $state(untrack(() => category?.slug ?? ""));
@@ -98,7 +108,7 @@
     const onNameInput = (value: string) => {
         names[activeLangCode] = value;
 
-        if (activeLangCode === "en-US" && !isSlugTouched) {
+        if (activeLangCode === defaultLocale && !isSlugTouched) {
             const clean = slugify(value);
             slug = clean;
             clearTimeout(slugCheckTimeout);
@@ -130,14 +140,6 @@
 
     const hasAnyName = $derived(Object.values(names).some((name) => name.trim().length > 0));
 
-    const translationsPayload = $derived(
-        JSON.stringify(
-            contentLanguages
-                .filter((lang) => lang.locale !== defaultLocale && names[lang.locale]?.trim())
-                .map((lang) => ({ languageCode: lang.locale, name: names[lang.locale].trim() }))
-        )
-    );
-
     const primaryName = $derived(
         names[defaultLocale]?.trim() ||
             Object.values(names)
@@ -146,7 +148,16 @@
             ""
     );
 
-    const isEnglishTab = $derived(activeLangCode === defaultLocale);
+    const translationsPayload = $derived(
+        JSON.stringify(
+            contentLanguages.map((lang) => ({
+                languageCode: lang.locale,
+                name: (names[lang.locale] ?? "").trim() || primaryName
+            }))
+        )
+    );
+
+    const isDefaultTab = $derived(activeLangCode === defaultLocale);
 
     const onSubmit = async (event: SubmitEvent) => {
         event.preventDefault();
@@ -161,6 +172,7 @@
         formError = "";
 
         const payload: CategoryPayload = {
+            languageCode: defaultLocale,
             name: primaryName,
             slug: slug || undefined,
             translations: JSON.parse(translationsPayload) as CategoryPayload["translations"]
@@ -212,6 +224,7 @@
             <CategoryNameField
                 {t}
                 {activeLangCode}
+                {isDefaultTab}
                 value={names[activeLangCode] ?? ""}
                 disabled={submitting}
                 onInput={onNameInput}
@@ -220,8 +233,8 @@
             <SlugField
                 {t}
                 {slug}
-                disabled={submitting || !isEnglishTab}
-                {isEnglishTab}
+                disabled={submitting || !isDefaultTab}
+                {isDefaultTab}
                 {isCheckingSlug}
                 isTaken={slugTaken}
                 {suggestedSlug}

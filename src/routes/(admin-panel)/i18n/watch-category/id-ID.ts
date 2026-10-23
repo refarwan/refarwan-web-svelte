@@ -18,8 +18,11 @@ export const idID: WatchCategoryTranslationObjects = {
     namePlaceholder: "Masukkan nama kategori...",
     namePlaceholderLang: "Masukkan nama kategori dalam ({lang})...",
     slugLabel: "Slug",
-    slugHelperEnglish: "Slug akan digunakan di URL. Dibuat otomatis dari nama kategori.",
-    slugHelperOtherLang: "Slug hanya dapat diubah pada tab English.",
+    slugHelperDefault:
+        "Slug akan digunakan di URL. Dibuat otomatis dari nama kategori di bahasa default.",
+    slugHelperEnglish:
+        "Slug akan digunakan di URL. Dibuat otomatis dari nama kategori di bahasa default.",
+    slugHelperOtherLang: "Slug hanya dapat diubah pada tab bahasa default.",
     slugTakenLabel: "Slug sudah terpakai. Disarankan:",
     saveCategory: "Simpan Kategori",
     saveChanges: "Simpan Perubahan",

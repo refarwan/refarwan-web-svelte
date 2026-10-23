@@ -1,9 +1,12 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
+    import { resolve } from "$app/paths";
     import { env } from "$env/dynamic/public";
     import { resolutionsFromFields } from "$lib/components/video-player/resolution";
     import VideoPlayer from "$lib/components/video-player/VideoPlayer.svelte";
     import { WATCH_TRANSLATIONS } from "$lib/i18n/watch";
     import AppMainSection from "../../_components/AppMainSection.svelte";
+    import PlayPlaylistQueue from "./_components/PlayPlaylistQueue.svelte";
     import PlayRecommendedVideos from "./_components/PlayRecommendedVideos.svelte";
     import PlayVideoInfo from "./_components/PlayVideoInfo.svelte";
 
@@ -14,6 +17,7 @@
     const currentLang = $derived(data?.currentLang ?? "en-US");
     const t = $derived(WATCH_TRANSLATIONS[currentLang]);
     const video = $derived(data.video);
+    const playlist = $derived(data.playlist);
 
     const localePrefix = $derived(currentLang === "en-US" ? "" : `/${currentLang}`);
     const basePath = $derived(`${localePrefix}/watch`);
@@ -56,6 +60,20 @@
             void recordView();
         }
     };
+
+    const handleEnded = () => {
+        isPlaying = false;
+        if (!playlist || !playlist.videos) return;
+        const currentIndex = playlist.videos.findIndex((v) => (v.videoId ?? v.id) === video.id);
+        if (currentIndex >= 0 && currentIndex < playlist.videos.length - 1) {
+            const nextVideo = playlist.videos[currentIndex + 1];
+            void goto(
+                resolve(
+                    `${basePath}/play?v=${nextVideo.videoId ?? nextVideo.id}&list=${playlist.slug}` as ResolvedPathname
+                )
+            );
+        }
+    };
 </script>
 
 <svelte:head>
@@ -74,13 +92,17 @@
                         thumbnailUrl={video.thumbnail.large}
                         on:play={() => (isPlaying = true)}
                         on:pause={() => (isPlaying = false)}
-                        on:ended={() => (isPlaying = false)}
+                        on:ended={handleEnded}
                         on:timeupdate={handleTimeUpdate}
                     />
                 </div>
                 <PlayVideoInfo {video} lang={currentLang} {t} {categoryHref} />
             </div>
             <div class="w-full lg:w-95">
+                {#if playlist}
+                    <PlayPlaylistQueue {playlist} currentVideoId={video.id} {t} {basePath} />
+                {/if}
+
                 <PlayRecommendedVideos
                     videos={data.recommended}
                     lang={currentLang}

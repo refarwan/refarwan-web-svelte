@@ -15,15 +15,19 @@ interface BuildVideoFormDataInput {
 }
 
 export const buildVideoFormData = (input: BuildVideoFormDataInput): FormData => {
-    const translations = input.contentLanguages
-        .filter((lang) => lang.locale !== "en-US" && input.titles[lang.locale]?.trim())
-        .map((lang) => ({
-            languageCode: lang.locale,
-            title: input.titles[lang.locale].trim(),
-            description: input.descriptions[lang.locale]?.trim() || input.titles[lang.locale].trim()
-        }));
+    const translations = input.contentLanguages.map((lang) => ({
+        languageCode: lang.locale,
+        title: input.titles[lang.locale]?.trim() || input.primaryTitle,
+        description: input.descriptions[lang.locale]?.trim() || input.primaryDescription || ""
+    }));
+
+    const defaultLocale =
+        input.contentLanguages.find((l) => l.default)?.locale ??
+        input.contentLanguages[0]?.locale ??
+        "en-US";
 
     const formData = new FormData();
+    formData.set("languageCode", defaultLocale);
     formData.set("video", input.videoFile);
     formData.set("title", input.primaryTitle);
     if (input.primaryDescription) formData.set("description", input.primaryDescription);

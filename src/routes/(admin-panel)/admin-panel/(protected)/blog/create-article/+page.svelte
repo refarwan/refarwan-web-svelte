@@ -41,7 +41,20 @@
         categories.map((category) => ({ value: category.id, label: category.name }))
     );
 
-    let activeLangCode = $state(untrack(() => data.contentLanguages[0]?.locale ?? "en-US"));
+    const defaultLocale = $derived(
+        data.contentLanguages.find((l) => l.default)?.locale ??
+            data.contentLanguages[0]?.locale ??
+            "en-US"
+    );
+
+    let activeLangCode = $state(
+        untrack(
+            () =>
+                data.contentLanguages.find((l) => l.default)?.locale ??
+                data.contentLanguages[0]?.locale ??
+                "en-US"
+        )
+    );
 
     let titles = $state<Record<string, string>>({});
     let shortDescriptions = $state<Record<string, string>>({});
@@ -90,7 +103,7 @@
     };
 
     const primaryTitle = $derived(
-        titles["en-US"]?.trim() ||
+        titles[defaultLocale]?.trim() ||
             titles[activeLangCode]?.trim() ||
             Object.values(titles)
                 .find((title) => title.trim())
@@ -99,30 +112,36 @@
     );
 
     const primaryShortDescription = $derived(
-        shortDescriptions["en-US"]?.trim() || shortDescriptions[activeLangCode]?.trim() || ""
+        shortDescriptions[defaultLocale]?.trim() || shortDescriptions[activeLangCode]?.trim() || ""
     );
 
     const primaryContent = $derived(
-        contents.en ||
+        contents[defaultLocale] ||
             contents[activeLangCode] ||
             Object.values(contents)[0] || { json: {}, html: "" }
     );
 
     const translationsPayload = $derived(
         JSON.stringify(
-            data.contentLanguages
-                .filter(
-                    (lang) =>
-                        lang.locale !== "en-US" &&
-                        (titles[lang.locale]?.trim() || contents[lang.locale]?.html)
-                )
-                .map((lang) => ({
+            data.contentLanguages.map((lang) => {
+                const title = titles[lang.locale]?.trim() || primaryTitle;
+                const shortDescription =
+                    shortDescriptions[lang.locale]?.trim() || primaryShortDescription;
+                const contentHTML = contents[lang.locale]?.html?.trim()
+                    ? contents[lang.locale].html
+                    : primaryContent.html;
+                const contentJSON = contents[lang.locale]?.html?.trim()
+                    ? (contents[lang.locale]?.json ?? {})
+                    : primaryContent.json;
+
+                return {
                     languageCode: lang.locale,
-                    title: titles[lang.locale]?.trim() || primaryTitle,
-                    shortDescription: shortDescriptions[lang.locale]?.trim() || "",
-                    contentJSON: contents[lang.locale]?.json ?? {},
-                    contentHTML: contents[lang.locale]?.html ?? ""
-                }))
+                    title,
+                    shortDescription,
+                    contentJSON,
+                    contentHTML
+                };
+            })
         )
     );
 
@@ -139,6 +158,7 @@
         submitting = true;
         try {
             const formData = new FormData();
+            formData.append("languageCode", defaultLocale);
             formData.append("title", primaryTitle);
             if (primaryShortDescription) {
                 formData.append("shortDescription", primaryShortDescription);

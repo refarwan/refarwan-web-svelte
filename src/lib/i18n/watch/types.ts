@@ -22,6 +22,17 @@ export type WatchTranslationObjects = {
     playOnWatch: string;
     loadMore: string;
     loading: string;
+    playlistsTab: string;
+    videosTab: string;
+    playAll: string;
+    playlistQueue: string;
+    noPlaylists: string;
+    playlistNotFound: string;
+    playlist: string;
+    playlists: string;
+    playlistVideos: string;
+    totalDuration: string;
+    videosSuffix: string;
 };
 
 export type WatchTranslations = Record<ContentLocale, WatchTranslationObjects>;

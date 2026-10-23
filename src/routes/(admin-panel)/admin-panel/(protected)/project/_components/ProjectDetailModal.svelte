@@ -1,6 +1,7 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
     import { resolve } from "$app/paths";
+    import { untrack } from "svelte";
     import CategoryBadge from "./CategoryBadge.svelte";
     import OperationalStatusBadge from "./OperationalStatusBadge.svelte";
     import StatusBadge from "./StatusBadge.svelte";
@@ -38,18 +39,16 @@
         ].filter((link): link is { label: string; href: string; icon: string } => Boolean(link))
     );
 
-    let activeLangTab = $state<string>("en");
+    let activeLangTab = $state<string>(
+        untrack(() => project.translations[0]?.languageCode ?? "en-US")
+    );
     const activeTranslation = $derived(
         project.translations.find((tr) => tr.languageCode === activeLangTab)
     );
 
-    const displayTitle = $derived(
-        activeLangTab === "en" ? project.title : activeTranslation?.title || project.title
-    );
+    const displayTitle = $derived(activeTranslation?.title || project.title);
     const displayShortDesc = $derived(
-        activeLangTab === "en"
-            ? project.shortDescription
-            : activeTranslation?.shortDescription || project.shortDescription
+        activeTranslation?.shortDescription || project.shortDescription
     );
 </script>
 
@@ -91,13 +90,6 @@
             <!-- Language Tabs (if has translations) -->
             {#if project.translations.length > 0}
                 <div class="flex items-center gap-2 border-b border-gray-100 pb-2">
-                    <button
-                        type="button"
-                        onclick={() => (activeLangTab = "en")}
-                        class={`cursor-pointer rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${activeLangTab === "en" ? "bg-theme-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
-                    >
-                        English
-                    </button>
                     {#each project.translations as tr (tr.languageCode)}
                         <button
                             type="button"

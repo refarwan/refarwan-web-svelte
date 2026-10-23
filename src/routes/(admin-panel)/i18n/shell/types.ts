@@ -11,6 +11,7 @@ export type ShellTranslationObjects = {
     watchVideos: string;
     watchUploadVideo: string;
     watchCategories: string;
+    watchPlaylists: string;
     project: string;
     projectCreateProject: string;
     projectCategories: string;

@@ -55,6 +55,11 @@
                     label: t.watchCategories,
                     href: resolve("/admin-panel/watch/categories"),
                     exact: true
+                },
+                {
+                    label: t.watchPlaylists,
+                    href: resolve("/admin-panel/watch/playlists"),
+                    exact: true
                 }
             ]
         },

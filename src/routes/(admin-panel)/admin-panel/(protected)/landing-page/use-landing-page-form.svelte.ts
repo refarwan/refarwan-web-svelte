@@ -34,6 +34,7 @@ export class LandingPageFormState {
     private snapshot = $state("");
     private getT: () => LandingPageTranslationObjects;
     private getCommonT: () => CommonTranslationObjects;
+    private getInitialLocale: () => string;
 
     constructor(
         getT: () => LandingPageTranslationObjects,
@@ -42,6 +43,7 @@ export class LandingPageFormState {
     ) {
         this.getT = getT;
         this.getCommonT = getCommonT;
+        this.getInitialLocale = getInitialLocale;
         this.activeLocale = getInitialLocale();
 
         void this.load();
@@ -168,10 +170,51 @@ export class LandingPageFormState {
                 this.heroPhotoCleared = false;
             }
 
+            const defaultLocale = this.getInitialLocale();
+            const defaultTrans =
+                this.translations[defaultLocale] ??
+                this.translations["en-US"] ??
+                Object.values(this.translations)[0];
+
+            const normalizedTranslations: Record<string, (typeof this.translations)[string]> = {};
+
+            for (const [locale, t] of Object.entries(this.translations)) {
+                normalizedTranslations[locale] = {
+                    metaTitle: t.metaTitle?.trim() || defaultTrans?.metaTitle || "",
+                    metaDescription:
+                        t.metaDescription?.trim() || defaultTrans?.metaDescription || "",
+                    heroRole: t.heroRole?.trim() || defaultTrans?.heroRole || "",
+                    heroDescription:
+                        t.heroDescription?.trim() || defaultTrans?.heroDescription || "",
+                    heroViewProjects:
+                        t.heroViewProjects?.trim() || defaultTrans?.heroViewProjects || "",
+                    aboutTitle: t.aboutTitle?.trim() || defaultTrans?.aboutTitle || "",
+                    aboutBio1: t.aboutBio1?.trim() || defaultTrans?.aboutBio1 || "",
+                    aboutBio2: t.aboutBio2?.trim() || defaultTrans?.aboutBio2 || "",
+                    aboutExperienceTitle:
+                        t.aboutExperienceTitle?.trim() || defaultTrans?.aboutExperienceTitle || "",
+                    aboutExperiences:
+                        t.aboutExperiences && t.aboutExperiences.length > 0
+                            ? t.aboutExperiences
+                            : (defaultTrans?.aboutExperiences ?? []),
+                    skillsTitle: t.skillsTitle?.trim() || defaultTrans?.skillsTitle || "",
+                    skillsDescription:
+                        t.skillsDescription?.trim() || defaultTrans?.skillsDescription || "",
+                    projectsTitle: t.projectsTitle?.trim() || defaultTrans?.projectsTitle || "",
+                    projectsSubtitle:
+                        t.projectsSubtitle?.trim() || defaultTrans?.projectsSubtitle || "",
+                    projectsVisitText:
+                        t.projectsVisitText?.trim() || defaultTrans?.projectsVisitText || "",
+                    ctaTitle: t.ctaTitle?.trim() || defaultTrans?.ctaTitle || "",
+                    ctaDescription: t.ctaDescription?.trim() || defaultTrans?.ctaDescription || "",
+                    ctaButton: t.ctaButton?.trim() || defaultTrans?.ctaButton || ""
+                };
+            }
+
             const payload: UpdateLandingPagePayload = {
                 featuredProjectIds: this.featuredProjectIds,
                 skills: this.skills,
-                translations: this.translations
+                translations: normalizedTranslations
             };
 
             await authorizedHttp.put("/landing-page", payload);

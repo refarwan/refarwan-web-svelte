@@ -11,6 +11,7 @@ export const enUS: ShellTranslationObjects = {
     watchVideos: "Videos",
     watchUploadVideo: "Upload Video",
     watchCategories: "Video Categories",
+    watchPlaylists: "Playlists",
     project: "Project",
     projectCreateProject: "Create Project",
     projectCategories: "Project Categories",

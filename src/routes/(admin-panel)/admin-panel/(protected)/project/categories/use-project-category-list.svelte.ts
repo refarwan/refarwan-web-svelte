@@ -6,6 +6,7 @@ import type { DataResponse, ListResponse } from "$lib/types/api-response";
 import type { ProjectCategoryDetail, ProjectCategoryItem } from "$lib/types/project-category";
 
 export interface CategoryPayload {
+    languageCode?: string;
     name: string;
     slug?: string;
     translations: { languageCode: string; name: string }[];

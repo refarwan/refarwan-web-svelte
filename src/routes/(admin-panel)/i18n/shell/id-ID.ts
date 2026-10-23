@@ -11,6 +11,7 @@ export const idID: ShellTranslationObjects = {
     watchVideos: "Vidio",
     watchUploadVideo: "Unggah Vidio",
     watchCategories: "Kategori Vidio",
+    watchPlaylists: "Playlist",
     project: "Proyek",
     projectCreateProject: "Buat Proyek",
     projectCategories: "Kategori Proyek",

@@ -21,5 +21,16 @@ export const enUS: WatchTranslationObjects = {
     appsBlogLabel: "Blog",
     playOnWatch: "Play on Watch",
     loadMore: "Load more",
-    loading: "Loading..."
+    loading: "Loading...",
+    playlistsTab: "Playlists",
+    videosTab: "Videos",
+    playAll: "Play All",
+    playlistQueue: "Playlist Queue",
+    noPlaylists: "No playlists found.",
+    playlistNotFound: "Playlist Not Found",
+    playlist: "Playlist",
+    playlists: "Playlists",
+    playlistVideos: "Playlist Videos",
+    totalDuration: "Total Duration",
+    videosSuffix: "videos"
 };
