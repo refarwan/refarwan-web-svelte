@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Icon from "@iconify/svelte";
     import { env } from "$env/dynamic/public";
     import { SvelteURLSearchParams } from "svelte/reactivity";
     import { WATCH_TRANSLATIONS } from "$lib/i18n/watch/index.js";
@@ -61,6 +62,7 @@
             loading = false;
         }
     };
+    const playlistsHref = $derived(`${basePath}/playlists` as ResolvedPathname);
 </script>
 
 <svelte:head>
@@ -69,12 +71,23 @@
 </svelte:head>
 
 <AppMainSection>
-    <CategoryFilter
-        categories={data.categories}
-        activeSlug={data.activeCategory}
-        allLabel={t.categoriesAll}
-        buildHref={buildCategoryHref}
-    />
+    <div class="flex items-center justify-between gap-3 overflow-x-auto pb-1">
+        <div class="min-w-0 flex-1">
+            <CategoryFilter
+                categories={data.categories}
+                activeSlug={data.activeCategory}
+                allLabel={t.categoriesAll}
+                buildHref={buildCategoryHref}
+            />
+        </div>
+        <a
+            href={playlistsHref}
+            class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-1.5 text-sm font-medium text-gray-700 shadow-xs transition-colors hover:border-gray-300 hover:bg-gray-50 md:py-2"
+        >
+            <Icon icon="lucide:list-video" class="h-4 w-4 text-gray-500" />
+            <span>{t.playlists}</span>
+        </a>
+    </div>
 
     <VideoGrid
         {videos}
