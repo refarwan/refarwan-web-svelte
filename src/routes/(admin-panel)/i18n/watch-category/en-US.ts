@@ -18,8 +18,11 @@ export const enUS: WatchCategoryTranslationObjects = {
     namePlaceholder: "Enter category name...",
     namePlaceholderLang: "Enter category name in ({lang})...",
     slugLabel: "Slug",
-    slugHelperEnglish: "Slug will be used in URL. Generated automatically from category name.",
-    slugHelperOtherLang: "Slug can only be edited in the English tab.",
+    slugHelperDefault:
+        "Slug will be used in URL. Generated automatically from category name in default language.",
+    slugHelperEnglish:
+        "Slug will be used in URL. Generated automatically from category name in default language.",
+    slugHelperOtherLang: "Slug can only be edited in the default language tab.",
     slugTakenLabel: "Slug already taken. Suggested:",
     saveCategory: "Save Category",
     saveChanges: "Save Changes",

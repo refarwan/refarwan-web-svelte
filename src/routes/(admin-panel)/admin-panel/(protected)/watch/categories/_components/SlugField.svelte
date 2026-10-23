@@ -5,7 +5,7 @@
         t: Record<string, string>;
         slug: string;
         disabled: boolean;
-        isEnglishTab: boolean;
+        isDefaultTab: boolean;
         isCheckingSlug: boolean;
         isTaken: boolean;
         suggestedSlug: string;
@@ -17,7 +17,7 @@
         t,
         slug,
         disabled,
-        isEnglishTab,
+        isDefaultTab,
         isCheckingSlug,
         isTaken,
         suggestedSlug,
@@ -56,6 +56,6 @@
         </div>
     {/if}
     <p class="text-xs leading-relaxed text-gray-500">
-        {isEnglishTab ? t.slugHelperEnglish : t.slugHelperOtherLang}
+        {isDefaultTab ? (t.slugHelperDefault ?? t.slugHelperEnglish) : t.slugHelperOtherLang}
     </p>
 </div>

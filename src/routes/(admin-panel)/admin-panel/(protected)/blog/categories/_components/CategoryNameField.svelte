@@ -2,16 +2,16 @@
     interface Props {
         t: Record<string, string>;
         activeLangCode: string;
+        isDefaultTab?: boolean;
         value: string;
         disabled: boolean;
         onInput: (value: string) => void;
     }
 
-    let { t, activeLangCode, value, disabled, onInput }: Props = $props();
+    let { t, activeLangCode, isDefaultTab = false, value, disabled, onInput }: Props = $props();
 
-    const isEnglishTab = $derived(activeLangCode.toLowerCase() === "en");
     const placeholder = $derived(
-        isEnglishTab
+        isDefaultTab
             ? t.namePlaceholder
             : t.namePlaceholderLang.replace("{lang}", activeLangCode.toUpperCase())
     );

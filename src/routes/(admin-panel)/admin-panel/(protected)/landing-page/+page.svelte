@@ -21,14 +21,23 @@
         pageTitleStore.set(t.pageTitle);
     });
 
+    const defaultLocale = $derived(
+        data.contentLanguages.find((l) => l.default)?.locale ??
+            data.contentLanguages[0]?.locale ??
+            "en-US"
+    );
+
     const form = new LandingPageFormState(
         () => t,
         () => commonT,
-        () => data.contentLanguages[0]?.locale ?? "en-US"
+        () =>
+            data.contentLanguages.find((l) => l.default)?.locale ??
+            data.contentLanguages[0]?.locale ??
+            "en-US"
     );
 
     let activeLangCode = $derived(
-        contentLanguages.find((l) => l.locale === form.activeLocale)?.locale ?? "en-US"
+        contentLanguages.find((l) => l.locale === form.activeLocale)?.locale ?? defaultLocale
     );
 
     const handleSelectLanguage = (code: string) => {

@@ -37,10 +37,15 @@
         cancelLabel
     }: Props = $props();
 
-    const defaultLocale = $derived(contentLanguages[0]?.locale ?? "en-US");
+    const defaultLocale = $derived(
+        contentLanguages.find((l) => l.default)?.locale ?? contentLanguages[0]?.locale ?? "en-US"
+    );
 
     const seedTranslations = () => {
-        const initialDefault = contentLanguages[0]?.locale ?? "en-US";
+        const initialDefault =
+            contentLanguages.find((l) => l.default)?.locale ??
+            contentLanguages[0]?.locale ??
+            "en-US";
         const titles: Record<string, string> = { [initialDefault]: playlist?.title ?? "" };
         const descriptions: Record<string, string> = {
             [initialDefault]: playlist?.description ?? ""
@@ -60,7 +65,12 @@
     const initialData = seedTranslations();
 
     let activeLangCode = $state<ContentLocale>(
-        untrack(() => contentLanguages[0]?.locale ?? "en-US")
+        untrack(
+            () =>
+                contentLanguages.find((l) => l.default)?.locale ??
+                contentLanguages[0]?.locale ??
+                "en-US"
+        )
     );
     let titles = $state<Record<string, string>>(initialData.titles);
     let descriptions = $state<Record<string, string>>(initialData.descriptions);
@@ -250,6 +260,7 @@
         submitting = true;
         try {
             const formData = new FormData();
+            formData.append("languageCode", defaultLocale);
             formData.append("title", defaultTitle);
             formData.append("description", (descriptions[defaultLocale] ?? "").trim());
             formData.append("slug", cleanSlug);

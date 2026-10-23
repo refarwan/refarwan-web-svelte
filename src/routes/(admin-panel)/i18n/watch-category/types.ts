@@ -18,6 +18,7 @@ export type WatchCategoryTranslationObjects = {
     namePlaceholder: string;
     namePlaceholderLang: string;
     slugLabel: string;
+    slugHelperDefault: string;
     slugHelperEnglish: string;
     slugHelperOtherLang: string;
     slugTakenLabel: string;

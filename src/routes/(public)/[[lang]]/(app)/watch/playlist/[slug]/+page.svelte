@@ -41,7 +41,7 @@
             <div class="flex flex-col items-start gap-6 md:flex-row md:gap-8">
                 <!-- Cover Card -->
                 <div
-                    class="group relative aspect-video w-full overflow-hidden rounded-xl border border-gray-200 bg-gray-100 shadow-sm md:aspect-[16/10] md:w-72 md:shrink-0"
+                    class="group relative aspect-video w-full overflow-hidden rounded-xl border border-gray-200 bg-gray-100 shadow-sm md:aspect-16/10 md:w-72 md:shrink-0"
                 >
                     {#if playlist.thumbnail?.large || playlist.thumbnail?.medium}
                         <img
@@ -56,7 +56,7 @@
                     {/if}
 
                     <div
-                        class="absolute inset-0 flex items-end bg-gradient-to-t from-black/70 via-transparent to-transparent p-3"
+                        class="absolute inset-0 flex items-end bg-linear-to-t from-black/70 via-transparent to-transparent p-3"
                     >
                         <div
                             class="flex items-center gap-1.5 rounded-md bg-black/60 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-md"

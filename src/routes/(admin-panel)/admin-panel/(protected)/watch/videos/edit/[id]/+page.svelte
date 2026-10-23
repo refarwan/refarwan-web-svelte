@@ -23,7 +23,20 @@
         videoEdit.categories.map((category) => ({ value: category.id, label: category.name }))
     );
 
-    let activeLangCode = $state(untrack(() => data.contentLanguages[0]?.locale ?? "en-US"));
+    const defaultLocale = $derived(
+        data.contentLanguages.find((l) => l.default)?.locale ??
+            data.contentLanguages[0]?.locale ??
+            "en-US"
+    );
+
+    let activeLangCode = $state(
+        untrack(
+            () =>
+                data.contentLanguages.find((l) => l.default)?.locale ??
+                data.contentLanguages[0]?.locale ??
+                "en-US"
+        )
+    );
     let titles = $state<Record<string, string>>({});
     let descriptions = $state<Record<string, string>>({});
     let categoryId = $state("");
@@ -45,8 +58,14 @@
         const video = videoEdit.video;
         if (!video || isReady) return;
 
-        const seedTitles: Record<string, string> = { "en-US": video.title ?? "" };
-        const seedDescriptions: Record<string, string> = { "en-US": video.description ?? "" };
+        const initialDefault =
+            data.contentLanguages.find((l) => l.default)?.locale ??
+            data.contentLanguages[0]?.locale ??
+            "en-US";
+        const seedTitles: Record<string, string> = { [initialDefault]: video.title ?? "" };
+        const seedDescriptions: Record<string, string> = {
+            [initialDefault]: video.description ?? ""
+        };
         for (const translation of video.translations) {
             const matchedLang = data.contentLanguages.find(
                 (l) => l.locale === translation.languageCode
@@ -101,7 +120,7 @@
     };
 
     const primaryTitle = $derived(
-        titles["en-US"]?.trim() ||
+        titles[defaultLocale]?.trim() ||
             titles[activeLangCode]?.trim() ||
             Object.values(titles)
                 .find((title) => title.trim())
@@ -109,18 +128,16 @@
             ""
     );
     const primaryDescription = $derived(
-        descriptions["en-US"]?.trim() || descriptions[activeLangCode]?.trim() || ""
+        descriptions[defaultLocale]?.trim() || descriptions[activeLangCode]?.trim() || ""
     );
 
     const translationsPayload = $derived(
         JSON.stringify(
-            data.contentLanguages
-                .filter((lang) => lang.locale !== "en-US" && titles[lang.locale]?.trim())
-                .map((lang) => ({
-                    languageCode: lang.locale,
-                    title: titles[lang.locale].trim(),
-                    description: descriptions[lang.locale]?.trim() || titles[lang.locale].trim()
-                }))
+            data.contentLanguages.map((lang) => ({
+                languageCode: lang.locale,
+                title: titles[lang.locale]?.trim() || primaryTitle,
+                description: descriptions[lang.locale]?.trim() || primaryDescription || ""
+            }))
         )
     );
 
@@ -131,6 +148,7 @@
         }
 
         const formData = new FormData();
+        formData.append("languageCode", defaultLocale);
         formData.append("title", primaryTitle);
         if (primaryDescription) {
             formData.append("description", primaryDescription);
